@@ -6,7 +6,7 @@
 /*   By: cfiliber <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/30 15:19:18 by cfiliber          #+#    #+#             */
-/*   Updated: 2022/10/30 17:22:08 by cfiliber         ###   ########.fr       */
+/*   Updated: 2022/10/30 18:27:03 by cfiliber         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,16 +75,16 @@ char	**read_map_file(char *file_path)
 	return (map);
 }
 
-char	**map_file_parse(char *file_path)//, t_game *game)
+char	**map_file_parse(char *file_path, t_game *game)
 {
 	char	**map_file;
 	map_file = read_map_file(file_path);
 	if (!map_file)
 		return (NULL);
-	// if (valid_file(map_file) == FALSE)
-	// {
-	// 	ft_free_char_mtx(map_file);
-	// 	return (NULL);
-	// }
+	if (valid_file(map_file, game) == FALSE)
+	{
+		ft_free_char_mtx(map_file);
+		return (NULL);
+	}
 	return (map_file);
 }
