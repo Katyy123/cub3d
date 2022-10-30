@@ -6,7 +6,7 @@
 /*   By: cfiliber <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/21 12:41:47 by mel-hada          #+#    #+#             */
-/*   Updated: 2022/10/30 14:09:40 by cfiliber         ###   ########.fr       */
+/*   Updated: 2022/10/30 15:55:37 by cfiliber         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,5 +60,12 @@
 # include "structs.h"
 #include <x86intrin.h>
 # include <semaphore.h>
+# include "../libft/libft.h"
+# include "../gnl/get_next_line.h"
+
+/* errors.c */
+int		error(char *message);
+void	*null_error(char *message);
+void	print_warning(char *message);
 
 # endif

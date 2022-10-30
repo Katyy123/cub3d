@@ -6,34 +6,64 @@
 #    By: cfiliber <marvin@42.fr>                    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/10/27 16:37:56 by cfiliber          #+#    #+#              #
-#    Updated: 2022/10/30 14:07:10 by cfiliber         ###   ########.fr        #
+#    Updated: 2022/10/30 15:57:36 by cfiliber         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 NAME	= cub3d
 
-SRCS	= cub3d.c \
-		
+LIB_PATH = ./libft/
+LIB = $(LIB_PATH)libft.a
 
-FLGS	= gcc -Werror -Wall -Wextra 
-LINKS = -lmlx -framework OpenGL -framework AppKit
+SRCS = $(MAIN_SRC) $(SRC_GNL) $(SRC_MAP) $(SRC_GAME)
 
+MAIN_SRC = main.c errors.c
 
-RM		= rm -f
+GNL = get_next_line.c get_next_line_utils.c
+SRC_GNL = $(addprefix gnl/, $(GNL))
 
-all:	$(NAME) $(SRCS)
+MAP = map_reader.c
+SRC_MAP = $(addprefix map/, $(MAP))
 
-$(NAME): $(SRCS)
-	$(FLGS) $(LINKS) $(SRCS) -o $(NAME)
-#	make -C lib
-# $(FLGS)  -lmlx -framework OpenGL -framework AppKit -Ofast -g3 -flto -march=native -O3 -ffast-math -msse4.2 -mtune=intel lib/libmlx.a $(SRCS) -o $(NAME)
+GAME = 
+SRC_GAME = $(addprefix game/, $(GAME))
 
-clean: 
-	$(RM) -fr $(NAME)
+OBJS = $(SRCS:.c=.o)
+
+CC = gcc
+
+CFLAGS = -Wall -Wextra -Werror -g -I libft -Imlx -fsanitize=address
+
+GREEN = '\x1b[32m'
+YELLOW = '\x1b[33m'
+RED = '\x1b[31m'
+MAGENTA = '\x1b[35m'
+CYAN = '\x1b[36m'
+GRAY = '\x1b[2;37m'
+CURSIVE = '\x1b[3m'
+RESET = '\x1b[0m'
+
+%.o : %.c
+	$(CC) $(CFLAGS) -c $< -o $@
+
+all: subsystem $(NAME)
+
+subsystem:
+	make all -C $(LIB_PATH)
+
+$(NAME): $(OBJS)
+	$(CC) $(CFLAGS) -lmlx -framework OpenGL -framework AppKit -o $(NAME) $(OBJS) $(LIB)
+	@echo $(GREEN)$(CURSIVE)"\nAll files have been compiled"$(RESET)
+	@echo $(MAGENTA)$(CURSIVE)"\nTo start the game, type ./cub3d and map name.\nFor example: ./cub3d maps/test1.cub\n"$(RESET)
+
+clean:
+	make clean -C $(LIB_PATH)
+	rm -f $(OBJS)
 
 fclean: clean
-	make clean -C lib
-	$(RM) -fr img/guns/g1 img/guns/g2 img/guns/g3 img/guns/g4 img/guns/g5 img/guns/g6 img/guns/g7 img/guns/g8 img/guns/g9 img/enemies/attack_1 img/enemies/attack_2 img/enemies/attack_3 img/enemies/hit img/enemies/death img/enemies/walk img/enemies/run
+	make fclean -C $(LIB_PATH)
+	rm -f $(NAME)
+
 re: fclean all
 
-.PHONY: clean fclean all re
+.PHONY: all clean fclean re

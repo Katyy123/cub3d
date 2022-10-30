@@ -6,13 +6,18 @@
 /*   By: cfiliber <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/08 12:01:01 by ael-bekk          #+#    #+#             */
-/*   Updated: 2022/10/30 14:09:20 by cfiliber         ###   ########.fr       */
+/*   Updated: 2022/10/30 16:16:19 by cfiliber         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef STRUCTS_H
 # define STRUCTS_H
 
+typedef enum e_bool
+{
+	TRUE = 1,
+	FALSE = 0
+}	t_bool;
 
 /*
 * struttura necessaria a gestire le immagini con minilibx.
