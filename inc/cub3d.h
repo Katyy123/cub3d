@@ -3,15 +3,50 @@
 /*                                                        :::      ::::::::   */
 /*   cub3d.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tbertoli <tbertoli@student.42.fr>          +#+  +:+       +#+        */
+/*   By: cfiliber <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/21 12:41:47 by mel-hada          #+#    #+#             */
-/*   Updated: 2022/10/26 00:43:59 by tbertoli         ###   ########.fr       */
+/*   Updated: 2022/10/30 14:09:40 by cfiliber         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef CUB3D_H
 # define CUB3D_H
+
+# define X_EVENT_KEY_PRESS		2
+# define X_EVENT_KEY_RELEASE	3
+# define X_EVENT_MOUSE_PRESS	4
+# define X_EVENT_MOUSE_RELEASE	5
+# define X_EVENT_MOUSE_MOVE		6
+# define X_EVENT_EXIT			17
+
+# define KEY_1			18
+# define KEY_2			19
+# define KEY_3			20
+# define KEY_4			21
+# define KEY_Q			12
+# define KEY_W			13
+# define KEY_E			14
+# define KEY_R			15
+# define KEY_A			0
+# define KEY_S			1
+# define KEY_D			2
+# define KEY_I			34
+# define KEY_O			31
+# define KEY_P			35
+# define KEY_J			38
+# define KEY_K			40
+# define KEY_L			37
+# define KEY_LEFT		123
+# define KEY_RIGHT		124
+# define KEY_FORWARD 	126
+# define KEY_BACKWARD	125
+
+# define KEY_TAB	48
+# define KEY_MAJ	257
+# define KEY_ESC	53
+# define KEY_TAB	48
+
 
 # include <unistd.h>
 # include <stdlib.h>
@@ -26,28 +61,4 @@
 #include <x86intrin.h>
 # include <semaphore.h>
 
-/* utils */
-int     ft_strncmp(const char *s1, const char *s2, size_t n);
-int     ft_strlen(const char *str);
-int     ft_strlen2(char **str);
-char	*ft_strjoin(char *s1, char *s2);
-char	**ft_split(char *s, char c);
-void	*ft_memcpy(void *dst, const void *src, size_t n);
-char	*ft_substr(char const *s, int start, int len);
-char	*ft_strchr(const char *str, int c);
-char    *get_next_line(int fd);
-int	    ft_isdigit(int c);
-int	    ft_atoi(const char *str);
-void	error(char *str,int m);
-int		ft_close(void);
-char	*ft_strdup(const char *str);
-//t_map	*ft_lst_last(t_map *lst);
-//void	ft_lst_del_one(t_map *lst, void (*del)(void*));
-//void	ft_lst_clear(t_map **lst, void (*del)(void*));
-//void	ft_lst_add_back(t_map **lst, t_map *new);
-//void	ft_lst_add_front(t_map **lst, t_map *new);
-//t_map	*ft_lst_new(void *content);
-
-
-
-#endif
+# endif

@@ -3,16 +3,33 @@
 /*                                                        :::      ::::::::   */
 /*   structs.h                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tbertoli <tbertoli@student.42.fr>          +#+  +:+       +#+        */
+/*   By: cfiliber <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/08 12:01:01 by ael-bekk          #+#    #+#             */
-/*   Updated: 2022/10/26 02:30:59 by tbertoli         ###   ########.fr       */
+/*   Updated: 2022/10/30 14:09:20 by cfiliber         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef STRUCTS_H
 # define STRUCTS_H
 
+
+/*
+* struttura necessaria a gestire le immagini con minilibx.
+* contiene il puntatore a immagine img;
+* gli altri elementi servono a [...]
+*/
+typedef struct	s_data {
+	void	*img;
+	void	*addr;
+	int		bits_per_pixel;
+	int		line_length;
+	int		endian;
+}				t_data;
+
+/*
+* struttura in cui vengono salvate le path alle 4 diverse textures
+*/
 typedef struct s_textures
 {
 	char	*no;
@@ -21,6 +38,13 @@ typedef struct s_textures
 	char	*ea;
 } t_textures;
 
+/*
+* struttura che contiene:
+* pos_x = cordinata x del giocatore nella mappa
+* pos_y = cordinata y del giocatore nella mappa
+* view = valore del campo visivo del giocatore
+* pov = direzione dello sguardo
+*/
 typedef struct s_player
 {
 	float	pos_x;
@@ -29,18 +53,22 @@ typedef struct s_player
 	float	pov;
 } t_player;
 
-typedef struct	s_data {
-	void	*img;
-	char	*addr;
-	int		bits_per_pixel;
-	int		line_length;
-	int		endian;
-}				t_data;
+/*
+* struttura che contiene elementi utili alla gestione della finestra di gioco
+* ptr è il pointer da inizializzare con mlx_init()
+* win è il pointer alla finestra, da inizializzare con mlx_new_window(...)
+* shown_img è l'immagine mostrata sulla fienstra, che viene refreshata a ogni loop
+*/
+typedef	struct	s_screen
+{
+	void		*ptr;
+	void		*win;
+	t_data		shown_img;
+}				t_screen;
 
 typedef struct s_game
 {
-	char		*map[100];	//matrice della mappa in due dimensioni
-	char		lmap[10000];	//array della mappa linearizzata
+    t_screen	screen;
 	t_player	pl;
 	t_textures	textures;
 	int			screen_x;
@@ -50,22 +78,10 @@ typedef struct s_game
 	float		n_rays; // = screen_x
 	float		delta_view;
 	int			game_ended;
-//	t_strutt	s;
+    char		**map;
+    //char		lmap;	//array della mappa linearizzata
+	
+
 } t_game;
 
 #endif
-
-void	*mlx;
-	void	*mlx_win;
-	t_data	img;
-
-	/*
-	mlx = mlx_init();
-	mlx_win = mlx_new_window(mlx, 1920, 1080, "Hello world!");
-	img.img = mlx_new_image(mlx, 1920, 1080);
-	img.addr = mlx_get_data_addr(img.img, &img.bits_per_pixel, &img.line_length,
-								&img.endian);
-	my_mlx_pixel_put(&img, 5, 5, 0x00FF0000);
-	mlx_put_image_to_window(mlx, mlx_win, img.img, 0, 0);
-	mlx_loop(mlx);
-	*/
