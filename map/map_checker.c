@@ -6,19 +6,43 @@
 /*   By: cfiliber <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/30 16:33:53 by cfiliber          #+#    #+#             */
-/*   Updated: 2022/10/30 19:15:32 by cfiliber         ###   ########.fr       */
+/*   Updated: 2022/10/31 15:45:24 by cfiliber         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "map.h"
 
-t_bool	check_path(char *file_str, unsigned int pos, char *t_textures_elem, char *type_id)
+t_bool	valid_map()
 {
-	//check if the path exist and save it in the t_textures struct
-	//free type_id
+	if (!game->textures.no || !game->textures.so
+					|| !game->textures.we || !game->textures.ea)
+					return (error("The map content is not the last info"));
 }
 
-t_bool	valid_info(char *file_str, unsigned int pos, t_game game)
+void save_textures()
+
+int	check_path(char *str, unsigned int pos, char *texture_elem, char *type_id)
+{
+	int fd;
+
+	free (type_id);
+	while (str[pos] == ' ')
+		pos++;
+	fd = open(&str[pos], O_RDONLY);
+	if (!fd)
+		return (-1);
+	close(fd);
+	save_textures(str, )
+	//texture_elem = &str[pos];
+	return (0);
+}
+
+t_bool	valid_texture_info(char *str, t_game *game)
+{
+	
+}
+
+t_bool	valid_info(char *file_str, unsigned int pos, t_game *game)
 {
 	char *type_id;
 
@@ -35,40 +59,40 @@ t_bool	valid_info(char *file_str, unsigned int pos, t_game game)
 	// if (file_str[pos] != 0 && file_str[pos] != 1)
 	// 	while (ft_strncmp(file_str[pos], ))
 
-	if (ft_strncmp(type_id, "NO", 2) == 0)
-		// || ft_strncmp(type_id, "SO", 2) == 0
-		// || ft_strncmp(type_id, "WE", 2) == 0
-		// || ft_strncmp(type_id, "EA", 2) == 0
-		// || ft_strncmp(type_id, "F ", 2) == 0
-		// || ft_strncmp(type_id, "C ", 2) == 0)
-	// {
-	// 	if (check_path(file_str, pos + 2, game) == FALSE)
-	// 		return (error("Wrong texture path"));
-	// }	
+	
+	if (ft_strncmp(type_id, "NO", 2) == 0
+		|| ft_strncmp(type_id, "SO", 2) == 0
+		|| ft_strncmp(type_id, "WE", 2) == 0
+		|| ft_strncmp(type_id, "EA", 2) == 0)
 	{
-		if (check_path(file_str, pos + 2, game.textures.no, type_id) == FALSE)
+		if (check_path(file_str, pos + 2, game, type_id) == FALSE)
+			return (error("Wrong texture path"));
+	}
+	if (ft_strncmp(type_id, "NO", 2) == 0)
+	{
+		if (check_path(file_str, pos + 2, game->textures.no, type_id) == -1)
 			return (error("Wrong NO texture path"));
 	}
 	else if (ft_strncmp(type_id, "SO", 2) == 0)
 	{
-		if (check_path(file_str, pos + 2, game.textures.no, type_id) == FALSE)
+		if (check_path(file_str, pos + 2, game->textures.no, type_id) == -1)
 			return (error("Wrong SO texture path"));
 	}
 	else if (ft_strncmp(type_id, "WE", 2) == 0)
 	{
-		if (check_path(file_str, pos + 2, game.textures.no, type_id) == FALSE)
+		if (check_path(file_str, pos + 2, game->textures.no, type_id) == -1)
 			return (error("Wrong WE texture path"));
 	}
 	else if (ft_strncmp(type_id, "EA", 2) == 0)
 	{
-		if (check_path(file_str, pos + 2, game.textures.no, type_id) == FALSE)
+		if (check_path(file_str, pos + 2, game->textures.no, type_id) == -1)
 			return (error("Wrong EA texture path"));
 	}
-	else if (file_str[pos] != 0 && file_str[pos] != 1)
+	else// if (file_str[pos] != 0 && file_str[pos] != 1)
 		return (error("Wrong type identifier"));
 }
 
-t_bool	valid_file(char **map_file, t_game game)
+t_bool	valid_file(char **map_file, t_game *game)
 {
 	int	x;
 	int	y;
@@ -84,13 +108,20 @@ t_bool	valid_file(char **map_file, t_game game)
 				x++;
 				continue;
 			}
-			if (valid_info(map_file[y], x, game) == FALSE)
-				return FALSE;
-			//check if there are all the type identifiers before the map (use t_file_check_data struct) and then check if the map is valid
+			else if (map_file[y][x] != 0 && map_file[y][x] != 1)
+			{
+				if (valid_info(map_file[y], x, game) == FALSE)
+					return (FALSE);
+			}
+			else
+			{
+				if (valid_map(&map_file[y], x, game) == FALSE)
+					return (FALSE);	
+			}	
 		}
 		y++;
 	}
-	return TRUE;
+	return (TRUE);
 }
 
 // t_file_check_data	map_check_init(char **map)

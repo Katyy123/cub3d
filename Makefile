@@ -6,7 +6,7 @@
 #    By: cfiliber <marvin@42.fr>                    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/10/27 16:37:56 by cfiliber          #+#    #+#              #
-#    Updated: 2022/10/30 15:57:36 by cfiliber         ###   ########.fr        #
+#    Updated: 2022/10/31 14:18:16 by cfiliber         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -22,7 +22,7 @@ MAIN_SRC = main.c errors.c
 GNL = get_next_line.c get_next_line_utils.c
 SRC_GNL = $(addprefix gnl/, $(GNL))
 
-MAP = map_reader.c
+MAP = map_reader.c map_checker.c
 SRC_MAP = $(addprefix map/, $(MAP))
 
 GAME = 
