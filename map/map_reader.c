@@ -6,7 +6,7 @@
 /*   By: cfiliber <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/30 15:19:18 by cfiliber          #+#    #+#             */
-/*   Updated: 2022/10/30 18:27:03 by cfiliber         ###   ########.fr       */
+/*   Updated: 2022/10/31 19:13:15 by cfiliber         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,7 +60,7 @@ char	**read_map_file(char *file_path)
 	line_count = file_linecount(file_path);
 	if (line_count <= 0)
 		return (null_error("the file may not exist"));
-	map = malloc(sizeof(char *) * line_count + 1);
+	map = malloc(sizeof(char *) * (line_count + 1));
 	if (map == NULL)
 		return (null_error("malloc failure on read_map()"));
 	fd = open(file_path, O_RDONLY);
@@ -81,6 +81,19 @@ char	**map_file_parse(char *file_path, t_game *game)
 	map_file = read_map_file(file_path);
 	if (!map_file)
 		return (NULL);
+	int x;
+	int y ;
+	y = 0;
+	while(map_file[y])
+	{
+		x = 0;
+		while(map_file[y][x])
+		{
+			printf("riga %d, colonna %d: %c\n", y, x, map_file[y][x]);
+			x++;
+		}
+		y++;
+	}
 	if (valid_file(map_file, game) == FALSE)
 	{
 		ft_free_char_mtx(map_file);

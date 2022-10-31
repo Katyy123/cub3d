@@ -6,90 +6,96 @@
 /*   By: cfiliber <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/30 16:33:53 by cfiliber          #+#    #+#             */
-/*   Updated: 2022/10/31 15:45:24 by cfiliber         ###   ########.fr       */
+/*   Updated: 2022/10/31 19:19:46 by cfiliber         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "map.h"
 
-t_bool	valid_map()
+t_bool	valid_map(/*char **map_file, int x, int y, */t_game *game)
 {
 	if (!game->textures.no || !game->textures.so
-					|| !game->textures.we || !game->textures.ea)
-					return (error("The map content is not the last info"));
+		|| !game->textures.we || !game->textures.ea)
+		return (error("The map content is not the last info"));
+	return (TRUE);
 }
 
-void save_textures()
+void save_textures(char *str, t_game * game, char *type_id)
+{
+	if (ft_strncmp(type_id, "NO", 2) == 0)
+		game->textures.no = str;
+	if (ft_strncmp(type_id, "SO", 2) == 0)
+		game->textures.so = str;
+	if (ft_strncmp(type_id, "WE", 2) == 0)
+		game->textures.we = str;
+	if (ft_strncmp(type_id, "EA", 2) == 0)
+		game->textures.ea = str;
+	printf("NO texture: %s\n", game->textures.no);
+	printf("SO texture: %s\n", game->textures.so);
+	printf("WE texture: %s\n", game->textures.we);
+	printf("EA texture: %s\n", game->textures.ea);
+}
 
-int	check_path(char *str, unsigned int pos, char *texture_elem, char *type_id)
+int	check_texture_path(char *str, t_game *game, char *type_id)
 {
 	int fd;
+	int i;
 
-	free (type_id);
-	while (str[pos] == ' ')
-		pos++;
-	fd = open(&str[pos], O_RDONLY);
+	i = 0;
+	while (str[i] == ' ')
+		i++;
+	fd = open(&str[i], O_RDONLY);
 	if (!fd)
+	{
+		free (type_id);
 		return (-1);
+	}
 	close(fd);
-	save_textures(str, )
-	//texture_elem = &str[pos];
+	save_textures(&str[i], game, type_id);
+	free (type_id);
 	return (0);
 }
 
-t_bool	valid_texture_info(char *str, t_game *game)
+int	check_color()//char *str, t_game *game, char *type_id)
 {
-	
+	return 0;
 }
 
-t_bool	valid_info(char *file_str, unsigned int pos, t_game *game)
+t_bool	valid_info(char *str, t_game *game)
 {
 	char *type_id;
 
-	type_id = ft_substr(file_str, pos, 2);
-	// if (ft_strncmp(type_id, "NO", 2) != 0
-	// 	&& ft_strncmp(type_id, "SO", 2) != 0
-	// 	&& ft_strncmp(type_id, "WE", 2) != 0
-	// 	&& ft_strncmp(type_id, "EA", 2) != 0
-	// 	&& ft_strncmp(type_id, "F ", 2) != 0
-	// 	&& ft_strncmp(type_id, "C ", 2) != 0
-	// 	&& file_str[pos] != 0
-	// 	&& file_str[pos] != 1)
-	// 	return (error("Wrong type identifier"));
-	// if (file_str[pos] != 0 && file_str[pos] != 1)
-	// 	while (ft_strncmp(file_str[pos], ))
-
-	
+	type_id = ft_substr(str, 0, 2);
+	printf("type_id = %s\n", type_id);
 	if (ft_strncmp(type_id, "NO", 2) == 0
 		|| ft_strncmp(type_id, "SO", 2) == 0
 		|| ft_strncmp(type_id, "WE", 2) == 0
 		|| ft_strncmp(type_id, "EA", 2) == 0)
 	{
-		if (check_path(file_str, pos + 2, game, type_id) == FALSE)
+		if (check_texture_path(str + 2, game, type_id) == -1)
 			return (error("Wrong texture path"));
 	}
-	if (ft_strncmp(type_id, "NO", 2) == 0)
+	else if (ft_strncmp(type_id, "F ", 2) == 0
+		|| ft_strncmp(type_id, "C ", 2) == 0)
 	{
-		if (check_path(file_str, pos + 2, game->textures.no, type_id) == -1)
-			return (error("Wrong NO texture path"));
+		if (check_color(/*str + 2, game, type_id*/) == -1)
+			return (error("Wrong color"));
 	}
-	else if (ft_strncmp(type_id, "SO", 2) == 0)
-	{
-		if (check_path(file_str, pos + 2, game->textures.no, type_id) == -1)
-			return (error("Wrong SO texture path"));
-	}
-	else if (ft_strncmp(type_id, "WE", 2) == 0)
-	{
-		if (check_path(file_str, pos + 2, game->textures.no, type_id) == -1)
-			return (error("Wrong WE texture path"));
-	}
-	else if (ft_strncmp(type_id, "EA", 2) == 0)
-	{
-		if (check_path(file_str, pos + 2, game->textures.no, type_id) == -1)
-			return (error("Wrong EA texture path"));
-	}
-	else// if (file_str[pos] != 0 && file_str[pos] != 1)
+	else if (*str != '0' && *str != '1')
 		return (error("Wrong type identifier"));
+	return (TRUE);
+}
+
+t_bool	valid_file_2(char **map_file, int x, int y, t_game *game)
+{
+	if (valid_info(&map_file[y][x], game) == FALSE)
+					return (FALSE);
+	if (map_file[y][x] == '0' || map_file[y][x] == '1')
+	{
+		if (valid_map(/*map_file, x, y, */game) == FALSE)
+			return (FALSE);	
+	}
+	return (TRUE);	
 }
 
 t_bool	valid_file(char **map_file, t_game *game)
@@ -108,16 +114,9 @@ t_bool	valid_file(char **map_file, t_game *game)
 				x++;
 				continue;
 			}
-			else if (map_file[y][x] != 0 && map_file[y][x] != 1)
-			{
-				if (valid_info(map_file[y], x, game) == FALSE)
-					return (FALSE);
-			}
-			else
-			{
-				if (valid_map(&map_file[y], x, game) == FALSE)
-					return (FALSE);	
-			}	
+			if (valid_file_2(map_file, x, y, game) == FALSE)
+				return (FALSE);
+			x++;
 		}
 		y++;
 	}
