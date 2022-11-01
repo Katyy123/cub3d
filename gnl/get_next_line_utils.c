@@ -74,11 +74,11 @@ char	*ft_strchr_gnl(const char *s, int c)
 {
 	char	car;
 	size_t	i;
-	int		slen;
+	//int		slen;
 	char	*s2;
 
 	car = (char)c;
-	slen = ft_strlen_gnl(s);
+	/*slen = */ft_strlen_gnl(s);
 	s2 = (char *)s;
 	i = 0;
 	while (i <= ft_strlen_gnl(s))

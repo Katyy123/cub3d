@@ -12,7 +12,7 @@
 
 #include "map.h"
 
-t_bool	valid_map(/*char **map_file, int x, int y, */t_game *game)
+t_bool	valid_map(/*char **map_file, t_pos *pos, */t_game *game)
 {
 	if (!game->textures.no || !game->textures.so
 		|| !game->textures.we || !game->textures.ea)
@@ -36,89 +36,113 @@ void save_textures(char *str, t_game * game, char *type_id)
 	printf("EA texture: %s\n", game->textures.ea);
 }
 
-int	check_texture_path(char *str, t_game *game, char *type_id)
+int	check_texture_path(char *str, t_pos *pos, t_game *game, char *type_id)
 {
 	int fd;
-	int i;
+	//int i;
 
-	i = 0;
-	while (str[i] == ' ')
-		i++;
-	fd = open(&str[i], O_RDONLY);
-	if (!fd)
+	//i = 0;
+	pos->x += 2;
+	while (str[pos->x] == ' ')
+		pos->x++;
+	printf("&str[pos->x]: %s\n", &str[pos->x]);
+	fd = open(&str[pos->x], O_RDONLY);
+	if (fd == -1)
 	{
 		free (type_id);
 		return (-1);
 	}
 	close(fd);
-	save_textures(&str[i], game, type_id);
+	save_textures(&str[pos->x], game, type_id);
+	pos->x += ft_strlen(&str[pos->x]) - 1;//-1 perché poi in valid_file faccio pos.x++
 	free (type_id);
 	return (0);
 }
 
-int	check_color()//char *str, t_game *game, char *type_id)
+int	check_color(/*char *str, t_game *game, */t_pos *pos, char *type_id)
 {
+	pos->x += 2;
+	free (type_id);
 	return 0;
 }
 
-t_bool	valid_info(char *str, t_game *game)
+t_bool	valid_info(char *str, t_pos *pos, t_game *game)
 {
 	char *type_id;
 
-	type_id = ft_substr(str, 0, 2);
+	type_id = ft_substr(&str[pos->x], 0, 2);
+	printf("str[pos->x]: %c\n", str[pos->x]);
 	printf("type_id = %s\n", type_id);
 	if (ft_strncmp(type_id, "NO", 2) == 0
 		|| ft_strncmp(type_id, "SO", 2) == 0
 		|| ft_strncmp(type_id, "WE", 2) == 0
 		|| ft_strncmp(type_id, "EA", 2) == 0)
 	{
-		if (check_texture_path(str + 2, game, type_id) == -1)
-			return (error("Wrong texture path"));
+		if (check_texture_path(str, pos, game, type_id) == -1)
+			return (error("Wrong or missing texture path"));
 	}
 	else if (ft_strncmp(type_id, "F ", 2) == 0
 		|| ft_strncmp(type_id, "C ", 2) == 0)
 	{
-		if (check_color(/*str + 2, game, type_id*/) == -1)
+		if (check_color(/*str, game, */pos, type_id) == -1)
 			return (error("Wrong color"));
 	}
-	else if (*str != '0' && *str != '1')
+	else if (str[pos->x] != '0' && str[pos->x] != '1')
+	{
+		free (type_id);
 		return (error("Wrong type identifier"));
+	}
 	return (TRUE);
 }
 
-t_bool	valid_file_2(char **map_file, int x, int y, t_game *game)
+t_bool	valid_file_2(char **map_file, t_pos *pos, t_game *game)
 {
-	if (valid_info(&map_file[y][x], game) == FALSE)
+	if (valid_info(map_file[pos->y], pos, game) == FALSE)
 					return (FALSE);
-	if (map_file[y][x] == '0' || map_file[y][x] == '1')
+	printf("pos.y = %d\n", pos->y);
+	printf("pos.x = %d\n", pos->x);
+	if (map_file[pos->y][pos->x] == '0' || map_file[pos->y][pos->x] == '1')
 	{
-		if (valid_map(/*map_file, x, y, */game) == FALSE)
+		if (valid_map(/*map_file, pos, */game) == FALSE)
 			return (FALSE);	
 	}
 	return (TRUE);	
 }
 
+void	textures_struct_init(t_game *game)
+{
+	game->textures.no = NULL;
+	game->textures.so = NULL;
+	game->textures.we = NULL;
+	game->textures.ea = NULL;
+}
+
 t_bool	valid_file(char **map_file, t_game *game)
 {
-	int	x;
-	int	y;
-	
-	y = 0;
-	while (map_file[y])
+	t_pos pos;
+
+	pos.y = 0;
+	textures_struct_init(game);
+	while (map_file[pos.y])
 	{
-		x = 0;
-		while (map_file[y][x])
+		pos.x = 0;
+		printf("***pos.y = %d\n", pos.y);
+		printf("***pos.x = %d\n", pos.x);
+		printf("***map_file[pos.y][pos.x] = %c\n", map_file[pos.y][pos.x]);
+		while (map_file[pos.y][pos.x])
 		{
-			if (map_file[y][x] == ' ')
+			printf("__pos.y = %d\n", pos.y);
+			printf("__pos.x = %d\n", pos.x);
+			if (map_file[pos.y][pos.x] == ' ')
 			{
-				x++;
+				pos.x++;
 				continue;
 			}
-			if (valid_file_2(map_file, x, y, game) == FALSE)
+			if (valid_file_2(map_file, &pos, game) == FALSE)
 				return (FALSE);
-			x++;
+			pos.x++;
 		}
-		y++;
+		pos.y++;
 	}
 	return (TRUE);
 }

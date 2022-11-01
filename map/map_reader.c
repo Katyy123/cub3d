@@ -68,6 +68,7 @@ char	**read_map_file(char *file_path)
 	while (i < line_count)
 	{
 		get_next_line(fd, &map[i]);
+		map[i][ft_strlen(map[i])] = '\0';
 		i++;
 	}
 	map[i] = NULL;

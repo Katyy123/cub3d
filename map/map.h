@@ -19,6 +19,12 @@
 # include <unistd.h>
 # include "../gnl/get_next_line.h"
 
+typedef struct s_pos
+{
+	int	x;
+	int	y;
+} t_pos;
+
 typedef struct s_file_check_data
 {
 	int		size_x;

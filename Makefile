@@ -52,7 +52,7 @@ subsystem:
 	make all -C $(LIB_PATH)
 
 $(NAME): $(OBJS)
-	$(CC) $(CFLAGS) -lmlx -framework OpenGL -framework AppKit -o $(NAME) $(OBJS) $(LIB)
+	$(CC) $(CFLAGS) -o $(NAME) $(OBJS) $(LIB)
 	@echo $(GREEN)$(CURSIVE)"\nAll files have been compiled"$(RESET)
 	@echo $(MAGENTA)$(CURSIVE)"\nTo start the game, type ./cub3d and map name.\nFor example: ./cub3d maps/test1.cub\n"$(RESET)
 
