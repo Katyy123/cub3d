@@ -22,7 +22,7 @@ MAIN_SRC = main.c errors.c
 GNL = get_next_line.c get_next_line_utils.c
 SRC_GNL = $(addprefix gnl/, $(GNL))
 
-MAP = map_reader.c map_checker.c
+MAP = file_reader.c file_checker.c texture_checker.c color_checker.c map_checker.c
 SRC_MAP = $(addprefix map/, $(MAP))
 
 GAME = 
@@ -32,7 +32,7 @@ OBJS = $(SRCS:.c=.o)
 
 CC = gcc
 
-CFLAGS = -Wall -Wextra -Werror -g -I libft -Imlx -fsanitize=address
+CFLAGS = -Wall -Wextra -Werror -g -I libft -Imlx #-fsanitize=address
 
 GREEN = '\x1b[32m'
 YELLOW = '\x1b[33m'

@@ -40,12 +40,21 @@ typedef struct s_file_check_data
 	t_bool	c_color;
 }	t_file_check_data;
 
-/* map_reader.c */
-int					valid_arg(int argc, char *file_path);
-char				**read_map_file(char *file_path);
-char				**map_file_parse(char *file_path, t_game *game);
+/* file_reader.c */
+int			valid_arg(int argc, char *file_path);
+char		**read_map_file(char *file_path);
+char		**map_file_parse(char *file_path, t_game *game);
+
+/* file_checker.c */
+t_bool		valid_file(char **map_file, t_game *game);
+
+/* texture_checker.c */
+int			check_texture_path(char *str, t_pos *pos, t_game *game, char *type_id);
+
+/* color_checker.c */
+int			check_color(char *str, t_game *game, t_pos *pos, char *type_id);
 
 /* map_checker.c */
-t_bool				valid_file(char **map_file, t_game *game);
+t_bool		valid_map(/*char **map_file, t_pos *pos, */t_game *game);
 
 #endif
