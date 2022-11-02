@@ -20,6 +20,9 @@ int main(int argc, char **argv)
 	if (!valid_arg(argc, argv[1]))
 		return (-1);
 	game.map = map_file_parse(argv[1], &game);
+	if (game.map == NULL)
+		return (-1);
+	free(game.map);
 	return 0;
 }
 	

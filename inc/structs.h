@@ -41,6 +41,8 @@ typedef struct s_textures
 	char	*so;
 	char	*we;
 	char	*ea;
+	int		f_col;
+	int		c_col;
 } t_textures;
 
 /*

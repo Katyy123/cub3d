@@ -68,7 +68,7 @@ char	**read_map_file(char *file_path)
 	while (i < line_count)
 	{
 		get_next_line(fd, &map[i]);
-		map[i][ft_strlen(map[i])] = '\0';
+		//map[i][ft_strlen(map[i])] = '\0';
 		i++;
 	}
 	map[i] = NULL;
@@ -79,22 +79,23 @@ char	**read_map_file(char *file_path)
 char	**map_file_parse(char *file_path, t_game *game)
 {
 	char	**map_file;
+	
 	map_file = read_map_file(file_path);
 	if (!map_file)
 		return (NULL);
-	int x;
-	int y ;
-	y = 0;
-	while(map_file[y])
-	{
-		x = 0;
-		while(map_file[y][x])
-		{
-			printf("riga %d, colonna %d: %c\n", y, x, map_file[y][x]);
-			x++;
-		}
-		y++;
-	}
+	//int x;
+	//int y ;
+	//y = 0;
+	//while(map_file[y])
+	//{
+		//x = 0;
+		//while(map_file[y][x])
+		//{
+			//printf("riga %d, colonna %d: %c\n", y, x, map_file[y][x]);
+			//x++;
+		//}
+		//y++;
+	//}
 	if (valid_file(map_file, game) == FALSE)
 	{
 		ft_free_char_mtx(map_file);

@@ -1,7 +1,9 @@
  
  
+ EA ./textures/east.xpm
  
- 
- SO    ./textures/north.xpm
+NO   ./textures/north.xpm
 
       SO    ./textures/south.xpm
+WE   ./textures/west.xpm
+F 0,130,65
