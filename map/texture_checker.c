@@ -21,7 +21,6 @@ int	check_texture_path(char *str, t_pos *pos, t_game *game, char *type_id)
 	pos->x += 2;
 	while (str[pos->x] == ' ')
 		pos->x++;
-	//printf("&str[pos->x]: %s\n", &str[pos->x]);
 	fd = open(&str[pos->x], O_RDONLY);
 	if (fd == -1)
 	{

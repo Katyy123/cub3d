@@ -61,7 +61,7 @@ char	**read_map_file(char *file_path)
 	int		i;
 
 	line_count = file_linecount(file_path);
-	if (line_count <= 0)
+	if (line_count < 0)
 		return (null_error("the file may not exist"));
 	map_file = malloc(sizeof(char *) * (line_count + 1));
 	if (map_file == NULL)
@@ -71,7 +71,6 @@ char	**read_map_file(char *file_path)
 	while (i < line_count)
 	{
 		get_next_line(fd, &map_file[i]);
-		//map_file[i][ft_strlen(map[i])] = '\0';
 		i++;
 	}
 	map_file[i] = NULL;
@@ -87,19 +86,6 @@ int	map_file_parse(char *file_path, t_game *game)
 	map_file = read_map_file(file_path);
 	if (!map_file)
 		return (-1);
-	//int x;
-	//int y ;
-	//y = 0;
-	//while(map_file[y])
-	//{
-		//x = 0;
-		//while(map_file[y][x])
-		//{
-			//printf("riga %d, colonna %d: %c\n", y, x, map_file[y][x]);
-			//x++;
-		//}
-		//y++;
-	//}
 	if (valid_file(map_file, game) == FALSE)
 	{
 		ft_free_char_mtx(map_file);

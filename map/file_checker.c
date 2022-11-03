@@ -18,8 +18,6 @@ t_bool	valid_info(char *str, t_pos *pos, t_game *game)
 	char *type_id;
 
 	type_id = ft_substr(&str[pos->x], 0, 2);
-	//printf("str[pos->x]: %c\n", str[pos->x]);
-	//printf("type_id = %s\n", type_id);
 	if (ft_strncmp(type_id, "NO", 2) == 0
 		|| ft_strncmp(type_id, "SO", 2) == 0
 		|| ft_strncmp(type_id, "WE", 2) == 0
@@ -39,8 +37,6 @@ t_bool	valid_info(char *str, t_pos *pos, t_game *game)
 		free (type_id);
 		return (error("Wrong type identifier"));
 	}
-	// else
-	// 	free (type_id);
 	return (TRUE);
 }
 
@@ -59,9 +55,9 @@ t_bool	valid_file(char **map_file, t_game *game)
 {
 	printf("\nIN VALID_FILE FUNCTION\n");
 	t_pos pos;
-	t_textures *tex;
+	//t_textures *tex;
 
-	tex = &game->textures;
+	//tex = &game->textures;
 	textures_struct_init(game);
 	pos.y = 0;
 	while (map_file[pos.y])
@@ -69,8 +65,6 @@ t_bool	valid_file(char **map_file, t_game *game)
 		printf("\nIN 1st WHILE OF VALID_FILE FUNCTION\n");
 		pos.x = 0;
 		printf("pos.y = %d\n", pos.y);
-		//printf("pos.x = %d\n", pos.x);
-		//printf("map_file[pos.y][pos.x] = %c\n", map_file[pos.y][pos.x]);
 		while (map_file[pos.y][pos.x])
 		{
 			printf("\nIN 2nd WHILE OF VALID_FILE FUNCTION\n");
@@ -84,30 +78,26 @@ t_bool	valid_file(char **map_file, t_game *game)
 			if (map_file[pos.y][pos.x] != '0' && map_file[pos.y][pos.x] != '1'
 				&& !game->map)
 			{
-					if (valid_info(map_file[pos.y], &pos, game) == FALSE)
-						return (FALSE);
+				if (valid_info(map_file[pos.y], &pos, game) == FALSE)
+					return (FALSE);
 			}
 			else if (map_file[pos.y][pos.x] != '0' && map_file[pos.y][pos.x] != '1')
 				return (error("The map content is not the last info"));
-			// else if (!game->textures.no || !game->textures.so || !game->textures.we
-			// 	|| !game->textures.ea || game->textures.f_col == -1
-			// 	|| 	game->textures.c_col == -1)
-			// 	return (error("The map content is not the last info"));
 			else
 			{
 				if (valid_map(map_file, /*pos, */game) == FALSE)
-					return (FALSE);	
+					return (error("The map is not valid"));	
 			}
 			pos.x++;
 		}
 		pos.y++;
 	}
-	if (!tex->no || !tex->so || !tex->we || !tex->ea || !tex->f_col || !tex->c_col
-		|| !game->map)
-		return (error("The file does not contain all the info"));
+	// if (!tex->no || !tex->so || !tex->we || !tex->ea || !tex->f_col || !tex->c_col
+	// 	|| !game->map)
+	// 	return (error("The file does not contain all the info"));
 	if (!game->textures.no || !game->textures.so || !game->textures.we
-			|| !game->textures.ea || game->textures.f_col == -1
-			|| 	game->textures.c_col == -1)
+		|| !game->textures.ea || game->textures.f_col == -1
+		|| 	game->textures.c_col == -1 || !game->map)
 		return (error("The file does not contain all the info"));
 	printf("NO texture: %s\n", game->textures.no);
 	printf("SO texture: %s\n", game->textures.so);
