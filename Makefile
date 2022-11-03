@@ -32,7 +32,7 @@ OBJS = $(SRCS:.c=.o)
 
 CC = gcc
 
-CFLAGS = -Wall -Wextra -Werror -g -I libft -Imlx #-fsanitize=address
+CFLAGS = -Wall -Wextra -Werror -g -I libft -Imlx -fsanitize=address
 
 GREEN = '\x1b[32m'
 YELLOW = '\x1b[33m'

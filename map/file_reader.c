@@ -14,6 +14,7 @@
 
 int	valid_arg(int argc, char *file_path)
 {
+	printf("\nIN VALID_ARG FUNCTION\n");
 	if (argc == 1)
 		return (error("there is no map file"));
 	if (argc > 2)
@@ -25,6 +26,7 @@ int	valid_arg(int argc, char *file_path)
 
 int	file_linecount(char *file)
 {
+	printf("\nIN FILE_LINECOUNT FUNCTION\n");
 	int		linecount;
 	int		fd;
 	int		readcount;
@@ -52,7 +54,8 @@ int	file_linecount(char *file)
 
 char	**read_map_file(char *file_path)
 {
-	char	**map;
+	printf("\nIN READ_MAP_FILE FUNCTION\n");
+	char	**map_file;
 	int		line_count;
 	int		fd;
 	int		i;
@@ -60,29 +63,30 @@ char	**read_map_file(char *file_path)
 	line_count = file_linecount(file_path);
 	if (line_count <= 0)
 		return (null_error("the file may not exist"));
-	map = malloc(sizeof(char *) * (line_count + 1));
-	if (map == NULL)
+	map_file = malloc(sizeof(char *) * (line_count + 1));
+	if (map_file == NULL)
 		return (null_error("malloc failure on read_map()"));
 	fd = open(file_path, O_RDONLY);
 	i = 0;
 	while (i < line_count)
 	{
-		get_next_line(fd, &map[i]);
-		//map[i][ft_strlen(map[i])] = '\0';
+		get_next_line(fd, &map_file[i]);
+		//map_file[i][ft_strlen(map[i])] = '\0';
 		i++;
 	}
-	map[i] = NULL;
+	map_file[i] = NULL;
 	close(fd);
-	return (map);
+	return (map_file);
 }
 
-char	**map_file_parse(char *file_path, t_game *game)
+int	map_file_parse(char *file_path, t_game *game)
 {
+	printf("\nIN MAP_FILE_PARSE FUNCTION\n");
 	char	**map_file;
 	
 	map_file = read_map_file(file_path);
 	if (!map_file)
-		return (NULL);
+		return (-1);
 	//int x;
 	//int y ;
 	//y = 0;
@@ -99,7 +103,8 @@ char	**map_file_parse(char *file_path, t_game *game)
 	if (valid_file(map_file, game) == FALSE)
 	{
 		ft_free_char_mtx(map_file);
-		return (NULL);
+		return (-1);
 	}
-	return (map_file);
+	ft_free_char_mtx(map_file);
+	return (0);
 }

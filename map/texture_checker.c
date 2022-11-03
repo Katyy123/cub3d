@@ -2,7 +2,8 @@
 
 void save_textures(char *str, t_game *game, char *type_id)
 {
-	if (ft_strncmp(type_id, "NO", 2) == 0)
+	printf("\nIN SAVE_TEXTURES FUNCTION\n");
+    if (ft_strncmp(type_id, "NO", 2) == 0)
 		game->textures.no = str;
 	if (ft_strncmp(type_id, "SO", 2) == 0)
 		game->textures.so = str;
@@ -14,7 +15,8 @@ void save_textures(char *str, t_game *game, char *type_id)
 
 int	check_texture_path(char *str, t_pos *pos, t_game *game, char *type_id)
 {
-	int fd;
+	printf("\nIN CHECK_TEXTURE_PATH FUNCTION\n");
+    int fd;
 
 	pos->x += 2;
 	while (str[pos->x] == ' ')
