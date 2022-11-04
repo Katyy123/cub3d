@@ -55,6 +55,6 @@ int			check_texture_path(char *str, t_pos *pos, t_game *game, char *type_id);
 int			check_color(char *str, t_game *game, t_pos *pos, char *type_id);
 
 /* map_checker.c */
-t_bool		valid_map(char **map_file, /*t_pos *pos, */t_game *game);
+t_bool		valid_map(char **map_file, t_pos *pos, t_game *game);
 
 #endif

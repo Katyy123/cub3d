@@ -21,9 +21,13 @@ int main(int argc, char **argv)
 	if (!valid_arg(argc, argv[1]))
 		return (-1);
 	if (map_file_parse(argv[1], &game) == -1)
+	{
+		ft_free_char_mtx(game.map);
 		return (-1);
+	}
 	if (game.map == NULL)
 		return (-1);
+	ft_free_char_mtx(game.map);
 	return 0;
 }
 	

@@ -85,8 +85,8 @@ t_bool	valid_file(char **map_file, t_game *game)
 				return (error("The map content is not the last info"));
 			else
 			{
-				if (valid_map(map_file, /*pos, */game) == FALSE)
-					return (error("The map is not valid"));	
+				if (valid_map(map_file, &pos, game) == FALSE)
+					return (FALSE);	
 			}
 			pos.x++;
 		}
