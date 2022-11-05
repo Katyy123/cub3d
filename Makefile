@@ -22,7 +22,7 @@ MAIN_SRC = main.c errors.c
 GNL = get_next_line.c get_next_line_utils.c
 SRC_GNL = $(addprefix gnl/, $(GNL))
 
-PARSING = file_reader.c file_checker.c texture_checker.c color_checker.c map_create.c map_create_2.c map_checker.c
+PARSING = file_reader.c file_checker.c texture_checker.c color_checker.c map_create.c map_create_2.c map_checker.c map_checker_2.c
 SRC_PARSING = $(addprefix parsing/, $(PARSING))
 
 GAME = 
