@@ -80,6 +80,8 @@ int create_map(char **map_file, t_game *game, int lines_to_remove)
         i++;
     }
     game->map[i] = NULL;
+    game->map_x = max_len;
+    game->map_y = ft_char_mtx_linecount(game->map);
     free (len_str);
     return (0);
 }

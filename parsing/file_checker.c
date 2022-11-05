@@ -69,11 +69,11 @@ t_bool	valid_file_2(char **map_file, t_game *game, t_pos *pos)
 		if (valid_map(map_file, pos, game) == FALSE)
 			return (FALSE);	
 	}
-	else if (map_file[pos->y][pos->x] != '0' && map_file[pos->y][pos->x] != '1')
-	{
-		//printf("\n----------pos->y = %d pos->x = %d\n", pos->y, pos->x);
-		return (error("The map content is not the last info"));
-	}
+	// else if (map_file[pos->y][pos->x] != '0' && map_file[pos->y][pos->x] != '1')
+	// {
+	// 	//printf("\n----------pos->y = %d pos->x = %d\n", pos->y, pos->x);
+	// 	return (error("The map content is not the last info"));
+	// }
 	
 	return (TRUE);
 }

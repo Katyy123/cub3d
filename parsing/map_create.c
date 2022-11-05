@@ -41,9 +41,9 @@ t_bool	valid_map(char **map_file, t_pos *pos, t_game *game)
         i++;
     }
     printf("--end map--\n");
-    // if (check_map(game) == -1)
-    //     return (FALSE);//eventualmente scrivere qui error("The map is not valid")
-    pos->y += ft_char_mtx_linecount(game->map);
+    if (check_map(game) == -1)
+        return (FALSE);//eventualmente scrivere qui error("The map is not valid")
+    pos->y += game->map_x;
     pos->x = 0 - 1;
     return (TRUE);
 }

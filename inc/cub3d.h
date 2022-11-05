@@ -65,6 +65,7 @@
 
 /* errors.c */
 int		error(char *message);
+int     error_1(char *message);
 void	*null_error(char *message);
 void	print_warning(char *message);
 
