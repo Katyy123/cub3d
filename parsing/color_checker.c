@@ -3,17 +3,17 @@
 /* save the rgb color inside the t_textures struct */
 void	save_color(int *col_arr, t_game *game, char *type_id)
 {
-	printf("\nIN SAVE_COLOR FUNCTION\n");
+	//printf("\nIN SAVE_COLOR FUNCTION\n");
     int	col_cod;
 
-	int i = 0;
-	while (i < 3)
-	{
-		printf("col_arr[%d]: %d\n", i, col_arr[i]);
-		i++;
-	}
+	// int i = 0;
+	// while (i < 3)
+	// {
+	// 	printf("col_arr[%d]: %d\n", i, col_arr[i]);
+	// 	i++;
+	// }
 	col_cod = 0 << 24 | col_arr[0] << 16 | col_arr[1] << 8 | col_arr[2];
-	printf("col_cod: %d\n", col_cod);
+	//printf("col_cod: %d\n", col_cod);
 	if (ft_strncmp(type_id, "F", 1) == 0)
 		game->textures.f_col = col_cod;
 	else if (ft_strncmp(type_id, "C", 1) == 0)
@@ -54,7 +54,7 @@ int	check_color_param(char *type_id, char **color_mtx, int *color_arr)
 /* check the info about the rgb color */
 int	check_color(char *str, t_game *game, t_pos *pos, char *type_id)
 {
-	printf("\nIN CHECK_COLOR FUNCTION\n");
+	//printf("\nIN CHECK_COLOR FUNCTION\n");
     char	**color_mtx;
 	int		*color_arr;
 	
@@ -62,7 +62,6 @@ int	check_color(char *str, t_game *game, t_pos *pos, char *type_id)
 	pos->x += 1;
 	while (str[pos->x] == ' ')
 		pos->x++;
-	printf("&str[pos->x]: %s\n", &str[pos->x]);
 	color_mtx = ft_split(&str[pos->x], ',');
 	if (!color_mtx)
     	return(free_stuff(type_id, color_mtx, color_arr));
@@ -73,8 +72,6 @@ int	check_color(char *str, t_game *game, t_pos *pos, char *type_id)
 		return (-1);
 	save_color(color_arr, game, type_id);
 	free_stuff(type_id, color_mtx, color_arr);
-	printf("pos->x: %d\n", pos->x);
-	printf("str[pos->x]: %c\n", str[pos->x]);
 	pos->x += ft_strlen(&str[pos->x]) - 1;
 	return 0;
 }

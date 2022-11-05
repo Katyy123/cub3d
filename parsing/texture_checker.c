@@ -3,7 +3,7 @@
 /* save the path of the texture inside the t_textures struct */
 void save_textures(char *str, t_game *game, char *type_id)
 {
-	printf("\nIN SAVE_TEXTURES FUNCTION\n");
+	//printf("\nIN SAVE_TEXTURES FUNCTION\n");
     if (ft_strncmp(type_id, "NO", 2) == 0)
 		game->textures.no = str;
 	if (ft_strncmp(type_id, "SO", 2) == 0)
@@ -17,7 +17,7 @@ void save_textures(char *str, t_game *game, char *type_id)
 /* check the path of the texture */
 int	check_texture_path(char *str, t_pos *pos, t_game *game, char *type_id)
 {
-	printf("\nIN CHECK_TEXTURE_PATH FUNCTION\n");
+	//printf("\nIN CHECK_TEXTURE_PATH FUNCTION\n");
     int fd;
 
 	pos->x += 2;

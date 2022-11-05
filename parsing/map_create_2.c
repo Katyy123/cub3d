@@ -1,9 +1,9 @@
 #include "parsing.h"
 
-/* allocate every map strings */
+/* allocate every map string */
 int alloc_map_strings(t_game *game, int max_len, int *len_str, int i)
 {
-    printf("\nIN alloc_map_strings FUNCTION\n");
+    //printf("\nIN alloc_map_strings FUNCTION\n");
     game->map[i] = malloc(sizeof(char) * max_len + 1);
     if (!game->map[i])
     {  
@@ -17,7 +17,7 @@ int alloc_map_strings(t_game *game, int max_len, int *len_str, int i)
 /* find the maximum length of the map rows */
 int find_max_strlen(char **map_file, int *len_str, int lines_to_remove)
 {
-    printf("\nIN find_max_strlen FUNCTION\n");
+    //printf("\nIN find_max_strlen FUNCTION\n");
     int i;
     int max_len;
 
@@ -36,14 +36,14 @@ int find_max_strlen(char **map_file, int *len_str, int lines_to_remove)
 /* allocate memory for len_str and map */
 int *alloc_lenstr_map(char **map_file, t_game *game, int lines_to_remove)
 {
-    printf("\nIN alloc_lenstr_map FUNCTION\n");
+    //printf("\nIN alloc_lenstr_map FUNCTION\n");
     int lines_n;
     int *len_str;
 
     lines_n = ft_char_mtx_linecount(map_file) - lines_to_remove;
-    printf("ft_char_mtx_linecount(map_file): %d\n", ft_char_mtx_linecount(map_file));
-    printf("lines_to_remove: %d\n", lines_to_remove);
-    printf("lines_n: %d\n", lines_n);
+    //printf("ft_char_mtx_linecount(map_file): %d\n", ft_char_mtx_linecount(map_file));
+    //printf("lines_to_remove: %d\n", lines_to_remove);
+    //printf("lines_n: %d\n", lines_n);
     len_str = malloc(sizeof(int) * (lines_n + 1));
     if (!len_str)
         return(null_error("can't do malloc len_str in valid_map"));
@@ -59,7 +59,7 @@ int *alloc_lenstr_map(char **map_file, t_game *game, int lines_to_remove)
 /* create the map adding spaces at the end of the lines to have them the same length */
 int create_map(char **map_file, t_game *game, int lines_to_remove)
 {
-    printf("\nIN create_map FUNCTION\n");
+    //printf("\nIN create_map FUNCTION\n");
     int i;
     int max_len;
     int *len_str;

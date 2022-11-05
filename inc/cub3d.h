@@ -54,7 +54,7 @@
 # include <fcntl.h>
 # include <time.h>
 # include <pthread.h>
-//# include <mlx.h>
+# include <mlx.h>
 //# include "../lib/mlx.h"
 # include <math.h>
 # include "structs.h"

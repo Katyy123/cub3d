@@ -15,7 +15,7 @@
 /* check if the argument is valid */
 int	valid_arg(int argc, char *file_path)
 {
-	printf("\nIN VALID_ARG FUNCTION\n");
+	//printf("\nIN VALID_ARG FUNCTION\n");
 	if (argc == 1)
 		return (error("there is no map file"));
 	if (argc > 2)
@@ -28,7 +28,7 @@ int	valid_arg(int argc, char *file_path)
 /* count the lines of the file */
 int	file_linecount(char *file)
 {
-	printf("\nIN FILE_LINECOUNT FUNCTION\n");
+	//printf("\nIN FILE_LINECOUNT FUNCTION\n");
 	int		linecount;
 	int		fd;
 	int		readcount;
@@ -57,7 +57,7 @@ int	file_linecount(char *file)
 /* read the file and return a matrix that is a copy of the file */
 char	**read_map_file(char *file_path)
 {
-	printf("\nIN READ_MAP_FILE FUNCTION\n");
+	//printf("\nIN READ_MAP_FILE FUNCTION\n");
 	char	**map_file;
 	int		line_count;
 	int		fd;
@@ -84,7 +84,7 @@ char	**read_map_file(char *file_path)
 /* parsing of the file */
 int	map_file_parse(char *file_path, t_game *game)
 {
-	printf("\nIN MAP_FILE_PARSE FUNCTION\n");
+	//printf("\nIN MAP_FILE_PARSE FUNCTION\n");
 	char	**map_file;
 	
 	map_file = read_map_file(file_path);
