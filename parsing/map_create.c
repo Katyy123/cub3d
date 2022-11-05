@@ -41,9 +41,22 @@ t_bool	valid_map(char **map_file, t_pos *pos, t_game *game)
         i++;
     }
     printf("--end map--\n");
+    int y = 0;
+    while (game->map[y])
+    {
+        int x = 0;
+        while (game->map[y][x])
+        {
+            printf("game->map[%d][%d] : %c$\n", y, x, game->map[y][x]);
+            x++;
+        }
+        if (!game->map[y][x])
+            printf("game->map[%d][%d] : NULL\n", y, x);
+        y++;
+    }
     if (check_map(game) == -1)
         return (FALSE);//eventualmente scrivere qui error("The map is not valid")
-    pos->y += game->map_x;
+    pos->y += game->map_y;
     pos->x = 0 - 1;
     return (TRUE);
 }

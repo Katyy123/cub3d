@@ -14,10 +14,6 @@ void    save_player_data(t_player *player, int x, int y, char dir)
         player->pov = 3.14;
     else if (dir == 'N')
         player->pov = 3 * 3.14 / 2;
-    printf("player->pos_x = %f\n", player->pos_x);
-    printf("player->pos_y = %f\n", player->pos_y);
-    printf("player->view = %f\n", player->view);
-    printf("player->pov = %f\n", player->pov);
 }
 
 t_bool  space_closed_by_walls(t_game *game, int y, int x)
@@ -38,12 +34,23 @@ t_bool  space_closed_by_walls(t_game *game, int y, int x)
     return (TRUE);
 }
 
+int check_empty_line(t_game *game, int y)
+{
+    printf("\nIN check_empty_line FUNCTION\n");
+    if (ft_all_char_same(game->map[y], ' '))
+        return (error_1("||||||The map content is not the last info"));
+    return (0);
+}
+
 int check_first_elem(t_game *game, int y)
 {
-    if (!game->map[y][0])
-        return (error_1("The map content is not the last info"));
-    else if (game->map[y][0] != 1)
-        return (error_1("The map must be closed by walls"));
+    printf("\nIN check_first_elem FUNCTION\n");
+    printf("y = %d\n", y);
+    printf("game->map[y]: %s\n", game->map[y]);
+    // if (!game->map[y][0])
+    //     return (error_1("The map content is not the last info"));
+    if (game->map[y][0] != '1' && game->map[y][0] != ' ')
+        return (error_1("****The map must be closed by walls"));
     return (0);
 }
 

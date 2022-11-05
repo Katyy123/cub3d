@@ -71,7 +71,7 @@ t_bool	valid_file_2(char **map_file, t_game *game, t_pos *pos)
 	}
 	// else if (map_file[pos->y][pos->x] != '0' && map_file[pos->y][pos->x] != '1')
 	// {
-	// 	//printf("\n----------pos->y = %d pos->x = %d\n", pos->y, pos->x);
+	// 	//printf("\npos->y = %d pos->x = %d\n", pos->y, pos->x);
 	// 	return (error("The map content is not the last info"));
 	// }
 	
@@ -106,6 +106,7 @@ t_bool	valid_file(char **map_file, t_game *game)
 			if (valid_file_2(map_file, game, &pos) == FALSE)
 				return (FALSE);
 			pos.x++;
+			printf("\npos.y = %d  pos->x = %d\n", pos.y, pos.x);
 		}
 		if (map_file[pos.y])
 			pos.y++;
@@ -135,5 +136,9 @@ t_bool	valid_file(char **map_file, t_game *game)
 		printf("game->textures.f_col == code\n");
 	else
 		printf("game->textures.f_col != code\n");
+	printf("game->pl.pos_x = %f\n", game->pl.pos_x);
+    printf("game->pl.pos_y = %f\n", game->pl.pos_y);
+    printf("game->pl.view = %f\n", game->pl.view);
+    printf("game->pl.pov = %f\n", game->pl.pov);
 	return (TRUE);
 }

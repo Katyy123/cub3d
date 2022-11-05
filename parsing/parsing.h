@@ -66,6 +66,7 @@ int			check_map(t_game *game);
 /* map_checker_2.c */
 void		save_player_data(t_player *player, int x, int y, char dir);
 t_bool 		space_closed_by_walls(t_game *game, int y, int x);
+int			check_empty_line(t_game *game, int y);
 int			check_first_elem(t_game *game, int y);
 void		player_struct_init(t_player *player);
 
