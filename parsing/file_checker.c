@@ -1,7 +1,7 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   map_checker.c                                      :+:      :+:    :+:   */
+/*   file_checker.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: cfiliber <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
@@ -10,8 +10,9 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "map.h"
+#include "parsing.h"
 
+/* check the info about textures and colors */
 t_bool	valid_info(char *str, t_pos *pos, t_game *game)
 {
 	printf("\nIN VALID_INFO FUNCTION\n");
@@ -40,6 +41,7 @@ t_bool	valid_info(char *str, t_pos *pos, t_game *game)
 	return (TRUE);
 }
 
+/* initialization of the t_textures struct */
 void	textures_struct_init(t_game *game)
 {
 	printf("\nIN TEXTURES_STRUCT_INIT FUNCTION\n");
@@ -51,6 +53,32 @@ void	textures_struct_init(t_game *game)
 	game->textures.c_col = -1;
 }
 
+/* check if all the info inside the file is valid */
+t_bool	valid_file_2(char **map_file, t_game *game, t_pos *pos)
+{
+	printf("\nIN valid_file_2 FUNCTION\n");
+	printf("\npos->y = %d  pos.x = %d\n", pos->y, pos->x);
+	if (map_file[pos->y][pos->x] != '0' && map_file[pos->y][pos->x] != '1'
+		&& !game->map)
+	{
+		if (valid_info(map_file[pos->y], pos, game) == FALSE)
+			return (FALSE);
+	}
+	else if (!game->map)
+	{
+		if (valid_map(map_file, pos, game) == FALSE)
+			return (FALSE);	
+	}
+	else if (map_file[pos->y][pos->x] != '0' && map_file[pos->y][pos->x] != '1')
+	{
+		//printf("\n----------pos->y = %d pos->x = %d\n", pos->y, pos->x);
+		return (error("The map content is not the last info"));
+	}
+	
+	return (TRUE);
+}
+
+/* check if all the info inside the file is valid */
 t_bool	valid_file(char **map_file, t_game *game)
 {
 	printf("\nIN VALID_FILE FUNCTION\n");
@@ -62,35 +90,26 @@ t_bool	valid_file(char **map_file, t_game *game)
 	pos.y = 0;
 	while (map_file[pos.y])
 	{
-		printf("\nIN 1st WHILE OF VALID_FILE FUNCTION\n");
+		//printf("\nIN 1st WHILE OF VALID_FILE FUNCTION\n");
 		pos.x = 0;
-		printf("pos.y = %d\n", pos.y);
-		while (map_file[pos.y][pos.x])
+		//printf("\npos.y = %d\n", pos.y);
+		while (map_file[pos.y] && map_file[pos.y][pos.x])
 		{
-			printf("\nIN 2nd WHILE OF VALID_FILE FUNCTION\n");
+			//printf("\nIN 2nd WHILE OF VALID_FILE FUNCTION\n");
 			//printf("pos.y = %d\n", pos.y);
-			printf("pos.x = %d\n", pos.x);
 			if (map_file[pos.y][pos.x] == ' ')
 			{
+				printf("\npos.y = %d  pos.x = %d\n", pos.y, pos.x);
 				pos.x++;
 				continue;
 			}
-			if (map_file[pos.y][pos.x] != '0' && map_file[pos.y][pos.x] != '1'
-				&& !game->map)
-			{
-				if (valid_info(map_file[pos.y], &pos, game) == FALSE)
-					return (FALSE);
-			}
-			else if (map_file[pos.y][pos.x] != '0' && map_file[pos.y][pos.x] != '1')
-				return (error("The map content is not the last info"));
-			else
-			{
-				if (valid_map(map_file, &pos, game) == FALSE)
-					return (FALSE);	
-			}
+			if (valid_file_2(map_file, game, &pos) == FALSE)
+				return (FALSE);
 			pos.x++;
 		}
-		pos.y++;
+		if (map_file[pos.y])
+			pos.y++;
+		printf("\n----- pos.y = %d -----\n", pos.y);
 	}
 	// if (!tex->no || !tex->so || !tex->we || !tex->ea || !tex->f_col || !tex->c_col
 	// 	|| !game->map)

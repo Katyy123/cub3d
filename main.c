@@ -11,7 +11,7 @@
 /* ************************************************************************** */
 
 #include "inc/cub3d.h"
-#include "map/map.h"
+#include "parsing/parsing.h"
 
 int main(int argc, char **argv)
 {
@@ -22,7 +22,8 @@ int main(int argc, char **argv)
 		return (-1);
 	if (map_file_parse(argv[1], &game) == -1)
 	{
-		ft_free_char_mtx(game.map);
+		if (game.map)
+			ft_free_char_mtx(game.map);
 		return (-1);
 	}
 	if (game.map == NULL)

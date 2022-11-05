@@ -20,7 +20,7 @@ SRCS = ft_isprint.c     ft_putchar_fd.c ft_strlcat.c    ft_substr.c     ft_atoi.
 	ft_isalpha.c    ft_memcpy.c     ft_strchr.c     ft_strnstr.c \
 	ft_isascii.c    ft_memmove.c    ft_strdup.c     ft_strrchr.c \
 	ft_isdigit.c    ft_memset.c     ft_strjoin.c    ft_strtrim.c \
-	ft_strend_cmp.c    ft_char_mtx_linecount.c    ft_free_char_mtx.c
+	ft_strend_cmp.c    ft_char_mtx_linecount.c    ft_free_char_mtx.c ft_all_char_same.c \
 
 OBJS = $(SRCS:.c=.o)
 

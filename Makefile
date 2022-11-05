@@ -10,20 +10,20 @@
 #                                                                              #
 # **************************************************************************** #
 
-NAME	= cub3d
+NAME	= cub3D
 
 LIB_PATH = ./libft/
 LIB = $(LIB_PATH)libft.a
 
-SRCS = $(MAIN_SRC) $(SRC_GNL) $(SRC_MAP) $(SRC_GAME)
+SRCS = $(MAIN_SRC) $(SRC_GNL) $(SRC_PARSING) $(SRC_GAME)
 
 MAIN_SRC = main.c errors.c
 
 GNL = get_next_line.c get_next_line_utils.c
 SRC_GNL = $(addprefix gnl/, $(GNL))
 
-MAP = file_reader.c file_checker.c texture_checker.c color_checker.c map_checker.c
-SRC_MAP = $(addprefix map/, $(MAP))
+PARSING = file_reader.c file_checker.c texture_checker.c color_checker.c map_create.c map_create_2.c map_checker.c
+SRC_PARSING = $(addprefix parsing/, $(PARSING))
 
 GAME = 
 SRC_GAME = $(addprefix game/, $(GAME))

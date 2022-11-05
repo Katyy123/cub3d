@@ -1,7 +1,7 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   map.h                                              :+:      :+:    :+:   */
+/*   parsing.h                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: cfiliber <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
@@ -10,8 +10,8 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef MAP_H
-# define MAP_H
+#ifndef PARSING_H
+# define PARSING_H
 
 # include "../inc/cub3d.h"
 # include "../inc/structs.h"
@@ -54,7 +54,13 @@ int			check_texture_path(char *str, t_pos *pos, t_game *game, char *type_id);
 /* color_checker.c */
 int			check_color(char *str, t_game *game, t_pos *pos, char *type_id);
 
-/* map_checker.c */
+/* map_create.c */
 t_bool		valid_map(char **map_file, t_pos *pos, t_game *game);
+
+/* map_create.c */
+int			check_map(t_game *game);
+
+/* map_create_2.c */
+int			create_map(char **map_file, t_game *game, int lines_to_remove);
 
 #endif

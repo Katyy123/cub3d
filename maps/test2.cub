@@ -1,5 +1,5 @@
 
- 
+
     EA    ./textures/east.xpm
    NO ./textures/north.xpm
 SO   ./textures/south.xpm
@@ -16,3 +16,6 @@ C 17,254,0
   11110111111
       1
 
+
+    
+    

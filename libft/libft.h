@@ -72,5 +72,6 @@ t_list			*ft_lstmap(t_list *lst, void *(*f)(void *),
 					void (*del)(void *));
 int				ft_char_mtx_linecount(char **mtx);
 void			ft_free_char_mtx(char **mtx);
+int				ft_all_char_same(char *str, char c);
 
 #endif

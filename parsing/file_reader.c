@@ -1,7 +1,7 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   map_reader.c                                       :+:      :+:    :+:   */
+/*   file_reader.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: cfiliber <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
@@ -10,8 +10,9 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "map.h"
+#include "parsing.h"
 
+/* check if the argument is valid */
 int	valid_arg(int argc, char *file_path)
 {
 	printf("\nIN VALID_ARG FUNCTION\n");
@@ -24,6 +25,7 @@ int	valid_arg(int argc, char *file_path)
 	return (1);
 }
 
+/* count the lines of the file */
 int	file_linecount(char *file)
 {
 	printf("\nIN FILE_LINECOUNT FUNCTION\n");
@@ -52,6 +54,7 @@ int	file_linecount(char *file)
 	return (linecount);
 }
 
+/* read the file and return a matrix that is a copy of the file */
 char	**read_map_file(char *file_path)
 {
 	printf("\nIN READ_MAP_FILE FUNCTION\n");
@@ -78,6 +81,7 @@ char	**read_map_file(char *file_path)
 	return (map_file);
 }
 
+/* parsing of the file */
 int	map_file_parse(char *file_path, t_game *game)
 {
 	printf("\nIN MAP_FILE_PARSE FUNCTION\n");

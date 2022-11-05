@@ -1,5 +1,6 @@
-#include "map.h"
+#include "parsing.h"
 
+/* save the path of the texture inside the t_textures struct */
 void save_textures(char *str, t_game *game, char *type_id)
 {
 	printf("\nIN SAVE_TEXTURES FUNCTION\n");
@@ -13,6 +14,7 @@ void save_textures(char *str, t_game *game, char *type_id)
 		game->textures.ea = str;
 }
 
+/* check the path of the texture */
 int	check_texture_path(char *str, t_pos *pos, t_game *game, char *type_id)
 {
 	printf("\nIN CHECK_TEXTURE_PATH FUNCTION\n");

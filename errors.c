@@ -11,12 +11,18 @@
 /* ************************************************************************** */
 
 #include "inc/cub3d.h"
-#include "map/map.h"
+#include "parsing/parsing.h"
 
 int	error(char *message)
 {
 	printf("\x1b[31m""Error:\n%s\n""\x1b[0m", message);
 	return (0);
+}
+
+int	error_1(char *message)
+{
+	printf("\x1b[31m""Error:\n%s\n""\x1b[0m", message);
+	return (-1);
 }
 
 void	*null_error(char *message)
