@@ -15,9 +15,9 @@ void	save_color(int *col_arr, t_game *game, char *type_id)
 	col_cod = 0 << 24 | col_arr[0] << 16 | col_arr[1] << 8 | col_arr[2];
 	//printf("col_cod: %d\n", col_cod);
 	if (ft_strncmp(type_id, "F", 1) == 0)
-		game->textures.f_col = col_cod;
+		game->col.f_col = col_cod;
 	else if (ft_strncmp(type_id, "C", 1) == 0)
-		game->textures.c_col = col_cod;
+		game->col.c_col = col_cod;
 }
 
 /* free type_id, color_mtx and color_arr if they are allocated and return -1 */

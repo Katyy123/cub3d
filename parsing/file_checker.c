@@ -6,7 +6,7 @@
 /*   By: cfiliber <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/30 16:33:53 by cfiliber          #+#    #+#             */
-/*   Updated: 2022/10/31 19:19:46 by cfiliber         ###   ########.fr       */
+/*   Updated: 2022/11/08 20:10:10 by cfiliber         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,12 +45,12 @@ t_bool	valid_info(char *str, t_pos *pos, t_game *game)
 void	textures_struct_init(t_game *game)
 {
 	//printf("\nIN TEXTURES_STRUCT_INIT FUNCTION\n");
-	game->textures.no = NULL;
-	game->textures.so = NULL;
-	game->textures.we = NULL;
-	game->textures.ea = NULL;
-	game->textures.f_col = -1;
-	game->textures.c_col = -1;
+	game->no_tex.path = NULL;
+	game->so_tex.path = NULL;
+	game->we_tex.path = NULL;
+	game->ea_tex.path = NULL;
+	game->col.f_col = -1;
+	game->col.c_col = -1;
 }
 
 /* check if all the info inside the file is valid */
@@ -78,9 +78,7 @@ t_bool	valid_file(char **map_file, t_game *game)
 {
 	//printf("\nIN VALID_FILE FUNCTION\n");
 	t_pos pos;
-	//t_textures *tex;
 
-	//tex = &(game->textures);
 	textures_struct_init(game);
 	pos.y = 0;
 	while (map_file[pos.y])
@@ -105,27 +103,24 @@ t_bool	valid_file(char **map_file, t_game *game)
 			pos.y++;
 		//printf("\n----- pos.y = %d -----\n", pos.y);
 	}
-	// if (!tex->no || !tex->so || !tex->we || !tex->ea || !tex->f_col || !tex->c_col
-	// 	|| !game->map)
-	// 	return (error("_____The file does not contain all the info"));
-	if (!game->textures.no || !game->textures.so || !game->textures.we
-		|| !game->textures.ea || game->textures.f_col == -1
-		|| 	game->textures.c_col == -1 || !game->map)
+	if (!game->no_tex.path || !game->so_tex.path || !game->we_tex.path
+		|| !game->ea_tex.path || game->col.f_col == -1
+		|| 	game->col.c_col == -1 || !game->map)
 		return (error("The file does not contain all the info"));
-	printf("NO texture: %s\n", game->textures.no);
-	printf("SO texture: %s\n", game->textures.so);
-	printf("WE texture: %s\n", game->textures.we);
-	printf("EA texture: %s\n\n", game->textures.ea);
-	//printf("floor color = %d\n", game->textures.f_col);
-	//printf("ceiling color = %d\n", game->textures.c_col);
-	//printf("color red code of floor: %d\n", game->textures.f_col & (0xFF << 16));
-	//printf("color green code of floor: %d\n", game->textures.f_col & (0xFF << 8));
-	//printf("color blue code of floor: %d\n", game->textures.f_col & (0xFF));
-	if (game->textures.f_col == 0x00FFFFFF)
+	printf("NO texture: %s\n", game->no_tex.path);
+	printf("SO texture: %s\n", game->so_tex.path);
+	printf("WE texture: %s\n", game->we_tex.path);
+	printf("EA texture: %s\n\n", game->ea_tex.path);
+	//printf("floor color = %d\n", game->col.f_col);
+	//printf("ceiling color = %d\n", game->col.c_col);
+	//printf("color red code of floor: %d\n", game->col.f_col & (0xFF << 16));
+	//printf("color green code of floor: %d\n", game->col.f_col & (0xFF << 8));
+	//printf("color blue code of floor: %d\n", game->col.f_col & (0xFF));
+	if (game->col.f_col == 0x00FFFFFF)
 		printf("floor color == color in the file\n");
 	else
 		printf("floor color != color int the file\n");
-	if (game->textures.c_col == 0x0011FE00)
+	if (game->col.c_col == 0x0011FE00)
 		printf("ceiling color == color in the file\n\n");
 	else
 		printf("ceiling color != color in the file\n\n");

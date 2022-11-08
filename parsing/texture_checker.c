@@ -5,13 +5,13 @@ void save_textures(char *str, t_game *game, char *type_id)
 {
 	//printf("\nIN SAVE_TEXTURES FUNCTION\n");
     if (ft_strncmp(type_id, "NO", 2) == 0)
-		game->textures.no = str;
+		game->no_tex.path = str;
 	if (ft_strncmp(type_id, "SO", 2) == 0)
-		game->textures.so = str;
+		game->so_tex.path = str;
 	if (ft_strncmp(type_id, "WE", 2) == 0)
-		game->textures.we = str;
+		game->we_tex.path = str;
 	if (ft_strncmp(type_id, "EA", 2) == 0)
-		game->textures.ea = str;
+		game->ea_tex.path = str;
 }
 
 /* check the path of the texture */
