@@ -6,7 +6,7 @@
 /*   By: cfiliber <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/21 12:41:47 by mel-hada          #+#    #+#             */
-/*   Updated: 2022/11/08 19:06:01 by cfiliber         ###   ########.fr       */
+/*   Updated: 2022/11/08 20:46:42 by cfiliber         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,5 +68,6 @@ int		error(char *message);
 int     error_1(char *message);
 void	*null_error(char *message);
 void	print_warning(char *message);
+int		main_function(t_game *game);
 
 # endif

@@ -6,7 +6,6 @@ void    save_player_data(t_player *player, int x, int y, char dir)
     //printf("\nIN save_player_data FUNCTION\n");
     player->pos_x = x;
     player->pos_y = y;
-    player->view = 3.14 / 2;
     if (dir == 'E')
         player->pov = 0;
     else if (dir == 'S')
@@ -61,6 +60,6 @@ void    player_struct_init(t_player *player)
     //printf("\nIN player_struct_init FUNCTION\n");
     player->pos_x = -1;
     player->pos_y = -1;
-    player->view = 3.14/2;
+    player->view = 3.14159 / 4.0;
     player->pos_x = -1;
 }

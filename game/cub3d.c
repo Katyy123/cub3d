@@ -1,4 +1,4 @@
-#include "inc/cub3d.h"
+#include "../inc/cub3d.h"
 
 #define H 1080/2
 #define W 1920/2
@@ -10,28 +10,28 @@ float to_degrees(float rad)
     return (rad * 57.2597);
 }
 
-char map_init[20][11]=  {
-                        {'1','1','1','1','1','1','1','1','1','1','\0'},
-                        {'1','1','0','0','1','1','0','0','1','1','\0'},
-                        {'1','0','0','0','0','0','0','0','0','1','\0'},
-                        {'1','1','0','0','0','0','1','0','0','1','\0'},
-                        {'1','0','0','0','0','0','0','0','0','1','\0'},
-                        {'1','0','0','0','0','p','0','0','0','1','\0'},
-                        {'1','0','0','0','0','0','0','0','0','1','\0'},
-                        {'1','0','0','0','0','0','0','1','0','1','\0'},
-                        {'1','1','0','0','0','0','0','0','1','1','\0'},
-                        {'1','1','1','1','1','1','1','1','1','1','\0'},
-                        {'1','1','1','1','1','1','1','1','1','1','\0'},
-                        {'1','1','0','0','1','0','0','0','1','1','\0'},
-                        {'1','0','0','0','0','0','0','0','0','1','\0'},
-                        {'1','0','0','0','0','0','0','0','0','1','\0'},
-                        {'1','0','0','1','0','0','0','0','0','1','\0'},
-                        {'1','0','0','0','0','p','1','0','0','1','\0'},
-                        {'1','0','0','0','0','0','0','0','0','1','\0'},
-                        {'1','0','0','0','0','0','0','0','0','1','\0'},
-                        {'1','1','0','0','0','1','0','0','1','1','\0'},
-                        {'1','1','1','1','1','1','1','1','1','1','\0'},
-                        };
+// char map_init[20][11]=  {
+//                         {'1','1','1','1','1','1','1','1','1','1','\0'},
+//                         {'1','1','0','0','1','1','0','0','1','1','\0'},
+//                         {'1','0','0','0','0','0','0','0','0','1','\0'},
+//                         {'1','1','0','0','0','0','1','0','0','1','\0'},
+//                         {'1','0','0','0','0','0','0','0','0','1','\0'},
+//                         {'1','0','0','0','0','p','0','0','0','1','\0'},
+//                         {'1','0','0','0','0','0','0','0','0','1','\0'},
+//                         {'1','0','0','0','0','0','0','1','0','1','\0'},
+//                         {'1','1','0','0','0','0','0','0','1','1','\0'},
+//                         {'1','1','1','1','1','1','1','1','1','1','\0'},
+//                         {'1','1','1','1','1','1','1','1','1','1','\0'},
+//                         {'1','1','0','0','1','0','0','0','1','1','\0'},
+//                         {'1','0','0','0','0','0','0','0','0','1','\0'},
+//                         {'1','0','0','0','0','0','0','0','0','1','\0'},
+//                         {'1','0','0','1','0','0','0','0','0','1','\0'},
+//                         {'1','0','0','0','0','p','1','0','0','1','\0'},
+//                         {'1','0','0','0','0','0','0','0','0','1','\0'},
+//                         {'1','0','0','0','0','0','0','0','0','1','\0'},
+//                         {'1','1','0','0','0','1','0','0','1','1','\0'},
+//                         {'1','1','1','1','1','1','1','1','1','1','\0'},
+//                         };
 
 void	*ft_memcpy(void *dst, const void *src, size_t n)
 {
@@ -83,10 +83,10 @@ char	*ft_strdup(const char *str)
 void    ft_init1(t_game *game)
 {
     //int i = 0;
-    game->pl.pos_x = 5;
-    game->pl.pos_y = 5;     //inizialmente il giocatore è in un punto deciso da me
-    game->pl.view = 3.14159 / 4.0;
-    game->pl.pov = 0;
+    //game->pl.pos_x = 5;
+    //game->pl.pos_y = 5;     //inizialmente il giocatore è in un punto deciso da me
+    //game->pl.view = 3.14159 / 4.0;
+    //game->pl.pov = 0;
     game->n_rays = W;
     game->delta_view = game->pl.view/game->n_rays;
     game->game_ended = 0;
@@ -119,10 +119,10 @@ void    ft_init2(t_game *game){
     screen = &game->screen;
     img = &game->screen.shown_img;
     screen->ptr = mlx_init();
-    screen->win = mlx_new_window(screen->ptr,W, H, "prova");
-    img->img = mlx_new_image(img->img, W, H);
+    screen->win = mlx_new_window(screen->ptr, W, H, "prova");
+    img->img = mlx_new_image(screen->ptr, W, H);
     img->addr = mlx_get_data_addr(img->img, &img->bits_per_pixel, &img->line_length, &img->endian);
-    ft_init_tex(&game->tex, screen->ptr);
+    ft_init_tex(&game->no_tex, screen->ptr);
 }
 
 void	my_mlx_pixel_put(t_data *data, int x, int y, int color)
@@ -182,7 +182,7 @@ float get_distance(t_game *game, int w)
         eye_y = d * cos(ray_a);
         ntest_x = game->pl.pos_x + eye_x;
         ntest_y = game->pl.pos_y + eye_y;
-        if (map_init[ntest_y][ntest_x] == '1')
+        if (game->map[ntest_y][ntest_x] == '1')
             break;
          if (ntest_x >= 10 || ntest_y >= 10)
             return -1;
@@ -221,7 +221,7 @@ float get_distance(t_game *game, int w)
 
 t_tex *select_text(t_game *game){
 
-    return (&game->tex);
+    return (&game->no_tex);
 }
 
 /*
@@ -271,7 +271,7 @@ void draw_line(t_screen *screen, int line, float celing_h, t_game *game)
     while (y < celing_h + wall_h)
     {
         //if (screen->q == 1)
-        color = get_color(game, y - celing_h, wall_h, game->tex);
+        color = get_color(game, y - celing_h, wall_h, game->no_tex);
         my_mlx_pixel_put(&screen->shown_img, line, (y), color);
         y++;
     }
@@ -373,8 +373,8 @@ int check_pos(t_game *game) //da completare
 
     x = game->pl.pos_x;
     y = game->pl.pos_y;
-    if (map_init[x][y] == '1')
-        return (1);
+    // if (map_init[x][y] == '1')
+    //     return (1);
     return (0);
     // {
     //     game->pl.pos_x -= sin(game->pl.pov) * 0.1;
@@ -417,22 +417,23 @@ int key_press(int keycode, t_game *game)
             game->pl.pos_x += sin(teta) * 0.1;
             game->pl.pos_y += cos(teta) * 0.1;
     }
-    update_window(game);
+    //update_window(game);
     return (0);
 }
 
-int main(void)
+//int main_function(void)
+int main_function(t_game *game)
 {
-    t_game game;
+    //t_game game;
 
-    game.tex.path = "bluestone.xpm";
-    ft_init1(&game);
-    ft_init2(&game);
+    //game.tex.path = "bluestone.xpm";
+    ft_init1(game);
+    ft_init2(game);
     //update_window(&game);
     
-    mlx_hook(game.screen.win, X_EVENT_KEY_PRESS, 0, &key_press, &game);
-    //mlx_loop_hook(game.screen.ptr, &update_window, &game);
-    mlx_loop(game.screen.ptr);
+    mlx_hook(game->screen.win, X_EVENT_KEY_PRESS, 0, &key_press, &game);
+    mlx_loop_hook(game->screen.ptr, &update_window, &game);
+    mlx_loop(game->screen.ptr);
 
     return (0);
 }

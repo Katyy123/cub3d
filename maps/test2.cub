@@ -1,10 +1,10 @@
 
 
-    EA    ./textures/east.xpm
-   NO ./textures/north.xpm
-SO   ./textures/south.xpm
+    EA    ./textures/bluestone.xpm
+   NO ./textures/bluestone.xpm
+SO   ./textures/bluestone.xpm
 
-WE ./textures/west.xpm
+WE ./textures/bluestone.xpm
 
  F 255,255,255
   
@@ -14,7 +14,7 @@ C 17,254,0
   1  1
  1111  1
 11 11
- 11S1
+ 11E1
  111
 
  
