@@ -128,8 +128,12 @@ void    ft_init2(t_game *game){
 void	my_mlx_pixel_put(t_data *data, int x, int y, int color)
 {
 	char	*dst;
-	dst = data->addr + (y * data->line_length + x * (data->bits_per_pixel / 8));
-	*(unsigned int*)dst = color;
+
+    if (x > 10 && x < (W - 10) && y > 10 && y < (H - 10))// to check
+    {
+	    dst = data->addr + (y * data->line_length + x * (data->bits_per_pixel / 8));
+	    *(unsigned int*)dst = color;
+    }
 }
 
 /*
@@ -373,8 +377,8 @@ int check_pos(t_game *game) //da completare
 
     x = game->pl.pos_x;
     y = game->pl.pos_y;
-    // if (map_init[x][y] == '1')
-    //     return (1);
+    if (game->map[x][y] == '1')
+        return (1);
     return (0);
     // {
     //     game->pl.pos_x -= sin(game->pl.pov) * 0.1;
@@ -421,19 +425,19 @@ int key_press(int keycode, t_game *game)
     return (0);
 }
 
-//int main_function(void)
-int main_function(t_game *game)
-{
-    //t_game game;
+// //int main_function(void)
+// int main_function(t_game *game)
+// {
+//     //t_game game;
 
-    //game.tex.path = "bluestone.xpm";
-    ft_init1(game);
-    ft_init2(game);
-    //update_window(&game);
+//     //game.tex.path = "bluestone.xpm";
+//     ft_init1(game);
+//     ft_init2(game);
+//     //update_window(&game);
     
-    mlx_hook(game->screen.win, X_EVENT_KEY_PRESS, 0, &key_press, &game);
-    mlx_loop_hook(game->screen.ptr, &update_window, &game);
-    mlx_loop(game->screen.ptr);
+//     mlx_hook(game->screen.win, X_EVENT_KEY_PRESS, 0, &key_press, &game);
+//     mlx_loop_hook(game->screen.ptr, &update_window, &game);
+//     mlx_loop(game->screen.ptr);
 
-    return (0);
-}
+//     return (0);
+// }
