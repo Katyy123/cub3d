@@ -6,7 +6,7 @@
 /*   By: cfiliber <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/08 12:01:01 by ael-bekk          #+#    #+#             */
-/*   Updated: 2022/11/08 20:07:47 by cfiliber         ###   ########.fr       */
+/*   Updated: 2022/11/09 18:40:59 by cfiliber         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -80,7 +80,7 @@ typedef struct s_player
 */
 typedef	struct	s_screen
 {
-	int			q;
+	int			orient;
 	void		*ptr;
 	void		*win;
 	t_data		shown_img;

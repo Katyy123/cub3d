@@ -6,7 +6,7 @@
 /*   By: cfiliber <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/30 15:11:58 by cfiliber          #+#    #+#             */
-/*   Updated: 2022/11/09 16:43:55 by cfiliber         ###   ########.fr       */
+/*   Updated: 2022/11/09 20:04:04 by cfiliber         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,7 +36,7 @@ int main(int argc, char **argv)
     //update_window(&game);
     
     mlx_hook(game.screen.win, X_EVENT_KEY_PRESS, 0, &key_press, &game);
-    mlx_loop_hook(game.screen.ptr, &update_window, &game);
+    mlx_loop_hook(game.screen.ptr, &update_window, &game); //uncommented
     mlx_loop(game.screen.ptr);
 	ft_free_char_mtx(game.map);
 	return 0;

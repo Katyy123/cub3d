@@ -12,7 +12,7 @@ int check_last_line(t_game *game)
     while (game->map[y][x])
     {
         if (game->map[y][x] != '1' && game->map[y][x] != ' ')
-            return (error_1("----The map must be closed by walls"));
+            return (error_1("The map must be closed by walls"));
         x++;
     }
     return (0);

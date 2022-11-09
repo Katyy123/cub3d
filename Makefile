@@ -6,7 +6,7 @@
 #    By: cfiliber <marvin@42.fr>                    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/10/27 16:37:56 by cfiliber          #+#    #+#              #
-#    Updated: 2022/11/08 21:32:27 by cfiliber         ###   ########.fr        #
+#    Updated: 2022/11/09 20:17:20 by cfiliber         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -49,20 +49,20 @@ RESET = '\x1b[0m'
 all: subsystem $(NAME)
 
 subsystem:
-	make all -C $(LIB_PATH)
+	@make all -C $(LIB_PATH)
 
 $(NAME): $(OBJS)
-	$(CC) $(CFLAGS) -lmlx -framework OpenGL -framework AppKit -o $(NAME) $(OBJS) $(LIB)
+	@$(CC) $(CFLAGS) -lmlx -framework OpenGL -framework AppKit -o $(NAME) $(OBJS) $(LIB)
 	@echo $(GREEN)$(CURSIVE)"\nAll files have been compiled"$(RESET)
 	@echo $(MAGENTA)$(CURSIVE)"\nTo start the game, type ./cub3d and map name.\nFor example: ./cub3d maps/test1.cub\n"$(RESET)
 
 clean:
-	make clean -C $(LIB_PATH)
-	rm -f $(OBJS)
+	@make clean -C $(LIB_PATH)
+	@rm -f $(OBJS)
 
 fclean: clean
-	make fclean -C $(LIB_PATH)
-	rm -f $(NAME)
+	@make fclean -C $(LIB_PATH)
+	@rm -f $(NAME)
 
 re: fclean all
 
