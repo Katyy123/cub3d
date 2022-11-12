@@ -6,7 +6,7 @@
 /*   By: cfiliber <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/30 15:19:18 by cfiliber          #+#    #+#             */
-/*   Updated: 2022/10/31 19:13:15 by cfiliber         ###   ########.fr       */
+/*   Updated: 2022/11/12 17:09:09 by cfiliber         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -95,6 +95,6 @@ int	map_file_parse(char *file_path, t_game *game)
 		ft_free_char_mtx(map_file);
 		return (-1);
 	}
-	ft_free_char_mtx(map_file);
+	ft_free_char_mtx(map_file); //commentato perchè devo leggere le path durante il gioco??
 	return (0);
 }

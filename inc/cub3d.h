@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cub3d.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: cfiliber <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: tbertoli <tbertoli@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/21 12:41:47 by mel-hada          #+#    #+#             */
-/*   Updated: 2022/11/09 20:16:43 by cfiliber         ###   ########.fr       */
+/*   Updated: 2022/11/12 14:04:28 by tbertoli         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,7 +75,8 @@ void	*ft_memcpy(void *dst, const void *src, size_t n);
 int     ft_strlen(const char *str);
 char	*ft_strdup(const char *str);
 void    ft_init1(t_game *game);
-void    ft_init_tex(t_tex *t, void *mlx);
+// void    ft_init_tex(t_tex *t, void *mlx);
+void    ft_init_tex(t_game *game);
 void    ft_init2(t_game *game);
 void	my_mlx_pixel_put(t_data *data, int x, int y, int color);
 void pixel_col_put(t_screen *screen, int x, int y, int color, int pxnum);

@@ -10,73 +10,6 @@ float to_degrees(float rad)
     return (rad * 57.2597);
 }
 
-// char map_init[20][11]=  {
-//                         {'1','1','1','1','1','1','1','1','1','1','\0'},
-//                         {'1','1','0','0','1','1','0','0','1','1','\0'},
-//                         {'1','0','0','0','0','0','0','0','0','1','\0'},
-//                         {'1','1','0','0','0','0','1','0','0','1','\0'},
-//                         {'1','0','0','0','0','0','0','0','0','1','\0'},
-//                         {'1','0','0','0','0','p','0','0','0','1','\0'},
-//                         {'1','0','0','0','0','0','0','0','0','1','\0'},
-//                         {'1','0','0','0','0','0','0','1','0','1','\0'},
-//                         {'1','1','0','0','0','0','0','0','1','1','\0'},
-//                         {'1','1','1','1','1','1','1','1','1','1','\0'},
-//                         {'1','1','1','1','1','1','1','1','1','1','\0'},
-//                         {'1','1','0','0','1','0','0','0','1','1','\0'},
-//                         {'1','0','0','0','0','0','0','0','0','1','\0'},
-//                         {'1','0','0','0','0','0','0','0','0','1','\0'},
-//                         {'1','0','0','1','0','0','0','0','0','1','\0'},
-//                         {'1','0','0','0','0','p','1','0','0','1','\0'},
-//                         {'1','0','0','0','0','0','0','0','0','1','\0'},
-//                         {'1','0','0','0','0','0','0','0','0','1','\0'},
-//                         {'1','1','0','0','0','1','0','0','1','1','\0'},
-//                         {'1','1','1','1','1','1','1','1','1','1','\0'},
-//                         };
-
-void	*ft_memcpy(void *dst, const void *src, size_t n)
-{
-	size_t			i;
-	unsigned char	*source;
-	unsigned char	*dest;
-
-	if (!dst && !src)
-		return (NULL);
-	i = 0;
-	source = (unsigned char *)src;
-	dest = (unsigned char *)dst;
-	while (i < n)
-	{
-		dest[i] = source[i];
-		i++;
-	}
-	return (dst);
-}
-
-int     ft_strlen(const char *str)
-{
-	int	len;
-
-	if(!str)
-		return (0);
-	len = 0;
-	while (str[len])
-		len++;
-	return (len);
-}
-
-char	*ft_strdup(const char *str)
-{
-	size_t	len;
-	char	*out;
-
-	len = ft_strlen((char *)str) + 1;
-	out = malloc(len * sizeof(char));
-	if (!out)
-		return (NULL);
-	ft_memcpy(out, str, len);
-	return (out);
-}
-
 /*
 * funzione che inizializza la mappa, la posizione del giocatore e altre costanti del gioco;
 */
@@ -92,26 +25,27 @@ void    ft_init1(t_game *game)
     game->game_ended = 0;
     flag = 0;
     printf("pov = %f",to_degrees(game->pl.view));
-    // i = 0;
-    // while (i < 10)
-    // {
-    //     printf("map[%d] = %s", i, map_init[i]);
-    //     printf("\n");
-    //     i++;
-    // }
-
-
 }
 
-/*
-* funzione che inizializza le texture. per ora gestisce un unica text.
-*/
-void    ft_init_tex(t_tex *t, void *mlx)
-//void    ft_init_tex(t_tex *t, void *mlx)// a partire dalla text creo una vera e propria immagine
+void    ft_init_tex(t_game *game)
 {
-    t->tex_img = mlx_xpm_file_to_image(mlx, t->path, &t->width, &t->height);
     
-    t->tex_addr = mlx_get_data_addr(t->tex_img, &t->bpp, &t->size_line, &t->endian);
+    game->no_tex.tex_img = mlx_xpm_file_to_image(game->screen.ptr, 
+                            game->no_tex.path, &game->no_tex.width, &game->no_tex.height);
+    game->no_tex.tex_addr = mlx_get_data_addr(game->no_tex.tex_img, &game->no_tex.bpp,
+                                &game->no_tex.size_line, &game->no_tex.endian);
+    game->so_tex.tex_img = mlx_xpm_file_to_image(game->screen.ptr, 
+                            game->so_tex.path, &game->so_tex.width, &game->so_tex.height);
+    game->so_tex.tex_addr = mlx_get_data_addr(game->so_tex.tex_img, &game->so_tex.bpp,
+                                &game->so_tex.size_line, &game->so_tex.endian);
+    game->ea_tex.tex_img = mlx_xpm_file_to_image(game->screen.ptr, 
+                            game->ea_tex.path, &game->ea_tex.width, &game->ea_tex.height);
+    game->ea_tex.tex_addr = mlx_get_data_addr(game->ea_tex.tex_img, &game->ea_tex.bpp,
+                                &game->ea_tex.size_line, &game->ea_tex.endian);
+    game->we_tex.tex_img = mlx_xpm_file_to_image(game->screen.ptr, 
+                            game->we_tex.path, &game->we_tex.width, &game->we_tex.height);
+    game->we_tex.tex_addr = mlx_get_data_addr(game->we_tex.tex_img, &game->we_tex.bpp,
+                                &game->we_tex.size_line, &game->we_tex.endian);
 }
 
 void    ft_init2(t_game *game){
@@ -123,8 +57,9 @@ void    ft_init2(t_game *game){
     screen->ptr = mlx_init();
     screen->win = mlx_new_window(screen->ptr, W, H, "prova");
     img->img = mlx_new_image(screen->ptr, W, H);//changed the first arg of mlx_new_image (earlier it was img->img)
-    img->addr = mlx_get_data_addr(img->img, &img->bits_per_pixel, &img->line_length, &img->endian);
-    ft_init_tex(&game->no_tex, screen->ptr);
+    img->addr = mlx_get_data_addr(img->img, &img->bits_per_pixel, 
+                                    &img->line_length, &img->endian);
+    ft_init_tex(game);
 }
 
 void	my_mlx_pixel_put(t_data *data, int x, int y, int color)
@@ -174,9 +109,6 @@ float get_distance(t_game *game, int w)
     float test_point_y;
     float test_angle;
 
-
-
-    
     d = 0;
     //float fRayAngle = (fPlayerA - fFOV / 2.0f) + ((float)x / (float)ScreenWidth()) * fFOV;
     ray_a = game->pl.pov - game->pl.view/2 + game->delta_view * w; //ricontrollare questa
@@ -188,10 +120,11 @@ float get_distance(t_game *game, int w)
         eye_y = d * cos(ray_a);
         ntest_x = game->pl.pos_x + eye_x;
         ntest_y = game->pl.pos_y + eye_y;
+        if (ntest_x >= game->map_x || ntest_y >= game->map_y)
+            return -1;
         if (game->map[ntest_y][ntest_x] == '1')
             break;
-         if (ntest_x >= game->map_x || ntest_y >= game->map_y)
-            return -1;
+        
 
     }
     //calcolo il quadrante:
@@ -200,6 +133,10 @@ float get_distance(t_game *game, int w)
     
     test_point_x = game->pl.pos_x + d * sin(ray_a);
     test_point_y = game->pl.pos_y + d * cos(ray_a);
+    if(test_point_x < 0)
+         test_point_x = -test_point_x;
+    if(test_point_y < 0)
+         test_point_y = -test_point_y;
     test_angle = 1000;
 
     //if ((test_point_x - mid_block_x) != 0)
@@ -229,10 +166,6 @@ float get_distance(t_game *game, int w)
     return d;
 }
 
-t_tex *select_text(t_game *game){
-
-    return (&game->no_tex);
-}
 
 /*
 * determina il colore del pixel dalla tex.
@@ -264,41 +197,32 @@ void draw_line(t_screen *screen, int line, float celing_h, t_game *game)
     int y;
     int color;
 
-    if (screen->orient == 1)
-        color = 0x00FFFFFF;
-    if (screen->orient == 2)
-        color = 0x00FF0000;
-    if (screen->orient == 3)
-        color = 0x00BBBBBB;
-    if (screen->orient == 4)
-        color = 0x00FFFF00;
-
     floor_h = celing_h;
     wall_h = H - celing_h -floor_h;
     y = 0;
     while (y < celing_h)//sono tra y = 0 e celing
-        y++; //lascio nero
+    {
+        my_mlx_pixel_put(&screen->shown_img, line, (y), game->col.c_col);
+        y++;
+    } //lascio nero
     while (y < celing_h + wall_h)
     {
-        if (screen->orient == 1)
+        if (screen->orient == 3)
             color = get_color(game, y - celing_h, wall_h, game->no_tex);
+        if (screen->orient == 2)
+            color = get_color(game, y - celing_h, wall_h, game->so_tex);
+        if (screen->orient == 1)
+            color = get_color(game, y - celing_h, wall_h, game->ea_tex);
+        if (screen->orient == 4)
+            color = get_color(game, y - celing_h, wall_h, game->we_tex);
         my_mlx_pixel_put(&screen->shown_img, line, (y), color);
         y++;
     }
-
-    //sono tra celing e 
-    // floor_h = celing_h;
-    // wall_h = H - celing_h - floor_h;
-    // y = 0;
-    // if (flag == 1)
-    // {
-    //     pixel_col_put(screen, line, y, 0x00FF0000, H);
-    //     return ;
-    // }
-    // pixel_col_put(screen, line, y, 0x00FF0000, celing_h);
-    // y = H - floor_h;
-    // pixel_col_put(screen, line, y, 0x00FF0000, floor_h);
-
+    while (y < H)//sono tra y = 0 e celing
+    {
+        my_mlx_pixel_put(&screen->shown_img, line, (y), game->col.f_col);
+        y++;
+    } //lascio nero
 }
 
 /*
@@ -358,19 +282,11 @@ int    update_window(t_game *game)
             floor = H - celing_h;
             draw_line(screen, w, celing_h, game);   
             w++;
-        }
-        
+        } 
     }
 	mlx_put_image_to_window(screen->ptr, screen->win, img->img, 0, 0);
     return (0);
 }
-
-// int loop(t_game *game){
-//     //update_screen(game);
-    
-// 	update_window(game);
-//    return (0);
-// }
 
 /*
 * funzione che controlla se si è andati a sbattere su un muro
@@ -396,16 +312,16 @@ int key_press(int keycode, t_game *game)
 {
     if (keycode == KEY_W || keycode == KEY_FORWARD)
 	{
-        if (!check_pos(game))
-        {
-            game->pl.pos_x += sin(game->pl.pov) * 0.1;
-            game->pl.pos_y += cos(game->pl.pov) * 0.1;
-        }
+        //if (!check_pos(game))
+        //{
+            game->pl.pos_x += sin(game->pl.pov) * 0.2;
+            game->pl.pos_y += cos(game->pl.pov) * 0.2;
+        //}
     }
     if (keycode == KEY_S || keycode == KEY_BACKWARD)
 	{
-        game->pl.pos_x -= sin(game->pl.pov) * 0.1;
-        game->pl.pos_y -= cos(game->pl.pov) * 0.1; 
+        game->pl.pos_x -= sin(game->pl.pov) * 0.2;
+        game->pl.pos_y -= cos(game->pl.pov) * 0.2; 
     }
     if (keycode == KEY_E || keycode == KEY_RIGHT)
         game->pl.pov += 0.1;
@@ -427,7 +343,7 @@ int key_press(int keycode, t_game *game)
             game->pl.pos_x += sin(teta) * 0.1;
             game->pl.pos_y += cos(teta) * 0.1;
     }
-    //update_window(game); //commented cause I call update_window from mlx_loop_hook
+    update_window(game); //commented cause I call update_window from mlx_loop_hook
     return (0);
 }
 
