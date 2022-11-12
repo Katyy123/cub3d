@@ -6,13 +6,18 @@
 /*   By: cfiliber <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/08 12:01:01 by ael-bekk          #+#    #+#             */
-/*   Updated: 2022/10/30 14:09:20 by cfiliber         ###   ########.fr       */
+/*   Updated: 2022/11/09 18:40:59 by cfiliber         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef STRUCTS_H
 # define STRUCTS_H
 
+typedef enum e_bool
+{
+	TRUE = 1,
+	FALSE = 0
+}	t_bool;
 
 /*
 * struttura necessaria a gestire le immagini con minilibx.
@@ -30,13 +35,27 @@ typedef struct	s_data {
 /*
 * struttura in cui vengono salvate le path alle 4 diverse textures
 */
-typedef struct s_textures
+typedef struct	s_tex
 {
-	char	*no;
-	char	*so;
-	char	*we;
-	char	*ea;
-} t_textures;
+	char	*path;
+	void	*tex_img;
+	void	*tex_addr;
+	int		width;
+	int		height;
+	int		bpp;
+	int		size_line;
+	int		endian;
+}				t_tex;
+
+/*
+* struct where floor and ceiling colors are saved
+*/
+
+typedef struct s_col
+{
+	int	f_col;
+	int	c_col;
+} t_col;
 
 /*
 * struttura che contiene:
@@ -61,6 +80,7 @@ typedef struct s_player
 */
 typedef	struct	s_screen
 {
+	int			orient;
 	void		*ptr;
 	void		*win;
 	t_data		shown_img;
@@ -70,18 +90,20 @@ typedef struct s_game
 {
     t_screen	screen;
 	t_player	pl;
-	t_textures	textures;
+	t_tex		no_tex;
+	t_tex		so_tex;
+	t_tex		we_tex;
+	t_tex		ea_tex;
+	t_col		col;
 	int			screen_x;
 	int			screen_y;
 	int			map_x;
 	int			map_y;
 	float		n_rays; // = screen_x
 	float		delta_view;
+	float		f_sample_x;
 	int			game_ended;
     char		**map;
-    //char		lmap;	//array della mappa linearizzata
-	
-
 } t_game;
 
 #endif
