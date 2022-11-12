@@ -15,11 +15,6 @@ float to_degrees(float rad)
 */
 void    ft_init1(t_game *game)
 {
-    //int i = 0;
-    //game->pl.pos_x = 5;
-    //game->pl.pos_y = 5;     //inizialmente il giocatore è in un punto deciso da me
-    //game->pl.view = 3.14159 / 4.0;
-    //game->pl.pov = 0;
     game->pl.pos_x += 0.5;
     game->pl.pos_y += 0.5;
     game->n_rays = W;

@@ -6,14 +6,15 @@ void    save_player_data(t_player *player, int x, int y, char dir)
     //printf("\nIN save_player_data FUNCTION\n");
     player->pos_x = x;
     player->pos_y = y;
+    player->pov = 0;
     if (dir == 'E')
         player->pov += 3.14 / 2;
-    else if (dir == 'S')
-        player->pov = 0;
+    // else if (dir == 'S')
+    //     player->pov = 0;
     else if (dir == 'W')
-        player->pov = 3 * 3.14 / 2;
+        player->pov += 3 * 3.14 / 2;
     else if (dir == 'N')
-        player->pov = 3.14;
+        player->pov += 3.14;
 }
 
 /* check if a space is surrounded (up, down, left, right) by an other space, a 1 or a \0 */
