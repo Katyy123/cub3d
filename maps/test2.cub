@@ -6,7 +6,7 @@ SO   ./textures/bluestone.xpm
 
 WE ./textures/wood.xpm
 
- F 30,23,0
+ F 50,30,30
   
 C 50,120,254
  
