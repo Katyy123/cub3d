@@ -6,7 +6,7 @@
 /*   By: cfiliber <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/08 12:01:01 by ael-bekk          #+#    #+#             */
-/*   Updated: 2022/11/09 18:40:59 by cfiliber         ###   ########.fr       */
+/*   Updated: 2022/11/12 19:38:59 by cfiliber         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,7 @@ typedef enum e_bool
 * contiene il puntatore a immagine img;
 * gli altri elementi servono a [...]
 */
-typedef struct	s_data {
+typedef struct s_data {
 	void	*img;
 	void	*addr;
 	int		bits_per_pixel;
@@ -35,7 +35,7 @@ typedef struct	s_data {
 /*
 * struttura in cui vengono salvate le path alle 4 diverse textures
 */
-typedef struct	s_tex
+typedef struct s_tex
 {
 	char	*path;
 	void	*tex_img;
@@ -55,7 +55,7 @@ typedef struct s_col
 {
 	int	f_col;
 	int	c_col;
-} t_col;
+}	t_col;
 
 /*
 * struttura che contiene:
@@ -70,7 +70,7 @@ typedef struct s_player
 	float	pos_y;
 	float	view;
 	float	pov;
-} t_player;
+}	t_player;
 
 /*
 * struttura che contiene elementi utili alla gestione della finestra di gioco
@@ -78,7 +78,7 @@ typedef struct s_player
 * win è il pointer alla finestra, da inizializzare con mlx_new_window(...)
 * shown_img è l'immagine mostrata sulla fienstra, che viene refreshata a ogni loop
 */
-typedef	struct	s_screen
+typedef struct s_screen
 {
 	int			orient;
 	void		*ptr;
@@ -88,7 +88,7 @@ typedef	struct	s_screen
 
 typedef struct s_game
 {
-    t_screen	screen;
+	t_screen	screen;
 	t_player	pl;
 	t_tex		no_tex;
 	t_tex		so_tex;
@@ -103,7 +103,7 @@ typedef struct s_game
 	float		delta_view;
 	float		f_sample_x;
 	int			game_ended;
-    char		**map;
-} t_game;
+	char		**map;
+}	t_game;
 
 #endif
