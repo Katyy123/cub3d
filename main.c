@@ -6,7 +6,7 @@
 /*   By: cfiliber <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/30 15:11:58 by cfiliber          #+#    #+#             */
-/*   Updated: 2022/11/09 20:04:04 by cfiliber         ###   ########.fr       */
+/*   Updated: 2022/11/12 19:42:52 by cfiliber         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,8 +28,6 @@ int main(int argc, char **argv)
 	}
 	if (game.map == NULL)
 		return (-1);
-	// if (main_function(&game) == -1)
-	// 	return (-1);
 	//game.tex.path = "bluestone.xpm";
     ft_init1(&game);
     ft_init2(&game);
