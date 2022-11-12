@@ -20,6 +20,8 @@ void    ft_init1(t_game *game)
     //game->pl.pos_y = 5;     //inizialmente il giocatore è in un punto deciso da me
     //game->pl.view = 3.14159 / 4.0;
     //game->pl.pov = 0;
+    game->pl.pos_x += 0.5;
+    game->pl.pos_y += 0.5;
     game->n_rays = W;
     game->delta_view = game->pl.view/game->n_rays;
     game->game_ended = 0;
@@ -115,7 +117,7 @@ float get_distance(t_game *game, int w)
     //ray_a = game->pl.pov - game->pl.view/2 + ( (float)w / (float)W * game->pl.view );
     while (1) //alla fine di questo while in d è presente la ditanza dal muro
     {
-        d += 0.01;
+        d += 0.005;
         eye_x = d * sin(ray_a);
         eye_y = d * cos(ray_a);
         ntest_x = game->pl.pos_x + eye_x;
@@ -123,7 +125,9 @@ float get_distance(t_game *game, int w)
         if (ntest_x >= game->map_x || ntest_y >= game->map_y)
             return -1;
         if (game->map[ntest_y][ntest_x] == '1')
+        {
             break;
+        }
         
 
     }
@@ -274,7 +278,7 @@ int    update_window(t_game *game)
 	while (w < W) //while del raycasting
 	{
         d = get_distance(game, w);
-        if (d == -1)
+        if (d == -1)///////da cambiare!!
             w++;
         else
         {
@@ -346,20 +350,3 @@ int key_press(int keycode, t_game *game)
     update_window(game); //commented cause I call update_window from mlx_loop_hook
     return (0);
 }
-
-// //int main_function(void)
-// int main_function(t_game *game)
-// {
-//     //t_game game;
-
-//     //game.tex.path = "bluestone.xpm";
-//     ft_init1(game);
-//     ft_init2(game);
-//     //update_window(&game);
-    
-//     mlx_hook(game->screen.win, X_EVENT_KEY_PRESS, 0, &key_press, &game);
-//     mlx_loop_hook(game->screen.ptr, &update_window, &game);
-//     mlx_loop(game->screen.ptr);
-
-//     return (0);
-// }
