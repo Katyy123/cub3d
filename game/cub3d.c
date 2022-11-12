@@ -317,16 +317,16 @@ int key_press(int keycode, t_game *game)
             game->pl.pos_y += cos(game->pl.pov) * 0.2;
         //}
     }
-    if (keycode == KEY_S || keycode == KEY_BACKWARD)
+    else if (keycode == KEY_S || keycode == KEY_BACKWARD)// modified from "if" to "else if" (check if it is ok) 
 	{
         game->pl.pos_x -= sin(game->pl.pov) * 0.2;
         game->pl.pos_y -= cos(game->pl.pov) * 0.2; 
     }
-    if (keycode == KEY_E || keycode == KEY_RIGHT)
+    else if (keycode == KEY_E || keycode == KEY_RIGHT)// modified from "if" to "else if" (check if it is ok)
         game->pl.pov += 0.1;
-    if (keycode == KEY_Q || keycode == KEY_LEFT)
+    else if (keycode == KEY_Q || keycode == KEY_LEFT)// modified from "if" to "else if" (check if it is ok)
         game->pl.pov -= 0.1;
-    if (keycode == KEY_A)
+    else if (keycode == KEY_A)// modified from "if" to "else if" (check if it is ok)
     {
         float teta;
 
@@ -334,7 +334,7 @@ int key_press(int keycode, t_game *game)
         game->pl.pos_x -= sin(teta) * 0.1;
         game->pl.pos_y -= cos(teta) * 0.1;
     }
-    if (keycode == KEY_D)
+    else if (keycode == KEY_D)// modified from "if" to "else if" (check if it is ok)
     {
             float teta;
 
@@ -342,6 +342,8 @@ int key_press(int keycode, t_game *game)
             game->pl.pos_x += sin(teta) * 0.1;
             game->pl.pos_y += cos(teta) * 0.1;
     }
+    else if (keycode == KEY_ESC)
+        end_program(game);
     update_window(game); //commented cause I call update_window from mlx_loop_hook
     return (0);
 }

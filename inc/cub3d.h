@@ -6,7 +6,7 @@
 /*   By: cfiliber <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/21 12:41:47 by mel-hada          #+#    #+#             */
-/*   Updated: 2022/11/12 19:35:54 by cfiliber         ###   ########.fr       */
+/*   Updated: 2022/11/12 20:38:30 by cfiliber         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,6 +69,7 @@ int     error_1(char *message);
 void	*null_error(char *message);
 void	print_warning(char *message);
 
+/* cub3d.c */
 float	to_degrees(float rad);
 void	*ft_memcpy(void *dst, const void *src, size_t n);
 int     ft_strlen(const char *str);
@@ -86,5 +87,7 @@ int		update_window(t_game *game);
 int 	check_pos(t_game *game);
 int 	key_press(int keycode, t_game *game);
 
+/* end_program.c */
+int		end_program(t_game *game);
 
 # endif
