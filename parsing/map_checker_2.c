@@ -6,7 +6,7 @@
 /*   By: tbertoli <tbertoli@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/12 17:41:01 by cfiliber          #+#    #+#             */
-/*   Updated: 2022/11/13 10:27:34 by tbertoli         ###   ########.fr       */
+/*   Updated: 2022/11/13 10:30:23 by tbertoli         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,8 +15,6 @@
 /* save player data in the t_player struct */
 void	save_player_data(t_player *player, int x, int y, char dir)
 {
-<<<<<<< HEAD
-    //printf("\nIN save_player_data FUNCTION\n");
     player->pos_x = x;
     player->pos_y = y;
     if (dir == 'E')
@@ -27,18 +25,6 @@ void	save_player_data(t_player *player, int x, int y, char dir)
         player->pov = 3.14;
     else if (dir == 'N')
         player->pov = 3 * 3.14 / 2;
-=======
-	player->pos_x = x;
-	player->pos_y = y;
-	if (dir == 'E')
-		player->pov = 0;
-	else if (dir == 'S')
-		player->pov = 3.14 / 2;
-	else if (dir == 'W')
-		player->pov = 3.14;
-	else if (dir == 'N')
-		player->pov = 3 * 3.14 / 2;
->>>>>>> 6e6f7ce01791874dbe401aa6ac3b54836b4b1ce0
 }
 
 /* check if a space is surrounded (up, down, left, right)
