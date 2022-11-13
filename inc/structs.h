@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   structs.h                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: cfiliber <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: tbertoli <tbertoli@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/08 12:01:01 by ael-bekk          #+#    #+#             */
-/*   Updated: 2022/11/12 19:38:59 by cfiliber         ###   ########.fr       */
+/*   Updated: 2022/11/13 11:03:41 by tbertoli         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,6 +31,16 @@ typedef struct s_data {
 	int		line_length;
 	int		endian;
 }				t_data;
+
+
+typedef struct s_mov {
+	int		m_fwrd;
+	int		m_bwrd;
+	int		m_lft;
+	int		m_rght;
+	int		r_l;
+	int		r_r;
+}				t_mov;
 
 /*
 * struttura in cui vengono salvate le path alle 4 diverse textures
@@ -95,6 +105,7 @@ typedef struct s_game
 	t_tex		we_tex;
 	t_tex		ea_tex;
 	t_col		col;
+	t_mov		mov;
 	int			screen_x;
 	int			screen_y;
 	int			map_x;

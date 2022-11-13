@@ -19,7 +19,12 @@ void    ft_init1(t_game *game)
     game->n_rays = W;
     game->delta_view = game->pl.view/game->n_rays;
     game->game_ended = 0;
-    printf("pov = %f",to_degrees(game->pl.view));
+    game->mov.m_fwrd = 0;
+    game->mov.m_bwrd = 0;
+    game->mov.m_lft = 0;
+    game->mov.m_rght = 0;
+    game->mov.r_l = 0;
+    game->mov.r_r = 0;
 }
 
 void    ft_init_tex(t_game *game)
@@ -110,7 +115,7 @@ float get_distance(t_game *game, int w)
     //ray_a = game->pl.pov - game->pl.view/2 + ( (float)w / (float)W * game->pl.view );
     while (1) //alla fine di questo while in d è presente la ditanza dal muro
     {
-        d += 0.005;
+        d += 0.01;
         eye_x = d * cos(ray_a);//
         eye_y = d * sin(ray_a);//scambiato seno e coseno
         ntest_x = game->pl.pos_x + eye_x;
@@ -264,7 +269,48 @@ int    update_window(t_game *game)
     mlx_destroy_image(screen->ptr, screen->shown_img.img);
     img->img = mlx_new_image(game->screen.ptr, W, H);//changed the first arg of mlx_new_image (earlier it was img->img)
     img->addr = mlx_get_data_addr(img->img, &img->bits_per_pixel, &img->line_length, &img->endian);
-	while (w < W) //while del raycasting
+	
+    
+    //check if needs to move
+    {
+    if (game->mov.m_fwrd == 1)
+    {
+        game->pl.pos_x += cos(game->pl.pov) * 0.2;
+        game->pl.pos_y += sin(game->pl.pov) * 0.2;//scambiati sen e cos
+    }
+    if (game->mov.m_bwrd == 1)
+    {
+        game->pl.pos_x -= cos(game->pl.pov) * 0.2;
+        game->pl.pos_y -= sin(game->pl.pov) * 0.2;//scambiati sen e cos
+    }
+    if (game->mov.r_r == 1)
+        game->pl.pov += 0.1;
+    if (game->mov.r_l == 1)
+        game->pl.pov -= 0.1;
+    if (game->mov.m_lft == 1)
+    {
+        float teta;
+
+        teta = game->pl.pov + 3.14/2;
+        game->pl.pos_x -= cos(teta) * 0.1; //scambiati sen e cos
+        game->pl.pos_y -= sin(teta) * 0.1;
+    }
+    if (game->mov.m_rght == 1)
+    {
+        float teta;
+
+        teta = game->pl.pov + 3.14/2;
+        game->pl.pos_x += cos(teta) * 0.1;
+        game->pl.pos_y += sin(teta) * 0.1; //scambiati sen e cos
+    }
+    }
+
+
+
+
+
+
+    while (w < W) //while del raycasting
 	{
         d = get_distance(game, w);
         if (d == -1)///////da cambiare!!
@@ -301,42 +347,52 @@ int check_pos(t_game *game) //da completare
     // }
 }
 
+int key_rlease(int keycode, t_game *game)
+{
+    if (keycode == KEY_W || keycode == KEY_FORWARD)
+        game->mov.m_fwrd = 0;
+    if (keycode == KEY_S || keycode == KEY_BACKWARD)// modified from "if" to "else if" (check if it is ok)
+        game->mov.m_bwrd = 0;
+    if (keycode == KEY_E || keycode == KEY_RIGHT)// modified from "if" to "else if" (check if it is ok)
+        game->mov.r_r = 0;
+    if (keycode == KEY_Q || keycode == KEY_LEFT)// modified from "if" to "else if" (check if it is ok)
+        game->mov.r_l = 0;
+    if (keycode == KEY_A)// modified from "if" to "else if" (check if it is ok)
+        game->mov.m_lft = 0;
+    if (keycode == KEY_D)// modified from "if" to "else if" (check if it is ok)
+        game->mov.m_rght = 0;
+    return (0);
+}
+
 int key_press(int keycode, t_game *game)
 {
     if (keycode == KEY_W || keycode == KEY_FORWARD)
-	{
-        //if (!check_pos(game))
-        //{
-            game->pl.pos_x += cos(game->pl.pov) * 0.2;
-            game->pl.pos_y += sin(game->pl.pov) * 0.2;//scambiati sen e cos
-        //}
-    }
-    else if (keycode == KEY_S || keycode == KEY_BACKWARD)// modified from "if" to "else if" (check if it is ok) 
-	{
-        game->pl.pos_x -= cos(game->pl.pov) * 0.2;
-        game->pl.pos_y -= sin(game->pl.pov) * 0.2;  //scambiati sen e cos
-    }
-    else if (keycode == KEY_E || keycode == KEY_RIGHT)// modified from "if" to "else if" (check if it is ok)
-        game->pl.pov += 0.1;
-    else if (keycode == KEY_Q || keycode == KEY_LEFT)// modified from "if" to "else if" (check if it is ok)
-        game->pl.pov -= 0.1;
-    else if (keycode == KEY_A)// modified from "if" to "else if" (check if it is ok)
+        game->mov.m_fwrd = 1;
+    if (keycode == KEY_S || keycode == KEY_BACKWARD)// modified from "if" to "else if" (check if it is ok)
+        game->mov.m_bwrd = 1;
+    if (keycode == KEY_E || keycode == KEY_RIGHT)// modified from "if" to "else if" (check if it is ok)
+        game->mov.r_r = 1;
+    if (keycode == KEY_Q || keycode == KEY_LEFT)// modified from "if" to "else if" (check if it is ok)
+        game->mov.r_l = 1;
+    if (keycode == KEY_A)// modified from "if" to "else if" (check if it is ok)
     {
-        float teta;
+        game->mov.m_lft = 1;
+        // float teta;
 
-        teta = game->pl.pov + 3.14/2;
-        game->pl.pos_x -= cos(teta) * 0.1; //scambiati sen e cos
-        game->pl.pos_y -= sin(teta) * 0.1;
+        // teta = game->pl.pov + 3.14/2;
+        // game->pl.pos_x -= cos(teta) * 0.1; //scambiati sen e cos
+        // game->pl.pos_y -= sin(teta) * 0.1;
     }
-    else if (keycode == KEY_D)// modified from "if" to "else if" (check if it is ok)
+    if (keycode == KEY_D)// modified from "if" to "else if" (check if it is ok)
     {
-            float teta;
+        game->mov.m_rght = 1;
+        // float teta;
 
-            teta = game->pl.pov + 3.14/2;
-            game->pl.pos_x += cos(teta) * 0.1;
-            game->pl.pos_y += sin(teta) * 0.1; //scambiati sen e cos
+        // teta = game->pl.pov + 3.14/2;
+        // game->pl.pos_x += cos(teta) * 0.1;
+        // game->pl.pos_y += sin(teta) * 0.1; //scambiati sen e cos
     }
-    else if (keycode == KEY_ESC)
+    if (keycode == KEY_ESC)
         end_program(game);
     update_window(game); //commented cause I call update_window from mlx_loop_hook
     return (0);
