@@ -3,6 +3,18 @@
 #define H 1080/2
 #define W 1920/2
 
+int flag = 0;
+
+char map_init[8][16]=  {
+                        {'1','1','1', '1', '1', '1','1','1','1','1','1','1','1','1','1','1'}, 
+                        {'1','0','0', '0', '0', '0','0','1','0','0','0','0','0','0','0','1'},
+                        {'1','0','0', '0', '0', '0','0','0','0','0','0','0','0','0','0','1'},
+                        {'1','1','0', '0', '0', '0','0','N','0','0','0','0','0','0','0','1'},
+                        {'1','1','0', '0', '0', '0','0','0','0','0','0','0','0','0','0','1'},
+                        {'1','0','0', '0', '0', '0','0','0','0','0','0','0','0','0','0','1'},
+                        {'1','0','0', '0', '0', '0','0','1','1','1','0','0','0','0','0','1'},
+                        {'1','1','1', '1', '1', '1','1','1','1','1','1','1','1','1','1','1'}
+                        };
 
 float to_degrees(float rad)
 {
@@ -19,6 +31,7 @@ void    ft_init1(t_game *game)
     game->n_rays = W;
     game->delta_view = game->pl.view/game->n_rays;
     game->game_ended = 0;
+    flag = 0;
     printf("pov = %f",to_degrees(game->pl.view));
 }
 
@@ -111,13 +124,14 @@ float get_distance(t_game *game, int w)
     while (1) //alla fine di questo while in d è presente la ditanza dal muro
     {
         d += 0.005;
-        eye_x = d * cos(ray_a);//
-        eye_y = d * sin(ray_a);//scambiato seno e coseno
+        eye_x = d * sin(ray_a);
+        eye_y = d * cos(ray_a);
         ntest_x = game->pl.pos_x + eye_x;
         ntest_y = game->pl.pos_y + eye_y;
         if (ntest_x >= game->map_x || ntest_y >= game->map_y)
             return -1;
-        if (game->map[ntest_y][ntest_x] == '1')
+        // if (game->map[ntest_y][ntest_x] == '1')
+        if (map_init[ntest_y][ntest_x] == '1')
         {
             break;
         }
@@ -128,12 +142,12 @@ float get_distance(t_game *game, int w)
     mid_block_x = (float) ntest_x + 0.5; 
     mid_block_y = (float) ntest_y + 0.5;
     
-    test_point_x = game->pl.pos_x + d * cos(ray_a);
-    test_point_y = game->pl.pos_y + d * sin(ray_a);//scambio seno e coseno
+    test_point_x = game->pl.pos_x + d * sin(ray_a);
+    test_point_y = game->pl.pos_y + d * cos(ray_a);
     test_angle = 1000;
 
     //if ((test_point_x - mid_block_x) != 0)
-    test_angle = atan2f((test_point_y - mid_block_y),(test_point_x - mid_block_x));
+    test_angle = atan2f((test_point_y - mid_block_y), (test_point_x - mid_block_x));
     if (test_angle >= -3.14159 * 0.25 && test_angle < 3.14159 * 0.25) //bianco
     {   
         game->screen.orient = 1;
@@ -307,14 +321,14 @@ int key_press(int keycode, t_game *game)
 	{
         //if (!check_pos(game))
         //{
-            game->pl.pos_x += cos(game->pl.pov) * 0.2;
-            game->pl.pos_y += sin(game->pl.pov) * 0.2;//scambiati sen e cos
+            game->pl.pos_x += sin(game->pl.pov) * 0.2;
+            game->pl.pos_y += cos(game->pl.pov) * 0.2;
         //}
     }
     if (keycode == KEY_S || keycode == KEY_BACKWARD)
 	{
-        game->pl.pos_x -= cos(game->pl.pov) * 0.2;
-        game->pl.pos_y -= sin(game->pl.pov) * 0.2;  //scambiati sen e cos
+        game->pl.pos_x -= sin(game->pl.pov) * 0.2;
+        game->pl.pos_y -= cos(game->pl.pov) * 0.2; 
     }
     if (keycode == KEY_E || keycode == KEY_RIGHT)
         game->pl.pov += 0.1;
@@ -325,16 +339,16 @@ int key_press(int keycode, t_game *game)
         float teta;
 
         teta = game->pl.pov + 3.14/2;
-        game->pl.pos_x -= cos(teta) * 0.1; //scambiati sen e cos
-        game->pl.pos_y -= sin(teta) * 0.1;
+        game->pl.pos_x -= sin(teta) * 0.1;
+        game->pl.pos_y -= cos(teta) * 0.1;
     }
     if (keycode == KEY_D)
     {
             float teta;
 
             teta = game->pl.pov + 3.14/2;
-            game->pl.pos_x += cos(teta) * 0.1;
-            game->pl.pos_y += sin(teta) * 0.1; //scambiati sen e cos
+            game->pl.pos_x += sin(teta) * 0.1;
+            game->pl.pos_y += cos(teta) * 0.1;
     }
     update_window(game); //commented cause I call update_window from mlx_loop_hook
     return (0);

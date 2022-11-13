@@ -7,13 +7,13 @@ void    save_player_data(t_player *player, int x, int y, char dir)
     player->pos_x = x;
     player->pos_y = y;
     if (dir == 'E')
-        player->pov += 3.14 / 2;
-    else if (dir == 'S')
         player->pov = 0;
+    else if (dir == 'S')
+         player->pov = 3.14 / 2;
     else if (dir == 'W')
-        player->pov = 3 * 3.14 / 2;
-    else if (dir == 'N')
         player->pov = 3.14;
+    else if (dir == 'N')
+        player->pov = 3 * 3.14 / 2;
 }
 
 /* check if a space is surrounded (up, down, left, right) by an other space, a 1 or a \0 */
