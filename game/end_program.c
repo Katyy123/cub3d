@@ -1,28 +1,25 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_all_char_same.c                                 :+:      :+:    :+:   */
+/*   end_program.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: cfiliber <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/11/12 19:40:15 by cfiliber          #+#    #+#             */
-/*   Updated: 2022/11/12 19:40:49 by cfiliber         ###   ########.fr       */
+/*   Created: 2022/11/12 20:31:37 by cfiliber          #+#    #+#             */
+/*   Updated: 2022/11/12 20:43:36 by cfiliber         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "libft.h"
+#include "../inc/cub3d.h"
 
-/* check if a string contains only one type of character */
-int	ft_all_char_same(char *str, char c)
+int	end_program(t_game *game) //to check if I need to free images and other stuff
 {
-	int	i;
-
-	i = 0;
-	while (str[i])
-	{
-		if (str[i] != c)
-			return (0);
-		i++;
-	}
-	return (1);
+	mlx_destroy_window(game->screen.ptr, game->screen.win);
+	free(game->screen.ptr);
+	ft_free_char_mtx(game->map);
+	free(game->no_tex.path);
+	free(game->so_tex.path);
+	free(game->we_tex.path);
+	free(game->ea_tex.path);
+	exit(0);
 }
