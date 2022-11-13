@@ -6,7 +6,7 @@
 #    By: cfiliber <marvin@42.fr>                    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/10/27 16:37:56 by cfiliber          #+#    #+#              #
-#    Updated: 2022/11/12 17:10:53 by cfiliber         ###   ########.fr        #
+#    Updated: 2022/11/12 20:38:57 by cfiliber         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -25,14 +25,14 @@ SRC_GNL = $(addprefix gnl/, $(GNL))
 PARSING = file_reader.c file_checker.c texture_checker.c color_checker.c map_create.c map_create_2.c map_checker.c map_checker_2.c
 SRC_PARSING = $(addprefix parsing/, $(PARSING))
 
-GAME = cub3d.c
+GAME = cub3d.c end_program.c
 SRC_GAME = $(addprefix game/, $(GAME))
 
 OBJS = $(SRCS:.c=.o)
 
 CC = gcc
 
-CFLAGS = -Wall -Wextra -Werror -g -I libft -Imlx #-fsanitize=address
+CFLAGS = -Wall -Wextra -Werror -g -I libft -Imlx -fsanitize=address
 
 GREEN = '\x1b[32m'
 YELLOW = '\x1b[33m'

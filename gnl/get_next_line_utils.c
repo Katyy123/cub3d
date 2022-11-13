@@ -6,7 +6,7 @@
 /*   By: cfiliber <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/17 19:30:33 by cfiliber          #+#    #+#             */
-/*   Updated: 2021/12/01 17:49:10 by cfiliber         ###   ########.fr       */
+/*   Updated: 2022/11/12 19:47:40 by cfiliber         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,14 +74,14 @@ char	*ft_strchr_gnl(const char *s, int c)
 {
 	char	car;
 	size_t	i;
-	//int		slen;
+	size_t	slen;
 	char	*s2;
 
 	car = (char)c;
-	/*slen = */ft_strlen_gnl(s);
+	slen = ft_strlen_gnl(s);
 	s2 = (char *)s;
 	i = 0;
-	while (i <= ft_strlen_gnl(s))
+	while (i <= slen)
 	{
 		if (s[i] == car)
 			return (s2 + i);
