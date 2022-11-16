@@ -10,6 +10,20 @@ float to_degrees(float rad)
 }
 
 /*
+* funzione che inizializza a zero i valori della struttura rc
+*/
+void    ft_init_rc(t_rc *rc)
+{
+    rc->ntest_x = 0;
+    rc->ntest_y = 0;
+    rc->mid_block_x = 0;
+    rc->mid_block_y = 0;
+    rc->test_point_x = 0;
+    rc->test_point_y = 0;
+    rc->test_angle = 0;
+}
+
+/*
 * funzione che inizializza la mappa, la posizione del giocatore e altre costanti del gioco;
 */
 void    ft_init1(t_game *game)
@@ -25,6 +39,7 @@ void    ft_init1(t_game *game)
     game->mov.m_rght = 0;
     game->mov.r_l = 0;
     game->mov.r_r = 0;
+    ft_init_rc(&game->r);
 }
 
 void    ft_init_tex(t_game *game)
@@ -91,10 +106,91 @@ void pixel_col_put(t_screen *screen, int x, int y, int color, int pxnum)
 }
 
 /*
+* funzione che determina l'orientamento della parte incontrata e setta il valore di 
+* f_sample_X che serve a capire la coordinata x per il sampling della texture
+*/
+void get_orient(t_game *game)
+{
+    float   test_angle;
+
+    test_angle = game->r.test_angle;
+    if (test_angle >= -3.14159 * 0.25 && test_angle < 3.14159 * 0.25)
+    {   
+        game->screen.orient = 1;
+         game->f_sample_x = game->r.test_point_y - (float)game->r.ntest_y;
+    }
+    if (test_angle >= 3.14159 * 0.25 && test_angle < 3.14159 * 0.75)
+    {   
+        game->screen.orient = 2;
+        game->f_sample_x = game->r.test_point_x - (float)game->r.ntest_x;
+    }
+    if (test_angle < -3.14159 * 0.25f && test_angle >= -3.14159 * 0.75)
+    {   
+        game->screen.orient = 3;
+        game->f_sample_x = game->r.test_point_x - (float)game->r.ntest_x;
+    }
+    if (test_angle >= 3.14159 * 0.75f || test_angle < -3.14159 * 0.75)
+    {   
+        game->screen.orient = 4;
+        game->f_sample_x = game->r.test_point_y - (float)game->r.ntest_y;
+    }
+}
+
+/*
+* funzione che ritorna 1 quando è stata incontrata una parete, o quando
+* sono uscito dalla mappa, nel frattempo aggiorna il valore della distanza dall
+* osservatore (d) che è passata per indirizzo.
+*/
+t_bool increment_d(float *d, t_game *game, float ray_a)
+{
+    float   eye_x;
+    float   eye_y;
+
+    *d += 0.01; //questo incremento qui può essere fatto mediante algoritmo dda
+    eye_x = *d * cos(ray_a);
+    eye_y = *d * sin(ray_a);
+    game->r.ntest_x = game->pl.pos_x + eye_x;
+    game->r.ntest_y = game->pl.pos_y + eye_y;
+    if (game->r.ntest_x >= game->map_x || game->r.ntest_y >= game->map_y)
+        return (TRUE);
+    else if (game->map[game->r.ntest_y][game->r.ntest_x] == '1')
+        return (TRUE);
+    else
+        return (FALSE);
+}
+
+/*
 * funzione che calcola la distanza dell' ostacolo dall'osservatore per ogni raggio della visuale
 */
 float get_distance(t_game *game, int w)
 {
+    float   d;
+    float   ray_a;
+    t_bool  wall;
+    
+    wall = FALSE;
+    d = 0;
+    //float fRayAngle = (fPlayerA - fFOV / 2.0f) + ((float)x / (float)ScreenWidth()) * fFOV;
+    ray_a =  game->pl.pov - game->pl.view/2 + game->delta_view * w; //ricontrollare questa
+    //ray_a = game->pl.pov - game->pl.view/2 + ( (float)w / (float)W * game->pl.view );
+    while (!wall) //alla fine di questo while in d è presente la ditanza dal muro
+    {
+        wall = increment_d(&d, game, ray_a);
+    }
+    //calcolo il quadrante:
+    game->r.mid_block_x = (float) game->r.ntest_x + 0.5; 
+    game->r.mid_block_y = (float) game->r.ntest_y + 0.5;
+    game->r.test_point_x = game->pl.pos_x + d * cos(ray_a);
+    game->r.test_point_y = game->pl.pos_y + d * sin(ray_a);//scambio seno e coseno
+    game->r.test_angle = 1000;
+
+    //if ((test_point_x - mid_block_x) != 0)
+    game->r.test_angle = atan2f((game->r.test_point_y - game->r.mid_block_y),
+                                (game->r.test_point_x - game->r.mid_block_x));
+    get_orient(game);
+    return d;
+
+    /*
     float d;
     float ray_a;
     float eye_x;
@@ -162,8 +258,8 @@ float get_distance(t_game *game, int w)
     // if (test_angle == 1000)
     //     game->screen.q = 4;
     return d;
+    */
 }
-
 
 /*
 * determina il colore del pixel dalla tex.
@@ -185,11 +281,64 @@ int     get_color(t_game *game, int y, int wall_h, t_tex tex)
     return (color);
 }
 
+int draw_ceiling(t_game *game, float celing_h, int line)
+{
+    t_screen    *screen;
+    int         y;
+
+    y = 0;
+    screen = &game->screen;
+    while (y < celing_h)
+    {
+        my_mlx_pixel_put(&screen->shown_img, line, (y), game->col.c_col);
+        y++;
+    }
+    return (y);
+}
+
+t_tex ret_right_tex(t_game *game)
+{
+    int orient;
+
+    orient = game->screen.orient;
+    if (orient == 3)
+        return (game->no_tex);
+    if (orient == 2)
+        return (game->so_tex);
+    if (orient == 1)
+        return (game->ea_tex);
+    if (orient == 4)
+        return (game->we_tex);
+    else
+        return (game->we_tex);
+}
+
 /*
 * funzione che disegna una linea sullo schermo per ogni ray
 */
 void draw_line(t_screen *screen, int line, float celing_h, t_game *game)
 {
+    float floor_h;
+    float wall_h;
+    int y;
+
+    floor_h = celing_h;
+    wall_h = H - celing_h -floor_h;
+    y = draw_ceiling(game, celing_h, line);
+    while (y < celing_h + wall_h)
+    {
+        my_mlx_pixel_put(&screen->shown_img, line, (y), 
+                        get_color(game, y - celing_h, wall_h,
+                        ret_right_tex(game)));
+        y++;
+    }
+    while (y < H)
+    {
+        my_mlx_pixel_put(&screen->shown_img, line, (y), game->col.f_col);
+        y++;
+    }
+
+    /*
     float floor_h;
     float wall_h;
     int y;
@@ -221,6 +370,7 @@ void draw_line(t_screen *screen, int line, float celing_h, t_game *game)
         my_mlx_pixel_put(&screen->shown_img, line, (y), game->col.f_col);
         y++;
     } //lascio nero
+    */
 }
 
 /*
@@ -253,6 +403,43 @@ void    update_screen(t_game *game)
 }
 */
 
+void    update_pos(t_game *game)
+{
+    float teta;
+    
+    if (game->mov.m_fwrd == 1 && !wall_f(game))
+    {
+        game->pl.pos_x += cos(game->pl.pov) * 0.2;
+        game->pl.pos_y += sin(game->pl.pov) * 0.2;//scambiati sen e cos
+    }
+    else if ((game->mov.m_fwrd == 1 && wall_f(game)))
+    {
+        game->pl.pos_x -= cos(game->pl.pov) * 0.2;
+        game->pl.pos_y -= sin(game->pl.pov) * 0.2;//scambiati sen e cos
+    }
+    if (game->mov.m_bwrd == 1 && !wall_b(game))
+    {
+        game->pl.pos_x -= cos(game->pl.pov) * 0.2;
+        game->pl.pos_y -= sin(game->pl.pov) * 0.2;//scambiati sen e cos
+    }
+    if (game->mov.m_rght == 1 && !wall_dx(game))
+    {
+        teta = game->pl.pov + 3.14/2;
+        game->pl.pos_x += cos(teta) * 0.1;
+        game->pl.pos_y += sin(teta) * 0.1; //scambiati sen e cos
+    }
+    if (game->mov.m_lft == 1 && !wall_sx(game))
+    {
+        teta = game->pl.pov + 3.14/2;
+        game->pl.pos_x -= cos(teta) * 0.1; //scambiati sen e cos
+        game->pl.pos_y -= sin(teta) * 0.1;
+    }
+    if (game->mov.r_r == 1)
+        game->pl.pov += 0.1;
+    if (game->mov.r_l == 1)
+        game->pl.pov -= 0.1;
+}
+
 int    update_window(t_game *game)
 {
 	t_screen	*screen;
@@ -269,47 +456,7 @@ int    update_window(t_game *game)
     mlx_destroy_image(screen->ptr, screen->shown_img.img);
     img->img = mlx_new_image(game->screen.ptr, W, H);//changed the first arg of mlx_new_image (earlier it was img->img)
     img->addr = mlx_get_data_addr(img->img, &img->bits_per_pixel, &img->line_length, &img->endian);
-	
-    
-    //check if needs to move
-    {
-    if (game->mov.m_fwrd == 1)
-    {
-        game->pl.pos_x += cos(game->pl.pov) * 0.2;
-        game->pl.pos_y += sin(game->pl.pov) * 0.2;//scambiati sen e cos
-    }
-    if (game->mov.m_bwrd == 1)
-    {
-        game->pl.pos_x -= cos(game->pl.pov) * 0.2;
-        game->pl.pos_y -= sin(game->pl.pov) * 0.2;//scambiati sen e cos
-    }
-    if (game->mov.r_r == 1)
-        game->pl.pov += 0.1;
-    if (game->mov.r_l == 1)
-        game->pl.pov -= 0.1;
-    if (game->mov.m_lft == 1)
-    {
-        float teta;
-
-        teta = game->pl.pov + 3.14/2;
-        game->pl.pos_x -= cos(teta) * 0.1; //scambiati sen e cos
-        game->pl.pos_y -= sin(teta) * 0.1;
-    }
-    if (game->mov.m_rght == 1)
-    {
-        float teta;
-
-        teta = game->pl.pov + 3.14/2;
-        game->pl.pos_x += cos(teta) * 0.1;
-        game->pl.pos_y += sin(teta) * 0.1; //scambiati sen e cos
-    }
-    }
-
-
-
-
-
-
+    update_pos(game);
     while (w < W) //while del raycasting
 	{
         d = get_distance(game, w);

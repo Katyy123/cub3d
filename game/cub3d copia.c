@@ -141,7 +141,7 @@ void get_orient(t_game *game)
 * sono uscito dalla mappa, nel frattempo aggiorna il valore della distanza dall
 * osservatore (d) che è passata per indirizzo.
 */
-int increment_d(float *d, t_game *game, float ray_a)
+t_bool increment_d(float *d, t_game *game, float ray_a)
 {
     float   eye_x;
     float   eye_y;
