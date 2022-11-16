@@ -328,6 +328,38 @@ void    update_screen(t_game *game)
 }
 */
 
+void    update_pos(t_game *game)
+{
+    float teta;
+    
+    if (game->mov.m_fwrd == 1)
+    {
+        game->pl.pos_x += cos(game->pl.pov) * 0.2;
+        game->pl.pos_y += sin(game->pl.pov) * 0.2;//scambiati sen e cos
+    }
+    if (game->mov.m_bwrd == 1)
+    {
+        game->pl.pos_x -= cos(game->pl.pov) * 0.2;
+        game->pl.pos_y -= sin(game->pl.pov) * 0.2;//scambiati sen e cos
+    }
+    if (game->mov.r_r == 1)
+        game->pl.pov += 0.1;
+    if (game->mov.r_l == 1)
+        game->pl.pov -= 0.1;
+    if (game->mov.m_lft == 1)
+    {
+        teta = game->pl.pov + 3.14/2;
+        game->pl.pos_x -= cos(teta) * 0.1; //scambiati sen e cos
+        game->pl.pos_y -= sin(teta) * 0.1;
+    }
+    if (game->mov.m_rght == 1)
+    {
+        teta = game->pl.pov + 3.14/2;
+        game->pl.pos_x += cos(teta) * 0.1;
+        game->pl.pos_y += sin(teta) * 0.1; //scambiati sen e cos
+    }
+}
+
 int    update_window(t_game *game)
 {
 	t_screen	*screen;
@@ -345,7 +377,7 @@ int    update_window(t_game *game)
     img->img = mlx_new_image(game->screen.ptr, W, H);//changed the first arg of mlx_new_image (earlier it was img->img)
     img->addr = mlx_get_data_addr(img->img, &img->bits_per_pixel, &img->line_length, &img->endian);
 	
-    
+    /*
     //check if needs to move
     {
     if (game->mov.m_fwrd == 1)
@@ -379,11 +411,8 @@ int    update_window(t_game *game)
         game->pl.pos_y += sin(teta) * 0.1; //scambiati sen e cos
     }
     }
-
-
-
-
-
+    */
+    update_pos(game);
 
     while (w < W) //while del raycasting
 	{
@@ -430,23 +459,9 @@ int key_press(int keycode, t_game *game)
     if (keycode == KEY_Q || keycode == KEY_LEFT)// modified from "if" to "else if" (check if it is ok)
         game->mov.r_l = 1;
     if (keycode == KEY_A)// modified from "if" to "else if" (check if it is ok)
-    {
         game->mov.m_lft = 1;
-        // float teta;
-
-        // teta = game->pl.pov + 3.14/2;
-        // game->pl.pos_x -= cos(teta) * 0.1; //scambiati sen e cos
-        // game->pl.pos_y -= sin(teta) * 0.1;
-    }
     if (keycode == KEY_D)// modified from "if" to "else if" (check if it is ok)
-    {
         game->mov.m_rght = 1;
-        // float teta;
-
-        // teta = game->pl.pov + 3.14/2;
-        // game->pl.pos_x += cos(teta) * 0.1;
-        // game->pl.pos_y += sin(teta) * 0.1; //scambiati sen e cos
-    }
     if (keycode == KEY_ESC)
         end_program(game);
     update_window(game); //commented cause I call update_window from mlx_loop_hook
