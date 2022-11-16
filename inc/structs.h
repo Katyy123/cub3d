@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   structs.h                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tbertoli <tbertoli@student.42.fr>          +#+  +:+       +#+        */
+/*   By: tom <tom@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/08 12:01:01 by ael-bekk          #+#    #+#             */
-/*   Updated: 2022/11/13 11:03:41 by tbertoli         ###   ########.fr       */
+/*   Updated: 2022/11/15 23:44:28 by tom              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,6 +32,19 @@ typedef struct s_data {
 	int		endian;
 }				t_data;
 
+
+//aggiunta da casa, da testare
+typedef struct s_rc {
+	int ntest_x;// = (int)(posX + distance_to_wall * cos(f_ray_angle))
+    int ntest_y; // = (int)(posY + distance_to_wall * sen(f_ray_angle)
+    
+    //per il calcolo del quadrante
+    float mid_block_x;
+    float mid_block_y;
+    float test_point_x;
+    float test_point_y;
+    float test_angle;
+}				t_rc;
 
 typedef struct s_mov {
 	int		m_fwrd;
@@ -98,6 +111,7 @@ typedef struct s_screen
 
 typedef struct s_game
 {
+	t_rc		r;
 	t_screen	screen;
 	t_player	pl;
 	t_tex		no_tex;
