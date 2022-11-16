@@ -136,6 +136,44 @@ void get_orient(t_game *game)
     }
 }
 
+
+// float dda_incr(float d, t_game *game, float ray_a)
+// {
+//     float incr;
+//     int n_x;
+//     int n_y;
+
+//     n_x = (int)game->pl.pos_x;
+//     n_y = (int)game->pl.pos_y;
+//     if (sen(ray_a) >= 0 && cos(ray_a) >= 0) //I
+//     {
+//         n_x++;
+//         n_y++;
+//     }
+//     if (sen(ray_a) >= 0 && cos(ray_a) < 0)//II
+//     {
+//         n_x--;
+//         n_y++;
+//     }
+//     if (sen(ray_a) < 0 && cos(ray_a) < 0)//III
+//     {
+//         n_x--;
+//         n_y++;
+//     }
+//     if (sen(ray_a) < 0 && cos(ray_a) >= 0)//IIII 
+//     {
+//         n_x++;
+//         n_y--;
+//     }
+    
+
+
+
+
+//     return (incr);
+// }
+
+
 /*
 * funzione che ritorna 1 quando è stata incontrata una parete, o quando
 * sono uscito dalla mappa, nel frattempo aggiorna il valore della distanza dall
@@ -147,6 +185,7 @@ t_bool increment_d(float *d, t_game *game, float ray_a)
     float   eye_y;
 
     *d += 0.01; //questo incremento qui può essere fatto mediante algoritmo dda
+    //*d += dda_incr(d, game, ray_a);
     eye_x = *d * cos(ray_a);
     eye_y = *d * sin(ray_a);
     game->r.ntest_x = game->pl.pos_x + eye_x;
@@ -170,21 +209,15 @@ float get_distance(t_game *game, int w)
     
     wall = FALSE;
     d = 0;
-    //float fRayAngle = (fPlayerA - fFOV / 2.0f) + ((float)x / (float)ScreenWidth()) * fFOV;
     ray_a =  game->pl.pov - game->pl.view/2 + game->delta_view * w; //ricontrollare questa
-    //ray_a = game->pl.pov - game->pl.view/2 + ( (float)w / (float)W * game->pl.view );
-    while (!wall) //alla fine di questo while in d è presente la ditanza dal muro
-    {
+    while (!wall)
         wall = increment_d(&d, game, ray_a);
-    }
     //calcolo il quadrante:
     game->r.mid_block_x = (float) game->r.ntest_x + 0.5; 
     game->r.mid_block_y = (float) game->r.ntest_y + 0.5;
     game->r.test_point_x = game->pl.pos_x + d * cos(ray_a);
-    game->r.test_point_y = game->pl.pos_y + d * sin(ray_a);//scambio seno e coseno
-    game->r.test_angle = 1000;
-
-    //if ((test_point_x - mid_block_x) != 0)
+    game->r.test_point_y = game->pl.pos_y + d * sin(ray_a);
+    //game->r.test_angle = 1000;
     game->r.test_angle = atan2f((game->r.test_point_y - game->r.mid_block_y),
                                 (game->r.test_point_x - game->r.mid_block_x));
     get_orient(game);
@@ -472,26 +505,6 @@ int    update_window(t_game *game)
     }
 	mlx_put_image_to_window(screen->ptr, screen->win, img->img, 0, 0);
     return (0);
-}
-
-/*
-* funzione che controlla se si è andati a sbattere su un muro
-* nel qual caso disfa il passo appena fatto
-*/
-int check_pos(t_game *game) //da completare
-{
-    int x;
-    int y;
-
-    x = game->pl.pos_x;
-    y = game->pl.pos_y;
-    if (game->map[x][y] == '1')
-        return (1);
-    return (0);
-    // {
-    //     game->pl.pos_x -= sin(game->pl.pov) * 0.1;
-    //     game->pl.pos_y -= cos(game->pl.pov) * 0.1;
-    // }
 }
 
 int key_rlease(int keycode, t_game *game)
