@@ -6,7 +6,7 @@
 /*   By: tom <tom@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/16 20:15:41 by tbertoli          #+#    #+#             */
-/*   Updated: 2022/11/17 18:37:14 by tom              ###   ########.fr       */
+/*   Updated: 2022/11/17 18:51:20 by tom              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,8 +18,8 @@ int wall_f(t_game *game)
     float test_y;
     float test_a;
 
-    test_a = game->pl.pov - (3.14 /2);
-    while (test_a < (game->pl.pov + (3.14 /2)))
+    test_a = game->pl.pov - (3.14 /4);
+    while (test_a < (game->pl.pov + (3.14 /4)))
     {
         test_x = game->pl.pos_x + cos(test_a);
         test_y = game->pl.pos_y + sin(test_a);
