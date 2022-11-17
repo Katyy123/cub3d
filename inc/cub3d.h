@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cub3d.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: cfiliber <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: tbertoli <tbertoli@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/21 12:41:47 by mel-hada          #+#    #+#             */
-/*   Updated: 2022/11/12 20:38:30 by cfiliber         ###   ########.fr       */
+/*   Updated: 2022/11/16 21:11:16 by tbertoli         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,13 +63,19 @@
 # include "../libft/libft.h"
 # include "../gnl/get_next_line.h"
 
+
+int wall_f(t_game *game);
+int wall_b(t_game *game);
+int wall_dx(t_game *game);
+int wall_sx(t_game *game);
+
 /* errors.c */
 int		error(char *message);
 int     error_1(char *message);
 void	*null_error(char *message);
 void	print_warning(char *message);
 
-/* cub3d.c */
+/* cub3d.c */ // ne mancano un po!
 float	to_degrees(float rad);
 void	*ft_memcpy(void *dst, const void *src, size_t n);
 int     ft_strlen(const char *str);
@@ -86,6 +92,7 @@ void 	draw_line(t_screen *screen, int line, float celing_h, t_game *game);
 int		update_window(t_game *game);
 int 	check_pos(t_game *game);
 int 	key_press(int keycode, t_game *game);
+int     key_rlease(int keycode, t_game *game);
 
 /* end_program.c */
 int		end_program(t_game *game);

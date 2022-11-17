@@ -3,24 +3,22 @@
 #define H 1080/2
 #define W 1920/2
 
+int flag = 0;
+
+char map_init[8][16]=  {
+                        {'1','1','1', '1', '1', '1','1','1','1','1','1','1','1','1','1','1'}, 
+                        {'1','0','0', '0', '0', '0','0','1','0','0','0','0','0','0','0','1'},
+                        {'1','0','0', '0', '0', '0','0','0','0','0','0','0','0','0','0','1'},
+                        {'1','1','0', '0', '0', '0','0','N','0','0','0','0','0','0','0','1'},
+                        {'1','1','0', '0', '0', '0','0','0','0','0','0','0','0','0','0','1'},
+                        {'1','0','0', '0', '0', '0','0','0','0','0','0','0','0','0','0','1'},
+                        {'1','0','0', '0', '0', '0','0','1','1','1','0','0','0','0','0','1'},
+                        {'1','1','1', '1', '1', '1','1','1','1','1','1','1','1','1','1','1'}
+                        };
 
 float to_degrees(float rad)
 {
     return (rad * 57.2597);
-}
-
-/*
-* funzione che inizializza a zero i valori della struttura rc
-*/
-void    ft_init_rc(t_rc *rc)
-{
-    rc->ntest_x = 0;
-    rc->ntest_y = 0;
-    rc->mid_block_x = 0;
-    rc->mid_block_y = 0;
-    rc->test_point_x = 0;
-    rc->test_point_y = 0;
-    rc->test_angle = 0;
 }
 
 /*
@@ -33,13 +31,8 @@ void    ft_init1(t_game *game)
     game->n_rays = W;
     game->delta_view = game->pl.view/game->n_rays;
     game->game_ended = 0;
-    game->mov.m_fwrd = 0;
-    game->mov.m_bwrd = 0;
-    game->mov.m_lft = 0;
-    game->mov.m_rght = 0;
-    game->mov.r_l = 0;
-    game->mov.r_r = 0;
-    ft_init_rc(&game->r);
+    flag = 0;
+    printf("pov = %f",to_degrees(game->pl.view));
 }
 
 void    ft_init_tex(t_game *game)
@@ -106,124 +99,10 @@ void pixel_col_put(t_screen *screen, int x, int y, int color, int pxnum)
 }
 
 /*
-* funzione che determina l'orientamento della parte incontrata e setta il valore di 
-* f_sample_X che serve a capire la coordinata x per il sampling della texture
-*/
-void get_orient(t_game *game)
-{
-    float   test_angle;
-
-    test_angle = game->r.test_angle;
-    if (test_angle >= -3.14159 * 0.25 && test_angle < 3.14159 * 0.25)
-    {   
-        game->screen.orient = 1;
-         game->f_sample_x = game->r.test_point_y - (float)game->r.ntest_y;
-    }
-    if (test_angle >= 3.14159 * 0.25 && test_angle < 3.14159 * 0.75)
-    {   
-        game->screen.orient = 2;
-        game->f_sample_x = game->r.test_point_x - (float)game->r.ntest_x;
-    }
-    if (test_angle < -3.14159 * 0.25f && test_angle >= -3.14159 * 0.75)
-    {   
-        game->screen.orient = 3;
-        game->f_sample_x = game->r.test_point_x - (float)game->r.ntest_x;
-    }
-    if (test_angle >= 3.14159 * 0.75f || test_angle < -3.14159 * 0.75)
-    {   
-        game->screen.orient = 4;
-        game->f_sample_x = game->r.test_point_y - (float)game->r.ntest_y;
-    }
-}
-
-
-// float dda_incr(float d, t_game *game, float ray_a)
-// {
-//     float incr;
-//     int n_x;
-//     int n_y;
-
-//     n_x = (int)game->pl.pos_x;
-//     n_y = (int)game->pl.pos_y;
-//     if (sen(ray_a) >= 0 && cos(ray_a) >= 0) //I
-//     {
-//         n_x++;
-//         n_y++;
-//     }
-//     if (sen(ray_a) >= 0 && cos(ray_a) < 0)//II
-//     {
-//         n_x--;
-//         n_y++;
-//     }
-//     if (sen(ray_a) < 0 && cos(ray_a) < 0)//III
-//     {
-//         n_x--;
-//         n_y++;
-//     }
-//     if (sen(ray_a) < 0 && cos(ray_a) >= 0)//IIII 
-//     {
-//         n_x++;
-//         n_y--;
-//     }
-    
-
-
-
-
-//     return (incr);
-// }
-
-
-/*
-* funzione che ritorna 1 quando è stata incontrata una parete, o quando
-* sono uscito dalla mappa, nel frattempo aggiorna il valore della distanza dall
-* osservatore (d) che è passata per indirizzo.
-*/
-t_bool increment_d(float *d, t_game *game, float ray_a)
-{
-    float   eye_x;
-    float   eye_y;
-
-    *d += 0.01; //questo incremento qui può essere fatto mediante algoritmo dda
-    //*d += dda_incr(d, game, ray_a);
-    eye_x = *d * cos(ray_a);
-    eye_y = *d * sin(ray_a);
-    game->r.ntest_x = game->pl.pos_x + eye_x;
-    game->r.ntest_y = game->pl.pos_y + eye_y;
-    if (game->r.ntest_x >= game->map_x || game->r.ntest_y >= game->map_y)
-        return (TRUE);
-    else if (game->map[game->r.ntest_y][game->r.ntest_x] == '1')
-        return (TRUE);
-    else
-        return (FALSE);
-}
-
-/*
 * funzione che calcola la distanza dell' ostacolo dall'osservatore per ogni raggio della visuale
 */
 float get_distance(t_game *game, int w)
 {
-    float   d;
-    float   ray_a;
-    t_bool  wall;
-    
-    wall = FALSE;
-    d = 0;
-    ray_a =  game->pl.pov - game->pl.view/2 + game->delta_view * w; //ricontrollare questa
-    while (!wall)
-        wall = increment_d(&d, game, ray_a);
-    //calcolo il quadrante:
-    game->r.mid_block_x = (float) game->r.ntest_x + 0.5; 
-    game->r.mid_block_y = (float) game->r.ntest_y + 0.5;
-    game->r.test_point_x = game->pl.pos_x + d * cos(ray_a);
-    game->r.test_point_y = game->pl.pos_y + d * sin(ray_a);
-    //game->r.test_angle = 1000;
-    game->r.test_angle = atan2f((game->r.test_point_y - game->r.mid_block_y),
-                                (game->r.test_point_x - game->r.mid_block_x));
-    get_orient(game);
-    return d;
-
-    /*
     float d;
     float ray_a;
     float eye_x;
@@ -244,14 +123,15 @@ float get_distance(t_game *game, int w)
     //ray_a = game->pl.pov - game->pl.view/2 + ( (float)w / (float)W * game->pl.view );
     while (1) //alla fine di questo while in d è presente la ditanza dal muro
     {
-        d += 0.01;
-        eye_x = d * cos(ray_a);//
-        eye_y = d * sin(ray_a);//scambiato seno e coseno
+        d += 0.005;
+        eye_x = d * sin(ray_a);
+        eye_y = d * cos(ray_a);
         ntest_x = game->pl.pos_x + eye_x;
         ntest_y = game->pl.pos_y + eye_y;
         if (ntest_x >= game->map_x || ntest_y >= game->map_y)
             return -1;
-        if (game->map[ntest_y][ntest_x] == '1')
+        // if (game->map[ntest_y][ntest_x] == '1')
+        if (map_init[ntest_y][ntest_x] == '1')
         {
             break;
         }
@@ -262,12 +142,12 @@ float get_distance(t_game *game, int w)
     mid_block_x = (float) ntest_x + 0.5; 
     mid_block_y = (float) ntest_y + 0.5;
     
-    test_point_x = game->pl.pos_x + d * cos(ray_a);
-    test_point_y = game->pl.pos_y + d * sin(ray_a);//scambio seno e coseno
+    test_point_x = game->pl.pos_x + d * sin(ray_a);
+    test_point_y = game->pl.pos_y + d * cos(ray_a);
     test_angle = 1000;
 
     //if ((test_point_x - mid_block_x) != 0)
-    test_angle = atan2f((test_point_y - mid_block_y),(test_point_x - mid_block_x));
+    test_angle = atan2f((test_point_y - mid_block_y), (test_point_x - mid_block_x));
     if (test_angle >= -3.14159 * 0.25 && test_angle < 3.14159 * 0.25) //bianco
     {   
         game->screen.orient = 1;
@@ -291,8 +171,8 @@ float get_distance(t_game *game, int w)
     // if (test_angle == 1000)
     //     game->screen.q = 4;
     return d;
-    */
 }
+
 
 /*
 * determina il colore del pixel dalla tex.
@@ -314,64 +194,11 @@ int     get_color(t_game *game, int y, int wall_h, t_tex tex)
     return (color);
 }
 
-int draw_ceiling(t_game *game, float celing_h, int line)
-{
-    t_screen    *screen;
-    int         y;
-
-    y = 0;
-    screen = &game->screen;
-    while (y < celing_h)
-    {
-        my_mlx_pixel_put(&screen->shown_img, line, (y), game->col.c_col);
-        y++;
-    }
-    return (y);
-}
-
-t_tex ret_right_tex(t_game *game)
-{
-    int orient;
-
-    orient = game->screen.orient;
-    if (orient == 3)
-        return (game->no_tex);
-    if (orient == 2)
-        return (game->so_tex);
-    if (orient == 1)
-        return (game->ea_tex);
-    if (orient == 4)
-        return (game->we_tex);
-    else
-        return (game->we_tex);
-}
-
 /*
 * funzione che disegna una linea sullo schermo per ogni ray
 */
 void draw_line(t_screen *screen, int line, float celing_h, t_game *game)
 {
-    float floor_h;
-    float wall_h;
-    int y;
-
-    floor_h = celing_h;
-    wall_h = H - celing_h -floor_h;
-    y = draw_ceiling(game, celing_h, line);
-    while (y < celing_h + wall_h)
-    {
-        my_mlx_pixel_put(&screen->shown_img, line, (y), 
-                        get_color(game, y - celing_h, wall_h,
-                        ret_right_tex(game)));
-        y++;
-    }
-    while (y < H)
-    {
-        my_mlx_pixel_put(&screen->shown_img, line, (y), game->col.f_col);
-        y++;
-    }
-
-    /*
     float floor_h;
     float wall_h;
     int y;
@@ -403,7 +230,6 @@ void draw_line(t_screen *screen, int line, float celing_h, t_game *game)
         my_mlx_pixel_put(&screen->shown_img, line, (y), game->col.f_col);
         y++;
     } //lascio nero
-    */
 }
 
 /*
@@ -436,43 +262,6 @@ void    update_screen(t_game *game)
 }
 */
 
-void    update_pos(t_game *game)
-{
-    float teta;
-    
-    if (game->mov.m_fwrd == 1 && !wall_f(game))
-    {
-        game->pl.pos_x += cos(game->pl.pov) * 0.2;
-        game->pl.pos_y += sin(game->pl.pov) * 0.2;//scambiati sen e cos
-    }
-    // else if ((game->mov.m_fwrd == 1 && wall_f(game)))
-    // {
-    //     game->pl.pos_x -= cos(game->pl.pov) * 0.2;
-    //     game->pl.pos_y -= sin(game->pl.pov) * 0.2;//scambiati sen e cos
-    // }
-    if (game->mov.m_bwrd == 1 && !wall_b(game))
-    {
-        game->pl.pos_x -= cos(game->pl.pov) * 0.2;
-        game->pl.pos_y -= sin(game->pl.pov) * 0.2;//scambiati sen e cos
-    }
-    if (game->mov.m_rght == 1 && !wall_dx(game))
-    {
-        teta = game->pl.pov + 3.14/2;
-        game->pl.pos_x += cos(teta) * 0.1;
-        game->pl.pos_y += sin(teta) * 0.1; //scambiati sen e cos
-    }
-    if (game->mov.m_lft == 1 && !wall_sx(game))
-    {
-        teta = game->pl.pov + 3.14/2;
-        game->pl.pos_x -= cos(teta) * 0.1; //scambiati sen e cos
-        game->pl.pos_y -= sin(teta) * 0.1;
-    }
-    if (game->mov.r_r == 1)
-        game->pl.pov += 0.1;
-    if (game->mov.r_l == 1)
-        game->pl.pov -= 0.1;
-}
-
 int    update_window(t_game *game)
 {
 	t_screen	*screen;
@@ -489,8 +278,7 @@ int    update_window(t_game *game)
     mlx_destroy_image(screen->ptr, screen->shown_img.img);
     img->img = mlx_new_image(game->screen.ptr, W, H);//changed the first arg of mlx_new_image (earlier it was img->img)
     img->addr = mlx_get_data_addr(img->img, &img->bits_per_pixel, &img->line_length, &img->endian);
-    update_pos(game);
-    while (w < W) //while del raycasting
+	while (w < W) //while del raycasting
 	{
         d = get_distance(game, w);
         if (d == -1)///////da cambiare!!
@@ -507,53 +295,61 @@ int    update_window(t_game *game)
     return (0);
 }
 
-int key_rlease(int keycode, t_game *game)
+/*
+* funzione che controlla se si è andati a sbattere su un muro
+* nel qual caso disfa il passo appena fatto
+*/
+int check_pos(t_game *game) //da completare
 {
-    if (keycode == KEY_W || keycode == KEY_FORWARD)
-        game->mov.m_fwrd = 0;
-    if (keycode == KEY_S || keycode == KEY_BACKWARD)// modified from "if" to "else if" (check if it is ok)
-        game->mov.m_bwrd = 0;
-    if (keycode == KEY_E || keycode == KEY_RIGHT)// modified from "if" to "else if" (check if it is ok)
-        game->mov.r_r = 0;
-    if (keycode == KEY_Q || keycode == KEY_LEFT)// modified from "if" to "else if" (check if it is ok)
-        game->mov.r_l = 0;
-    if (keycode == KEY_A)// modified from "if" to "else if" (check if it is ok)
-        game->mov.m_lft = 0;
-    if (keycode == KEY_D)// modified from "if" to "else if" (check if it is ok)
-        game->mov.m_rght = 0;
+    int x;
+    int y;
+
+    x = game->pl.pos_x;
+    y = game->pl.pos_y;
+    if (game->map[x][y] == '1')
+        return (1);
     return (0);
+    // {
+    //     game->pl.pos_x -= sin(game->pl.pov) * 0.1;
+    //     game->pl.pos_y -= cos(game->pl.pov) * 0.1;
+    // }
 }
 
 int key_press(int keycode, t_game *game)
 {
     if (keycode == KEY_W || keycode == KEY_FORWARD)
-        game->mov.m_fwrd = 1;
-    if (keycode == KEY_S || keycode == KEY_BACKWARD)// modified from "if" to "else if" (check if it is ok)
-        game->mov.m_bwrd = 1;
-    if (keycode == KEY_E || keycode == KEY_RIGHT)// modified from "if" to "else if" (check if it is ok)
-        game->mov.r_r = 1;
-    if (keycode == KEY_Q || keycode == KEY_LEFT)// modified from "if" to "else if" (check if it is ok)
-        game->mov.r_l = 1;
-    if (keycode == KEY_A)// modified from "if" to "else if" (check if it is ok)
-    {
-        game->mov.m_lft = 1;
-        // float teta;
-
-        // teta = game->pl.pov + 3.14/2;
-        // game->pl.pos_x -= cos(teta) * 0.1; //scambiati sen e cos
-        // game->pl.pos_y -= sin(teta) * 0.1;
+	{
+        //if (!check_pos(game))
+        //{
+            game->pl.pos_x += sin(game->pl.pov) * 0.2;
+            game->pl.pos_y += cos(game->pl.pov) * 0.2;
+        //}
     }
-    if (keycode == KEY_D)// modified from "if" to "else if" (check if it is ok)
-    {
-        game->mov.m_rght = 1;
-        // float teta;
-
-        // teta = game->pl.pov + 3.14/2;
-        // game->pl.pos_x += cos(teta) * 0.1;
-        // game->pl.pos_y += sin(teta) * 0.1; //scambiati sen e cos
+    if (keycode == KEY_S || keycode == KEY_BACKWARD)
+	{
+        game->pl.pos_x -= sin(game->pl.pov) * 0.2;
+        game->pl.pos_y -= cos(game->pl.pov) * 0.2; 
     }
-    if (keycode == KEY_ESC)
-        end_program(game);
+    if (keycode == KEY_E || keycode == KEY_RIGHT)
+        game->pl.pov += 0.1;
+    if (keycode == KEY_Q || keycode == KEY_LEFT)
+        game->pl.pov -= 0.1;
+    if (keycode == KEY_A)
+    {
+        float teta;
+
+        teta = game->pl.pov + 3.14/2;
+        game->pl.pos_x -= sin(teta) * 0.1;
+        game->pl.pos_y -= cos(teta) * 0.1;
+    }
+    if (keycode == KEY_D)
+    {
+            float teta;
+
+            teta = game->pl.pov + 3.14/2;
+            game->pl.pos_x += sin(teta) * 0.1;
+            game->pl.pos_y += cos(teta) * 0.1;
+    }
     update_window(game); //commented cause I call update_window from mlx_loop_hook
     return (0);
 }
