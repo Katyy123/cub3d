@@ -445,11 +445,11 @@ void    update_pos(t_game *game)
         game->pl.pos_x += cos(game->pl.pov) * 0.2;
         game->pl.pos_y += sin(game->pl.pov) * 0.2;//scambiati sen e cos
     }
-    else if ((game->mov.m_fwrd == 1 && wall_f(game)))
-    {
-        game->pl.pos_x -= cos(game->pl.pov) * 0.2;
-        game->pl.pos_y -= sin(game->pl.pov) * 0.2;//scambiati sen e cos
-    }
+    // else if ((game->mov.m_fwrd == 1 && wall_f(game)))
+    // {
+    //     game->pl.pos_x -= cos(game->pl.pov) * 0.2;
+    //     game->pl.pos_y -= sin(game->pl.pov) * 0.2;//scambiati sen e cos
+    // }
     if (game->mov.m_bwrd == 1 && !wall_b(game))
     {
         game->pl.pos_x -= cos(game->pl.pov) * 0.2;
