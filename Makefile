@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: tbertoli <tbertoli@student.42.fr>          +#+  +:+       +#+         #
+#    By: cfiliber <marvin@42.fr>                    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/10/27 16:37:56 by cfiliber          #+#    #+#              #
-#    Updated: 2022/11/16 20:39:38 by tbertoli         ###   ########.fr        #
+#    Updated: 2022/11/17 19:52:47 by cfiliber         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -32,7 +32,7 @@ OBJS = $(SRCS:.c=.o)
 
 CC = gcc
 
-CFLAGS = -Wall -Wextra -Werror -g -I libft -Imlx -fsanitize=address
+CFLAGS = -Wall -Wextra -Werror -g -I libft -Imlx #-fsanitize=address
 
 GREEN = '\x1b[32m'
 YELLOW = '\x1b[33m'
