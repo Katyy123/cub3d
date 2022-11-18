@@ -136,42 +136,60 @@ void get_orient(t_game *game)
     }
 }
 
+float my_abs(float a)
+{
+    if (a < 0)
+        return (-a);
+    return (a);
+}
 
-// float dda_incr(float d, t_game *game, float ray_a)
-// {
-//     float incr;
-//     int n_x;
-//     int n_y;
+float dda_incr(float d, t_game *game, float ray_a)
+{
+    int sign_x;
+    int sign_y;
+    float n_x;// new pos x
+    float n_y;// new pos y
 
-//     n_x = (int)game->pl.pos_x;
-//     n_y = (int)game->pl.pos_y;
-//     if (sen(ray_a) >= 0 && cos(ray_a) >= 0) //I
-//     {
-//         n_x++;
-//         n_y++;
-//     }
-//     if (sen(ray_a) >= 0 && cos(ray_a) < 0)//II
-//     {
-//         n_x--;
-//         n_y++;
-//     }
-//     if (sen(ray_a) < 0 && cos(ray_a) < 0)//III
-//     {
-//         n_x--;
-//         n_y++;
-//     }
-//     if (sen(ray_a) < 0 && cos(ray_a) >= 0)//IIII 
-//     {
-//         n_x++;
-//         n_y--;
-//     }
-    
+    n_x = (int)game->pl.pos_x + d * cos(ray_a);
+    n_y = (int)game->pl.pos_y + d * sin(ray_a);
+    if (sin(ray_a) >= 0 && cos(ray_a) >= 0) //I
+    {
+        sign_x = 1;
+        sign_y = 1;
+    }
+    if (sin(ray_a) >= 0 && cos(ray_a) < 0)//II
+    {
+        sign_x = -1;
+        sign_y = 1;
+    }
+    if (sin(ray_a) < 0 && cos(ray_a) < 0)//III
+    {
+        sign_x = -1;
+        sign_y = -1;
+    }
+    if (sin(ray_a) < 0 && cos(ray_a) >= 0)//IIII 
+    {
+        sign_x = 1;
+        sign_y = -1;
+    }
 
+//calcolo incremeto succesivo sulla x
+    int temp_x = (int)n_x;
+    float incr_x = my_abs(temp_x - n_x);
+    if (incr_x == 0)
+        incr_x = sign_x;
+    float ipotenusa_x = incr_x / cos(ray_a);
 
-
-
-//     return (incr);
-// }
+    int temp_y = (int)n_y;
+    float incr_y = my_abs(temp_y - n_y);
+    if (incr_y == 0)
+        incr_y = sign_y;
+    float ipotenusa_y = incr_y / cos(ray_a);
+    printf("ip x = %f  ip y = %f\n", ipotenusa_x, ipotenusa_y);
+    if (ipotenusa_x <= ipotenusa_y)
+        return (ipotenusa_x);
+    return (ipotenusa_y);
+}
 
 
 /*
@@ -184,8 +202,9 @@ t_bool increment_d(float *d, t_game *game, float ray_a)
     float   eye_x;
     float   eye_y;
 
-    *d += 0.01; //questo incremento qui può essere fatto mediante algoritmo dda
-    //*d += dda_incr(d, game, ray_a);
+    //*d += 0.01; //questo incremento qui può essere fatto mediante algoritmo dda
+    *d += dda_incr(*d, game, ray_a);
+    printf("d = %f\n", *d);
     eye_x = *d * cos(ray_a);
     eye_y = *d * sin(ray_a);
     game->r.ntest_x = game->pl.pos_x + eye_x;
@@ -212,6 +231,8 @@ float get_distance(t_game *game, int w)
     ray_a =  game->pl.pov - game->pl.view/2 + game->delta_view * w; //ricontrollare questa
     while (!wall)
         wall = increment_d(&d, game, ray_a);
+    // if (d < 0.2)
+    //     return (d);
     //calcolo il quadrante:
     game->r.mid_block_x = (float) game->r.ntest_x + 0.5; 
     game->r.mid_block_y = (float) game->r.ntest_y + 0.5;
@@ -440,7 +461,7 @@ void    update_pos(t_game *game)
 {
     float teta;
     
-    if (game->mov.m_fwrd == 1 && !wall_f(game))
+    if (game->mov.m_fwrd == 1 && !wall_f1(game) && !wall_f2(game))
     {
         game->pl.pos_x += cos(game->pl.pov) * 0.2;
         game->pl.pos_y += sin(game->pl.pov) * 0.2;//scambiati sen e cos
@@ -468,9 +489,9 @@ void    update_pos(t_game *game)
         game->pl.pos_y -= sin(teta) * 0.1;
     }
     if (game->mov.r_r == 1)
-        game->pl.pov += 0.1;
+        game->pl.pov += 0.05;
     if (game->mov.r_l == 1)
-        game->pl.pov -= 0.1;
+        game->pl.pov -= 0.05;
 }
 
 int    update_window(t_game *game)
@@ -493,6 +514,8 @@ int    update_window(t_game *game)
     while (w < W) //while del raycasting
 	{
         d = get_distance(game, w);
+        //if (d < 0.2)
+        //    return (0);
         if (d == -1)///////da cambiare!!
             w++;
         else
