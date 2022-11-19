@@ -3,15 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   parsing.h                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: cfiliber <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: tbertoli <tbertoli@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/30 15:06:49 by cfiliber          #+#    #+#             */
-/*   Updated: 2022/11/12 19:29:42 by cfiliber         ###   ########.fr       */
+/*   Updated: 2022/11/19 18:11:11 by tbertoli         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef PARSING_H
 # define PARSING_H
+
 
 # include "../inc/cub3d.h"
 # include "../inc/structs.h"
