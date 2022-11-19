@@ -6,7 +6,7 @@
 /*   By: tbertoli <tbertoli@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/21 12:41:47 by mel-hada          #+#    #+#             */
-/*   Updated: 2022/11/16 21:11:16 by tbertoli         ###   ########.fr       */
+/*   Updated: 2022/11/18 20:22:13 by tbertoli         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,7 +64,8 @@
 # include "../gnl/get_next_line.h"
 
 
-int wall_f(t_game *game);
+int wall_f1(t_game *game);
+int wall_f2(t_game *game);
 int wall_b(t_game *game);
 int wall_dx(t_game *game);
 int wall_sx(t_game *game);

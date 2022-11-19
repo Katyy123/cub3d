@@ -1,7 +1,7 @@
 #include "../inc/cub3d.h"
 
-#define H 1080/2
-#define W 1920/2
+#define H 1080 / 2
+#define W 1920 / 2
 
 
 float to_degrees(float rad)
@@ -136,42 +136,88 @@ void get_orient(t_game *game)
     }
 }
 
+float my_abs(float a)
+{
+    if (a < 0)
+        return (-a);
+    return (a);
+}
 
-// float dda_incr(float d, t_game *game, float ray_a)
-// {
-//     float incr;
-//     int n_x;
-//     int n_y;
+float dda_incr(float d, t_game *game, float ray_angle)
+{
+    float ray_a = ray_angle;
+    float n_x = 0.0;// new pos x
+    float n_y = 0.0;// new pos y
+    float ipotenusa_y = 0;
+    float ipotenusa_x = 0;
 
-//     n_x = (int)game->pl.pos_x;
-//     n_y = (int)game->pl.pos_y;
-//     if (sen(ray_a) >= 0 && cos(ray_a) >= 0) //I
-//     {
-//         n_x++;
-//         n_y++;
-//     }
-//     if (sen(ray_a) >= 0 && cos(ray_a) < 0)//II
-//     {
-//         n_x--;
-//         n_y++;
-//     }
-//     if (sen(ray_a) < 0 && cos(ray_a) < 0)//III
-//     {
-//         n_x--;
-//         n_y++;
-//     }
-//     if (sen(ray_a) < 0 && cos(ray_a) >= 0)//IIII 
-//     {
-//         n_x++;
-//         n_y--;
-//     }
+    float incr_x= 0.0;
+    float incr_y= 0.0;
+
+    float cos_a = cos(ray_a);
+    float sin_a = sin(ray_a);
+
+    n_x = game->pl.pos_x + (d * cos_a);
+    n_y = game->pl.pos_y + (d * sin_a);
+
+   
+    if (sin_a == 0 || cos_a == 0)
+        return (1);
+    else if (sin_a > 0 && cos_a > 0) //I
+    {
+        incr_x = 1 - n_x - (int)n_x;
+        incr_y = 1 - n_y - (int)n_y;
+        if (incr_x == 0)
+            incr_x = 1;
+        if (incr_y == 0)
+            incr_y = 1;
+        ipotenusa_y = my_abs(incr_y / sin_a);
+        ipotenusa_x = my_abs(incr_x / cos_a);
+    }
+    else if (sin_a > 0 && cos_a < 0)//II OK
+    {
+        incr_x = n_x - (int)n_x;
+        incr_y = 1 - n_y - (int)n_y;
+        if (incr_x == 0)
+            incr_x = 1;
+        if (incr_y == 0)
+            incr_y = 1;
+        ipotenusa_y = my_abs(incr_y / sin_a);
+        ipotenusa_x = my_abs(incr_x / cos_a); 
+    }
+    else if (sin_a < 0 && cos_a < 0)//III OK
+    {
+        incr_x = n_x - (int)n_x;
+        incr_y = n_y - (int)n_y;
+        if (incr_x == 0)
+            incr_x = 1;
+        if (incr_y == 0)
+            incr_y = 1;
+        ipotenusa_y = my_abs(incr_y / sin_a);
+        ipotenusa_x = my_abs(incr_x / cos_a);
+    }
+    else if (sin_a < 0 && cos_a > 0)//IIII 
+    {
+        incr_x = 1 - n_x - (int)n_x;
+        incr_y = n_y - (int)n_y;
+        if (incr_x == 0)
+            incr_x = 1;
+        if (incr_y == 0)
+            incr_y = 1;
+        ipotenusa_y = my_abs(incr_y / sin_a);
+        ipotenusa_x = my_abs(incr_x / cos_a); 
+    } 
+    // if (incr_x == 0)
+    //     incr_x = 1;
+    // if (incr_y == 0)
+    //     incr_y = 1;
+    // float ipotenusa_y = my_abs(incr_y / sin_a);
+    // float ipotenusa_x = my_abs(incr_x / cos_a);
     
-
-
-
-
-//     return (incr);
-// }
+    if (ipotenusa_x <= ipotenusa_y)
+        return (ipotenusa_x);
+    return (ipotenusa_y);
+}
 
 
 /*
@@ -183,13 +229,17 @@ t_bool increment_d(float *d, t_game *game, float ray_a)
 {
     float   eye_x;
     float   eye_y;
+    float   incr;
 
+    
+    incr = dda_incr(*d, game, ray_a);
+    // //printf("incr = %f\n", incr);
+    *d += incr;
     *d += 0.01; //questo incremento qui può essere fatto mediante algoritmo dda
-    //*d += dda_incr(d, game, ray_a);
     eye_x = *d * cos(ray_a);
     eye_y = *d * sin(ray_a);
-    game->r.ntest_x = game->pl.pos_x + eye_x;
-    game->r.ntest_y = game->pl.pos_y + eye_y;
+    game->r.ntest_x = (int)(game->pl.pos_x + eye_x);
+    game->r.ntest_y = (int)(game->pl.pos_y + eye_y);
     if (game->r.ntest_x >= game->map_x || game->r.ntest_y >= game->map_y)
         return (TRUE);
     else if (game->map[game->r.ntest_y][game->r.ntest_x] == '1')
@@ -221,77 +271,10 @@ float get_distance(t_game *game, int w)
     game->r.test_angle = atan2f((game->r.test_point_y - game->r.mid_block_y),
                                 (game->r.test_point_x - game->r.mid_block_x));
     get_orient(game);
+
+
     return d;
 
-    /*
-    float d;
-    float ray_a;
-    float eye_x;
-    float eye_y;
-    int ntest_x;// = (int)(posX + distance_to_wall * cos(f_ray_angle))
-    int ntest_y; // = (int)(posY + distance_to_wall * sen(f_ray_angle)
-    
-    //per il calcolo del quadrante
-    float mid_block_x;
-    float mid_block_y;
-    float test_point_x;
-    float test_point_y;
-    float test_angle;
-
-    d = 0;
-    //float fRayAngle = (fPlayerA - fFOV / 2.0f) + ((float)x / (float)ScreenWidth()) * fFOV;
-    ray_a =  game->pl.pov - game->pl.view/2 + game->delta_view * w; //ricontrollare questa
-    //ray_a = game->pl.pov - game->pl.view/2 + ( (float)w / (float)W * game->pl.view );
-    while (1) //alla fine di questo while in d è presente la ditanza dal muro
-    {
-        d += 0.01;
-        eye_x = d * cos(ray_a);//
-        eye_y = d * sin(ray_a);//scambiato seno e coseno
-        ntest_x = game->pl.pos_x + eye_x;
-        ntest_y = game->pl.pos_y + eye_y;
-        if (ntest_x >= game->map_x || ntest_y >= game->map_y)
-            return -1;
-        if (game->map[ntest_y][ntest_x] == '1')
-        {
-            break;
-        }
-        
-
-    }
-    //calcolo il quadrante:
-    mid_block_x = (float) ntest_x + 0.5; 
-    mid_block_y = (float) ntest_y + 0.5;
-    
-    test_point_x = game->pl.pos_x + d * cos(ray_a);
-    test_point_y = game->pl.pos_y + d * sin(ray_a);//scambio seno e coseno
-    test_angle = 1000;
-
-    //if ((test_point_x - mid_block_x) != 0)
-    test_angle = atan2f((test_point_y - mid_block_y),(test_point_x - mid_block_x));
-    if (test_angle >= -3.14159 * 0.25 && test_angle < 3.14159 * 0.25) //bianco
-    {   
-        game->screen.orient = 1;
-         game->f_sample_x = test_point_y - (float)ntest_y;
-    }
-    if (test_angle >= 3.14159 * 0.25 && test_angle < 3.14159 * 0.75) // rosso
-    {   
-        game->screen.orient = 2;
-        game->f_sample_x = test_point_x - (float)ntest_x;
-    }
-    if (test_angle < -3.14159 * 0.25f && test_angle >= -3.14159 * 0.75) //giallo
-    {   
-        game->screen.orient = 3;
-        game->f_sample_x = test_point_x - (float)ntest_x;
-    }
-    if (test_angle >= 3.14159 * 0.75f || test_angle < -3.14159 * 0.75)
-    {   
-        game->screen.orient = 4;
-        game->f_sample_x = test_point_y - (float)ntest_y;
-    }
-    // if (test_angle == 1000)
-    //     game->screen.q = 4;
-    return d;
-    */
 }
 
 /*
@@ -440,7 +423,7 @@ void    update_pos(t_game *game)
 {
     float teta;
     
-    if (game->mov.m_fwrd == 1 && !wall_f(game))
+    if (game->mov.m_fwrd == 1 && !wall_f1(game) && !wall_f2(game))
     {
         game->pl.pos_x += cos(game->pl.pov) * 0.2;
         game->pl.pos_y += sin(game->pl.pov) * 0.2;//scambiati sen e cos
@@ -468,9 +451,9 @@ void    update_pos(t_game *game)
         game->pl.pos_y -= sin(teta) * 0.1;
     }
     if (game->mov.r_r == 1)
-        game->pl.pov += 0.1;
+        game->pl.pov += 0.05;
     if (game->mov.r_l == 1)
-        game->pl.pov -= 0.1;
+        game->pl.pov -= 0.05;
 }
 
 int    update_window(t_game *game)
@@ -481,7 +464,7 @@ int    update_window(t_game *game)
     int       celing_h;
     int       floor;
 	int			w;
-    
+    printf("%f\n", to_degrees(game->pl.pov));
 	screen = &game->screen;
     img = &game->screen.shown_img;
     w = 0;
@@ -493,15 +476,17 @@ int    update_window(t_game *game)
     while (w < W) //while del raycasting
 	{
         d = get_distance(game, w);
-        if (d == -1)///////da cambiare!!
-            w++;
-        else
-        {
+        //if (d < 0.2)
+        //    return (0);
+        // if (d == -1)///////da cambiare!!
+        //     w++;
+        //else
+        //{
             celing_h = H/2 - H/d;
             floor = H - celing_h;
             draw_line(screen, w, celing_h, game);   
             w++;
-        } 
+        //} 
     }
 	mlx_put_image_to_window(screen->ptr, screen->win, img->img, 0, 0);
     return (0);
