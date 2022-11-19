@@ -148,22 +148,22 @@ float get_distance(t_game *game, int w)
 
     //if ((test_point_x - mid_block_x) != 0)
     test_angle = atan2f((test_point_y - mid_block_y), (test_point_x - mid_block_x));
-    if (test_angle >= -3.14159 * 0.25 && test_angle < 3.14159 * 0.25) //bianco
+    if (test_angle >= -M_PI * 0.25 && test_angle < M_PI * 0.25) //bianco
     {   
         game->screen.orient = 1;
          game->f_sample_x = test_point_y - (float)ntest_y;
     }
-    if (test_angle >= 3.14159 * 0.25 && test_angle < 3.14159 * 0.75) // rosso
+    if (test_angle >= M_PI * 0.25 && test_angle < M_PI * 0.75) // rosso
     {   
         game->screen.orient = 2;
         game->f_sample_x = test_point_x - (float)ntest_x;
     }
-    if (test_angle < -3.14159 * 0.25f && test_angle >= -3.14159 * 0.75) //giallo
+    if (test_angle < -M_PI * 0.25f && test_angle >= -M_PI * 0.75) //giallo
     {   
         game->screen.orient = 3;
         game->f_sample_x = test_point_x - (float)ntest_x;
     }
-    if (test_angle >= 3.14159 * 0.75f || test_angle < -3.14159 * 0.75)
+    if (test_angle >= M_PI * 0.75f || test_angle < -M_PI * 0.75)
     {   
         game->screen.orient = 4;
         game->f_sample_x = test_point_y - (float)ntest_y;
@@ -338,7 +338,7 @@ int key_press(int keycode, t_game *game)
     {
         float teta;
 
-        teta = game->pl.pov + 3.14/2;
+        teta = game->pl.pov + M_PI/2;
         game->pl.pos_x -= sin(teta) * 0.1;
         game->pl.pos_y -= cos(teta) * 0.1;
     }
@@ -346,7 +346,7 @@ int key_press(int keycode, t_game *game)
     {
             float teta;
 
-            teta = game->pl.pov + 3.14/2;
+            teta = game->pl.pov + M_PI/2;
             game->pl.pos_x += sin(teta) * 0.1;
             game->pl.pos_y += cos(teta) * 0.1;
     }

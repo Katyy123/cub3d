@@ -6,7 +6,7 @@
 /*   By: tbertoli <tbertoli@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/12 17:41:01 by cfiliber          #+#    #+#             */
-/*   Updated: 2022/11/19 15:54:16 by tbertoli         ###   ########.fr       */
+/*   Updated: 2022/11/19 18:10:46 by tbertoli         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,11 +20,11 @@ void	save_player_data(t_player *player, int x, int y, char dir)
 	if (dir == 'E')
 		player->pov = 0;
 	else if (dir == 'S')
-		player->pov = 3.14 / 2;
+		player->pov = M_PI / 2;
 	else if (dir == 'W')
-		player->pov = 3.14;
+		player->pov = M_PI;
 	else if (dir == 'N')
-		player->pov = 3 * 3.14 / 2;
+		player->pov = 3 * M_PI / 2;
 }
 
 /* check if a space is surrounded (up, down, left, right)
@@ -70,6 +70,6 @@ void	player_struct_init(t_player *player)
 {
 	player->pos_x = -1;
 	player->pos_y = -1;
-	player->view = 3.14159 / 4.0;
+	player->view = M_PI / 4.0;
 	player->pos_x = -1;
 }

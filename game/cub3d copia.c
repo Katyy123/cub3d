@@ -4,6 +4,88 @@
 #define W 1920/2
 
 
+float dda_incr(float d, t_game *game, float ray_angle)
+{
+    float ray_a = ray_angle;
+    float n_x = 0.0;// new pos x
+    float n_y = 0.0;// new pos y
+    float ipotenusa_y = 0;
+    float ipotenusa_x = 0;
+
+    float incr_x= 0.0;
+    float incr_y= 0.0;
+
+    float cos_a = cos(ray_a);
+    float sin_a = sin(ray_a);
+
+    n_x = game->pl.pos_x + (d * cos_a);
+    n_y = game->pl.pos_y + (d * sin_a);
+
+   
+    if (sin_a == 0 && cos_a < 0)
+        return(n_x - (int)n_x);
+    else if (sin_a == 0 && cos_a > 0)
+        return(1 - n_x - (int)n_x);
+    else if (sin_a < 0 && cos_a == 0)
+        return(n_y - (int)n_y);
+    else if (sin_a > 0 && cos_a == 0)
+        return(1 - n_y - (int)n_y);
+    if (sin_a > 0 && cos_a > 0) //I
+    {
+        incr_x = 1 - n_x - (int)n_x;
+        incr_y = 1 - n_y - (int)n_y;
+        if (incr_x == 0)
+            incr_x = 1;
+        if (incr_y == 0)
+            incr_y = 1;
+        ipotenusa_y = my_abs(incr_y / sin_a);
+        ipotenusa_x = my_abs(incr_x / cos_a);
+    }
+    else if (sin_a > 0 && cos_a < 0)//II 
+    {
+        incr_x = n_x - (int)n_x;
+        incr_y = 1 - n_y - (int)n_y;
+        if (incr_x == 0)
+            incr_x = 1;
+        if (incr_y == 0)
+            incr_y = 1;
+        ipotenusa_y = my_abs(incr_y / sin_a);
+        ipotenusa_x = my_abs(incr_x / cos_a); 
+    }
+    else if (sin_a < 0 && cos_a < 0)//III ok
+    {
+        incr_x = n_x - (int)n_x;
+        incr_y = n_y - (int)n_y;
+        if (incr_x == 0)
+            incr_x = 1;
+        if (incr_y == 0)
+            incr_y = 1;
+        ipotenusa_y = my_abs(incr_y / sin_a);
+        ipotenusa_x = my_abs(incr_x / cos_a);
+    }
+    else if (sin_a < 0 && cos_a > 0)//IIII ok 
+    {
+        incr_x = 1 - n_x - (int)n_x;
+        incr_y = n_y - (int)n_y;
+        if (incr_x == 0)
+            incr_x = 1;
+        if (incr_y == 0)
+            incr_y = 1;
+        ipotenusa_y = my_abs(incr_y / sin_a);
+        ipotenusa_x = my_abs(incr_x / cos_a); 
+    } 
+    // if (incr_x == 0)
+    //     incr_x = 1;
+    // if (incr_y == 0)
+    //     incr_y = 1;
+    // float ipotenusa_y = my_abs(incr_y / sin_a);
+    // float ipotenusa_x = my_abs(incr_x / cos_a);
+    
+    if (ipotenusa_x <= ipotenusa_y)
+        return (ipotenusa_x);
+    return (ipotenusa_y);
+}
+
 float to_degrees(float rad)
 {
     return (rad * 57.2597);
@@ -114,22 +196,22 @@ void get_orient(t_game *game)
     float   test_angle;
 
     test_angle = game->r.test_angle;
-    if (test_angle >= -3.14159 * 0.25 && test_angle < 3.14159 * 0.25)
+    if (test_angle >= -M_PI * 0.25 && test_angle < M_PI * 0.25)
     {   
         game->screen.orient = 1;
          game->f_sample_x = game->r.test_point_y - (float)game->r.ntest_y;
     }
-    if (test_angle >= 3.14159 * 0.25 && test_angle < 3.14159 * 0.75)
+    if (test_angle >= M_PI * 0.25 && test_angle < M_PI * 0.75)
     {   
         game->screen.orient = 2;
         game->f_sample_x = game->r.test_point_x - (float)game->r.ntest_x;
     }
-    if (test_angle < -3.14159 * 0.25f && test_angle >= -3.14159 * 0.75)
+    if (test_angle < -M_PI * 0.25f && test_angle >= -M_PI * 0.75)
     {   
         game->screen.orient = 3;
         game->f_sample_x = game->r.test_point_x - (float)game->r.ntest_x;
     }
-    if (test_angle >= 3.14159 * 0.75f || test_angle < -3.14159 * 0.75)
+    if (test_angle >= M_PI * 0.75f || test_angle < -M_PI * 0.75)
     {   
         game->screen.orient = 4;
         game->f_sample_x = game->r.test_point_y - (float)game->r.ntest_y;
@@ -348,13 +430,13 @@ void    update_pos(t_game *game)
         game->pl.pov -= 0.1;
     if (game->mov.m_lft == 1)
     {
-        teta = game->pl.pov + 3.14/2;
+        teta = game->pl.pov + M_PI/2;
         game->pl.pos_x -= cos(teta) * 0.1; //scambiati sen e cos
         game->pl.pos_y -= sin(teta) * 0.1;
     }
     if (game->mov.m_rght == 1)
     {
-        teta = game->pl.pov + 3.14/2;
+        teta = game->pl.pov + M_PI/2;
         game->pl.pos_x += cos(teta) * 0.1;
         game->pl.pos_y += sin(teta) * 0.1; //scambiati sen e cos
     }
@@ -398,7 +480,7 @@ int    update_window(t_game *game)
     {
         float teta;
 
-        teta = game->pl.pov + 3.14/2;
+        teta = game->pl.pov + M_PI/2;
         game->pl.pos_x -= cos(teta) * 0.1; //scambiati sen e cos
         game->pl.pos_y -= sin(teta) * 0.1;
     }
@@ -406,7 +488,7 @@ int    update_window(t_game *game)
     {
         float teta;
 
-        teta = game->pl.pov + 3.14/2;
+        teta = game->pl.pov + M_PI/2;
         game->pl.pos_x += cos(teta) * 0.1;
         game->pl.pos_y += sin(teta) * 0.1; //scambiati sen e cos
     }
