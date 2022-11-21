@@ -143,75 +143,7 @@ double my_abs(double a)
 }
 
 
-double dda_incr(double d, t_game *game, double m, double sx, double sy, double ray_a)
-{
-    //Dx = m*sx Dy = m*sy
-    (void)m;
-    double n_x = 0.0;// new pos x
-    double n_y = 0.0;// new pos y
-    double ipotenusa_y = 0;
-    double ipotenusa_x = 0;
-    double cos_a = cos(ray_a);
-    double sin_a = sin(ray_a);
 
-    double incr_x= 0.0;
-    double incr_y= 0.0;
-
-    n_x = game->pl.pos_x + (d * cos_a);
-    n_y = game->pl.pos_y + (d * sin_a);
-
-    if (sin_a == 0 && cos_a < 0)
-        return(n_x - (int)n_x);
-    else if (sin_a == 0 && cos_a > 0)
-        return(1 - n_x - (int)n_x);
-    else if (sin_a < 0 && cos_a == 0)
-        return(n_y - (int)n_y);
-    else if (sin_a > 0 && cos_a == 0)
-        return(1 - n_y - (int)n_y);
-    if (sin_a > 0 && cos_a > 0) //I
-    {
-        incr_x = 1 - n_x - (int)n_x;
-        incr_y = 1 - n_y - (int)n_y;
-        if (incr_x == 0)
-            incr_x = 1;
-        if (incr_y == 0)
-            incr_y = 1;
-        
-    }
-    else if (sin_a > 0 && cos_a < 0)//II 
-    {
-        incr_x = n_x - (int)n_x;
-        incr_y = 1 - n_y - (int)n_y;
-        if (incr_x == 0)
-            incr_x = 1;
-        if (incr_y == 0)
-            incr_y = 1;
-    }
-    else if (sin_a < 0 && cos_a < 0)//III ok
-    {
-        incr_x = n_x - (int)n_x;
-        incr_y = n_y - (int)n_y;
-        if (incr_x == 0)
-            incr_x = 1;
-        if (incr_y == 0)
-            incr_y = 1;
-    }
-    else if (sin_a < 0 && cos_a > 0)//IIII ok 
-    {
-        incr_x = 1 - n_x - (int)n_x;
-        incr_y = n_y - (int)n_y;
-        if (incr_x == 0)
-            incr_x = 1;
-        if (incr_y == 0)
-            incr_y = 1;
-    } 
-    ipotenusa_y = incr_y * sy;
-    ipotenusa_x = incr_x * sx;
-    if (ipotenusa_x <= ipotenusa_y)
-        return (ipotenusa_x);
-    return (ipotenusa_y);
-
-}
 
 
 /*
@@ -223,24 +155,22 @@ t_bool increment_d(double *d, t_game *game, double ray_a)
 {
     int     stepx;
     int     stepy;
-    int   eye_x;
-    int   eye_y;
+    float   eye_x;
+    float   eye_y;
     double   ipx;
     double   ipy;
+    t_bool wall;
 
+    wall = FALSE;
     double m = tan(ray_a);
     double sx = sqrt(1 + m*m);
     double sy = sqrt(1 + (1/m)*(1/m));
     double cos_a = cos(ray_a);
     double sin_a = sin(ray_a);
 
-    eye_x = game->pl.pos_x;
-    eye_y = game->pl.pos_y;
+    eye_x = (int)game->pl.pos_x;
+    eye_y = (int)game->pl.pos_y;
 
-    t_bool wall;
-
-    wall = FALSE;
-   
     if (cos_a < 0)
     {
         stepx = -1;
@@ -251,19 +181,6 @@ t_bool increment_d(double *d, t_game *game, double ray_a)
         stepx = 1;
         ipx = (((double)eye_x + 1) - game->pl.pos_x) * sx;
     }
-
-    while (!wall)
-    {
-        if (game->map[eye_y][eye_x] == '1')
-            wall = TRUE;
-        eye_x += stepx;
-        ipx += sx;
-        
-    }
-
-
-    eye_x = game->pl.pos_x;
-    eye_y = game->pl.pos_y;
     if (sin_a < 0)
     {
         stepy = -1;
@@ -274,33 +191,56 @@ t_bool increment_d(double *d, t_game *game, double ray_a)
         stepy = 1;
         ipy = (((double)eye_y + 1) - game->pl.pos_y) * sy;
     }
-
-    
-    wall = FALSE;
-    while (!wall)
+    //ipx = ipotenusa avendo fatto step su x
+    //ipy = ipotenusa avendo fatto step su y
+    int testx;
+    int testy;
+    while (1)
     {
-        if (game->map[eye_y][eye_x] == '1')
-            wall = TRUE;
-        eye_y += stepy;
-        ipy += sy;
+        testx = (int)game->pl.pos_x + (*d * cos_a);
+        testy = (int)game->pl.pos_y + (*d * sin_a);
+        if (game->map[testy][testx] == '1')
+            break;
+        if (ipy > ipx)
+        {
+            *d += ipx;
+             
+        }
+        else
+        {
+            *d += ipy;
+        }
+        eye_x = game->pl.pos_x + (*d * cos_a); //pos precisa in x 
+        eye_y = game->pl.pos_y + (*d * sin_a); //pos prescisa in y;
+        testx = (int)eye_x;
+        testy = (int)eye_y;
+        if (cos_a < 0)
+        {
+            stepx = -1;
+            ipx = (game->pl.pos_x - (double)eye_x) * sx;
+        }
+        else
+        {
+            stepx = 1;
+            ipx = (((double)eye_x + 1) - game->pl.pos_x) * sx;
+        }
+        if (sin_a < 0)
+        {
+            stepy = -1;
+            ipy = (game->pl.pos_y - (double)eye_y) * sy;
+        }
+        else
+        {
+            stepy = 1;
+            ipy = (((double)eye_y + 1) - game->pl.pos_y) * sy;
+        }
+    }
+    
         
-    }
-    
-    
-    if (ipx > ipy)
-    {
-        *d = ipy;
-        game->f_sample_x =(game->pl.pos_x + *d * cos_a) - (int)(game->pl.pos_x + *d * cos_a);            
-    }
-    else
-    {
-        *d = ipx;
-        game->f_sample_x =(game->pl.pos_y + *d * sin_a) - (int)(game->pl.pos_y + *d * sin_a);            
-    }
-    game->r.ntest_x = eye_x;
-    game->r.ntest_y = eye_y;
-    game->r.test_point_x = game->pl.pos_x + *d * cos_a;
-    game->r.test_point_y = game->pl.pos_y + *d * sin_a;
+    // game->r.ntest_x = eye_x;
+    // game->r.ntest_y = eye_y;
+    // game->r.test_point_x = game->pl.pos_x + *d * cos_a;
+    // game->r.test_point_y = game->pl.pos_y + *d * sin_a;
     
     return (TRUE);
 
@@ -322,8 +262,6 @@ double get_distance(t_game *game, int w)
     ray_a =  game->pl.pov - game->pl.view/2 + game->delta_view * w; //ricontrollare questa
     //while (!wall)
     wall = increment_d(&d, game, ray_a);
-    if (w > W/2 - 40 && w < W/2 + 40)
-        printf("ray_a = %f => d = %f\t cos_a = %f sin_a = %f\n ", to_degrees(ray_a), d, cos(ray_a), sin(ray_a));
     //calcolo il quadrante:
     game->r.mid_block_x = (double) game->r.ntest_x + 0.5; 
     game->r.mid_block_y = (double) game->r.ntest_y + 0.5;
