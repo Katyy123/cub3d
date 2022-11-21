@@ -6,7 +6,7 @@
 /*   By: tbertoli <tbertoli@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/16 20:15:41 by tbertoli          #+#    #+#             */
-/*   Updated: 2022/11/19 20:35:30 by tbertoli         ###   ########.fr       */
+/*   Updated: 2022/11/21 13:25:37 by tbertoli         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,9 +14,9 @@
 
 int wall_f1(t_game *game)
 {
-    float test_x;
-    float test_y;
-    float f;
+    double test_x;
+    double test_y;
+    double f;
 
     f = 0;
     while (f < 0.5)
@@ -32,9 +32,9 @@ int wall_f1(t_game *game)
 
 int wall_f2(t_game *game)
 {
-    float test_x;
-    float test_y;
-    float test_a;
+    double test_x;
+    double test_y;
+    double test_a;
 
     test_a = game->pl.pov - (M_PI /4);
     while (test_a < (game->pl.pov + (M_PI /4)))
@@ -50,9 +50,9 @@ int wall_f2(t_game *game)
 
 int wall_b1(t_game *game)
 {
-    float test_x;
-    float test_y;
-    float f;
+    double test_x;
+    double test_y;
+    double f;
 
     test_x = game->pl.pos_x - 0.5 * (cos(game->pl.pov) + 0.1);
     test_y = game->pl.pos_y - 0.5 * (sin(game->pl.pov) + 0.1);
@@ -70,9 +70,9 @@ int wall_b1(t_game *game)
 
 int wall_b2(t_game *game)
 {
-    float test_x;
-    float test_y;
-    float test_a;
+    double test_x;
+    double test_y;
+    double test_a;
 
     test_a = M_PI - game->pl.pov - (M_PI / 8);
     while (test_a < (M_PI - game->pl.pov + (M_PI / 8)))
@@ -88,9 +88,9 @@ int wall_b2(t_game *game)
 
 int wall_dx(t_game *game)
 {
-    float test_x;
-    float test_y;
-    float test_a;
+    double test_x;
+    double test_y;
+    double test_a;
 
     test_a = game->pl.pov + M_PI/2 - (M_PI /3);
     while (test_a < (game->pl.pov + M_PI/2 + (M_PI /3)))
@@ -106,9 +106,9 @@ int wall_dx(t_game *game)
 
 int wall_sx(t_game *game)
 {
-    float test_x;
-    float test_y;
-    float test_a;
+    double test_x;
+    double test_y;
+    double test_a;
 
     test_a = game->pl.pov - M_PI/2 - (M_PI /3);
     while (test_a < (game->pl.pov - M_PI/2 + (M_PI /3)))

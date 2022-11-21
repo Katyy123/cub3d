@@ -16,7 +16,7 @@ char map_init[8][16]=  {
                         {'1','1','1', '1', '1', '1','1','1','1','1','1','1','1','1','1','1'}
                         };
 
-float to_degrees(float rad)
+double to_degrees(double rad)
 {
     return (rad * 57.2597);
 }
@@ -101,26 +101,26 @@ void pixel_col_put(t_screen *screen, int x, int y, int color, int pxnum)
 /*
 * funzione che calcola la distanza dell' ostacolo dall'osservatore per ogni raggio della visuale
 */
-float get_distance(t_game *game, int w)
+double get_distance(t_game *game, int w)
 {
-    float d;
-    float ray_a;
-    float eye_x;
-    float eye_y;
+    double d;
+    double ray_a;
+    double eye_x;
+    double eye_y;
     int ntest_x;// = (int)(posX + distance_to_wall * cos(f_ray_angle))
     int ntest_y; // = (int)(posY + distance_to_wall * sen(f_ray_angle)
     
     //per il calcolo del quadrante
-    float mid_block_x;
-    float mid_block_y;
-    float test_point_x;
-    float test_point_y;
-    float test_angle;
+    double mid_block_x;
+    double mid_block_y;
+    double test_point_x;
+    double test_point_y;
+    double test_angle;
 
     d = 0;
-    //float fRayAngle = (fPlayerA - fFOV / 2.0f) + ((float)x / (float)ScreenWidth()) * fFOV;
+    //double fRayAngle = (fPlayerA - fFOV / 2.0f) + ((double)x / (double)ScreenWidth()) * fFOV;
     ray_a =  game->pl.pov - game->pl.view/2 + game->delta_view * w; //ricontrollare questa
-    //ray_a = game->pl.pov - game->pl.view/2 + ( (float)w / (float)W * game->pl.view );
+    //ray_a = game->pl.pov - game->pl.view/2 + ( (double)w / (double)W * game->pl.view );
     while (1) //alla fine di questo while in d è presente la ditanza dal muro
     {
         d += 0.005;
@@ -139,8 +139,8 @@ float get_distance(t_game *game, int w)
 
     }
     //calcolo il quadrante:
-    mid_block_x = (float) ntest_x + 0.5; 
-    mid_block_y = (float) ntest_y + 0.5;
+    mid_block_x = (double) ntest_x + 0.5; 
+    mid_block_y = (double) ntest_y + 0.5;
     
     test_point_x = game->pl.pos_x + d * sin(ray_a);
     test_point_y = game->pl.pos_y + d * cos(ray_a);
@@ -151,22 +151,22 @@ float get_distance(t_game *game, int w)
     if (test_angle >= -M_PI * 0.25 && test_angle < M_PI * 0.25) //bianco
     {   
         game->screen.orient = 1;
-         game->f_sample_x = test_point_y - (float)ntest_y;
+         game->f_sample_x = test_point_y - (double)ntest_y;
     }
     if (test_angle >= M_PI * 0.25 && test_angle < M_PI * 0.75) // rosso
     {   
         game->screen.orient = 2;
-        game->f_sample_x = test_point_x - (float)ntest_x;
+        game->f_sample_x = test_point_x - (double)ntest_x;
     }
     if (test_angle < -M_PI * 0.25f && test_angle >= -M_PI * 0.75) //giallo
     {   
         game->screen.orient = 3;
-        game->f_sample_x = test_point_x - (float)ntest_x;
+        game->f_sample_x = test_point_x - (double)ntest_x;
     }
     if (test_angle >= M_PI * 0.75f || test_angle < -M_PI * 0.75)
     {   
         game->screen.orient = 4;
-        game->f_sample_x = test_point_y - (float)ntest_y;
+        game->f_sample_x = test_point_y - (double)ntest_y;
     }
     // if (test_angle == 1000)
     //     game->screen.q = 4;
@@ -188,7 +188,7 @@ int     get_color(t_game *game, int y, int wall_h, t_tex tex)
     int xpx;
 
     xpx = tex.width;
-    yt = (int)((float)y / wall_h * tex.height);
+    yt = (int)((double)y / wall_h * tex.height);
     xt = (int)(game->f_sample_x * tex.width);
     color = (*(int*)(tex.tex_addr + (4 * xpx * yt) + (4 * xt)));
     return (color);
@@ -197,10 +197,10 @@ int     get_color(t_game *game, int y, int wall_h, t_tex tex)
 /*
 * funzione che disegna una linea sullo schermo per ogni ray
 */
-void draw_line(t_screen *screen, int line, float celing_h, t_game *game)
+void draw_line(t_screen *screen, int line, double celing_h, t_game *game)
 {
-    float floor_h;
-    float wall_h;
+    double floor_h;
+    double wall_h;
     int y;
     int color;
 
@@ -238,7 +238,7 @@ void    update_screen(t_game *game)
 {
 	t_screen	*screen;
     t_data      img;
-    float       d;
+    double       d;
     int       celing_h;
     int       floor;
 	int			i;
@@ -266,7 +266,7 @@ int    update_window(t_game *game)
 {
 	t_screen	*screen;
     t_data      *img;
-	float       d;
+	double       d;
     int       celing_h;
     int       floor;
 	int			w;
@@ -336,7 +336,7 @@ int key_press(int keycode, t_game *game)
         game->pl.pov -= 0.1;
     if (keycode == KEY_A)
     {
-        float teta;
+        double teta;
 
         teta = game->pl.pov + M_PI/2;
         game->pl.pos_x -= sin(teta) * 0.1;
@@ -344,7 +344,7 @@ int key_press(int keycode, t_game *game)
     }
     if (keycode == KEY_D)
     {
-            float teta;
+            double teta;
 
             teta = game->pl.pov + M_PI/2;
             game->pl.pos_x += sin(teta) * 0.1;

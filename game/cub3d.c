@@ -4,7 +4,7 @@
 #define W 1920 / 2
 
 
-float to_degrees(float rad)
+double to_degrees(double rad)
 {
     return (rad * 57.2597);
 }
@@ -111,32 +111,32 @@ void pixel_col_put(t_screen *screen, int x, int y, int color, int pxnum)
 */
 void get_orient(t_game *game)
 {
-    float   test_angle;
+    double   test_angle;
 
     test_angle = game->r.test_angle;
     if (test_angle >= -M_PI * 0.25 && test_angle < M_PI * 0.25)
     {   
         game->screen.orient = 1;
-         game->f_sample_x = game->r.test_point_y - (float)game->r.ntest_y;
+         game->f_sample_x = game->r.test_point_y - (double)game->r.ntest_y;
     }
     if (test_angle >= M_PI * 0.25 && test_angle < M_PI * 0.75)
     {   
         game->screen.orient = 2;
-        game->f_sample_x = game->r.test_point_x - (float)game->r.ntest_x;
+        game->f_sample_x = game->r.test_point_x - (double)game->r.ntest_x;
     }
     if (test_angle < -M_PI * 0.25f && test_angle >= -M_PI * 0.75)
     {   
         game->screen.orient = 3;
-        game->f_sample_x = game->r.test_point_x - (float)game->r.ntest_x;
+        game->f_sample_x = game->r.test_point_x - (double)game->r.ntest_x;
     }
     if (test_angle >= M_PI * 0.75f || test_angle < -M_PI * 0.75)
     {   
         game->screen.orient = 4;
-        game->f_sample_x = game->r.test_point_y - (float)game->r.ntest_y;
+        game->f_sample_x = game->r.test_point_y - (double)game->r.ntest_y;
     }
 }
 
-float my_abs(float a)
+double my_abs(double a)
 {
     if (a < 0)
         return (-a);
@@ -144,19 +144,19 @@ float my_abs(float a)
 }
 
 
-float dda_incr(float d, t_game *game, float m, float sx, float sy, float ray_a)
+double dda_incr(double d, t_game *game, double m, double sx, double sy, double ray_a)
 {
     //Dx = m*sx Dy = m*sy
     (void)m;
-    float n_x = 0.0;// new pos x
-    float n_y = 0.0;// new pos y
-    float ipotenusa_y = 0;
-    float ipotenusa_x = 0;
-    float cos_a = cos(ray_a);
-    float sin_a = sin(ray_a);
+    double n_x = 0.0;// new pos x
+    double n_y = 0.0;// new pos y
+    double ipotenusa_y = 0;
+    double ipotenusa_x = 0;
+    double cos_a = cos(ray_a);
+    double sin_a = sin(ray_a);
 
-    float incr_x= 0.0;
-    float incr_y= 0.0;
+    double incr_x= 0.0;
+    double incr_y= 0.0;
 
     n_x = game->pl.pos_x + (d * cos_a);
     n_y = game->pl.pos_y + (d * sin_a);
@@ -220,14 +220,14 @@ float dda_incr(float d, t_game *game, float m, float sx, float sy, float ray_a)
 * sono uscito dalla mappa, nel frattempo aggiorna il valore della distanza dall
 * osservatore (d) che è passata per indirizzo.
 */
-t_bool increment_d(float *d, t_game *game, float ray_a)
+t_bool increment_d(double *d, t_game *game, double ray_a)
 {
-    float   eye_x;
-    float   eye_y;
-    // float m = my_abs(tan(ray_a));
-    // float sx = sqrt(1 + m*m);
-    // float sy = sqrt(1 + (1/m)*(1/m));
-    // float   incr;
+    double   eye_x;
+    double   eye_y;
+    // double m = my_abs(tan(ray_a));
+    // double sx = sqrt(1 + m*m);
+    // double sy = sqrt(1 + (1/m)*(1/m));
+    // double   incr;
 
     
     //incr = dda_incr(*d, game, m, sx, sy, ray_a);
@@ -249,10 +249,10 @@ t_bool increment_d(float *d, t_game *game, float ray_a)
 /*
 * funzione che calcola la distanza dell' ostacolo dall'osservatore per ogni raggio della visuale
 */
-float get_distance(t_game *game, int w)
+double get_distance(t_game *game, int w)
 {
-    float   d;
-    float   ray_a;
+    double   d;
+    double   ray_a;
     t_bool  wall;
     
     wall = FALSE;
@@ -261,8 +261,8 @@ float get_distance(t_game *game, int w)
     while (!wall)
         wall = increment_d(&d, game, ray_a);
     //calcolo il quadrante:
-    game->r.mid_block_x = (float) game->r.ntest_x + 0.5; 
-    game->r.mid_block_y = (float) game->r.ntest_y + 0.5;
+    game->r.mid_block_x = (double) game->r.ntest_x + 0.5; 
+    game->r.mid_block_y = (double) game->r.ntest_y + 0.5;
     game->r.test_point_x = game->pl.pos_x + d * cos(ray_a);
     game->r.test_point_y = game->pl.pos_y + d * sin(ray_a);
     //game->r.test_angle = 1000;
@@ -289,13 +289,13 @@ int     get_color(t_game *game, int y, int wall_h, t_tex tex)
     int xpx;
 
     xpx = tex.width;
-    yt = (int)((float)y / wall_h * tex.height);
+    yt = (int)((double)y / wall_h * tex.height);
     xt = (int)(game->f_sample_x * tex.width);
     color = (*(int*)(tex.tex_addr + (4 * xpx * yt) + (4 * xt)));
     return (color);
 }
 
-int draw_ceiling(t_game *game, float celing_h, int line)
+int draw_ceiling(t_game *game, double celing_h, int line)
 {
     t_screen    *screen;
     int         y;
@@ -330,10 +330,10 @@ t_tex ret_right_tex(t_game *game)
 /*
 * funzione che disegna una linea sullo schermo per ogni ray
 */
-void draw_line(t_screen *screen, int line, float celing_h, t_game *game)
+void draw_line(t_screen *screen, int line, double celing_h, t_game *game)
 {
-    float floor_h;
-    float wall_h;
+    double floor_h;
+    double wall_h;
     int y;
 
     floor_h = celing_h;
@@ -353,8 +353,8 @@ void draw_line(t_screen *screen, int line, float celing_h, t_game *game)
     }
 
     /*
-    float floor_h;
-    float wall_h;
+    double floor_h;
+    double wall_h;
     int y;
     int color;
 
@@ -393,7 +393,7 @@ void    update_screen(t_game *game)
 {
 	t_screen	*screen;
     t_data      img;
-    float       d;
+    double       d;
     int       celing_h;
     int       floor;
 	int			i;
@@ -419,7 +419,7 @@ void    update_screen(t_game *game)
 
 void    update_pos(t_game *game)
 {
-    float teta;
+    double teta;
     
     if (game->mov.m_fwrd == 1 && !wall_f1(game) && !wall_f2(game))
     {
@@ -453,7 +453,7 @@ int    update_window(t_game *game)
 {
 	t_screen	*screen;
     t_data      *img;
-	float       d;
+	double       d;
     int       celing_h;
     int       floor;
 	int			w;
@@ -515,7 +515,7 @@ int key_press(int keycode, t_game *game)
     if (keycode == KEY_A)// modified from "if" to "else if" (check if it is ok)
     {
         game->mov.m_lft = 1;
-        // float teta;
+        // double teta;
 
         // teta = game->pl.pov + M_PI/2;
         // game->pl.pos_x -= cos(teta) * 0.1; //scambiati sen e cos
@@ -524,7 +524,7 @@ int key_press(int keycode, t_game *game)
     if (keycode == KEY_D)// modified from "if" to "else if" (check if it is ok)
     {
         game->mov.m_rght = 1;
-        // float teta;
+        // double teta;
 
         // teta = game->pl.pov + M_PI/2;
         // game->pl.pos_x += cos(teta) * 0.1;

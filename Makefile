@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: cfiliber <marvin@42.fr>                    +#+  +:+       +#+         #
+#    By: tbertoli <tbertoli@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/10/27 16:37:56 by cfiliber          #+#    #+#              #
-#    Updated: 2022/11/17 19:52:47 by cfiliber         ###   ########.fr        #
+#    Updated: 2022/11/21 13:19:45 by tbertoli         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -25,7 +25,7 @@ SRC_GNL = $(addprefix gnl/, $(GNL))
 PARSING = file_reader.c file_checker.c texture_checker.c color_checker.c map_create.c map_create_2.c map_checker.c map_checker_2.c
 SRC_PARSING = $(addprefix parsing/, $(PARSING))
 
-GAME = cub3d.c end_program.c mov_checks.c
+GAME = cub3dcopia.c end_program.c mov_checks.c
 SRC_GAME = $(addprefix game/, $(GAME))
 
 OBJS = $(SRCS:.c=.o)
