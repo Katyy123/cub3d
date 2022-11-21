@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   structs.h                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tbertoli <tbertoli@student.42.fr>          +#+  +:+       +#+        */
+/*   By: cfiliber <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/08 12:01:01 by ael-bekk          #+#    #+#             */
-/*   Updated: 2022/11/21 13:25:37 by tbertoli         ###   ########.fr       */
+/*   Updated: 2022/11/21 17:11:17 by cfiliber         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,6 +18,11 @@ typedef enum e_bool
 	TRUE = 1,
 	FALSE = 0
 }	t_bool;
+
+typedef struct s_coord {
+	double	x;
+	double	y;
+}	t_coord;
 
 /*
 * struttura necessaria a gestire le immagini con minilibx.

@@ -322,32 +322,32 @@ t_bool increment_d(double *d, t_game *game, double ray_a)
 /*
 * funzione che calcola la distanza dell' ostacolo dall'osservatore per ogni raggio della visuale
 */
-double get_distance(t_game *game, int w)
-{
-    double   d;
-    double   ray_a;
-    t_bool  wall;
+// double get_distance(t_game *game, int w)
+// {
+//     double   d;
+//     double   ray_a;
+//     t_bool  wall;
     
-    wall = FALSE;
-    d = 0;
-    ray_a =  game->pl.pov - game->pl.view/2 + game->delta_view * w; //ricontrollare questa
-    //while (!wall)
-    wall = increment_d(&d, game, ray_a);
-    if (w > W/2 - 40 && w < W/2 + 40)
-        printf("ray_a = %f => d = %f\t cos_a = %f sin_a = %f\n ", to_degrees(ray_a), d, cos(ray_a), sin(ray_a));
-    //calcolo il quadrante:
-    game->r.mid_block_x = (double) game->r.ntest_x + 0.5; 
-    game->r.mid_block_y = (double) game->r.ntest_y + 0.5;
+//     wall = FALSE;
+//     d = 0;
+//     ray_a =  game->pl.pov - game->pl.view/2 + game->delta_view * w; //ricontrollare questa
+//     //while (!wall)
+//     wall = increment_d(&d, game, ray_a);
+//     if (w > W/2 - 40 && w < W/2 + 40)
+//         printf("ray_a = %f => d = %f\t cos_a = %f sin_a = %f\n ", to_degrees(ray_a), d, cos(ray_a), sin(ray_a));
+//     //calcolo il quadrante:
+//     game->r.mid_block_x = (double) game->r.ntest_x + 0.5; 
+//     game->r.mid_block_y = (double) game->r.ntest_y + 0.5;
 
-    game->r.test_angle = 1000;
-    game->r.test_angle = atan2f((game->r.test_point_y - game->r.mid_block_y),
-                                 (game->r.test_point_x - game->r.mid_block_x));
-    get_orient(game);
+//     game->r.test_angle = 1000; //why?
+//     game->r.test_angle = atan2f((game->r.test_point_y - game->r.mid_block_y),
+//                                  (game->r.test_point_x - game->r.mid_block_x));
+//     get_orient(game);
 
 
-    return d;
+//     return d;
 
-}
+// }
 
 /*
 * determina il colore del pixel dalla tex.

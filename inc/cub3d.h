@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cub3d.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tbertoli <tbertoli@student.42.fr>          +#+  +:+       +#+        */
+/*   By: cfiliber <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/21 12:41:47 by mel-hada          #+#    #+#             */
-/*   Updated: 2022/11/21 13:25:37 by tbertoli         ###   ########.fr       */
+/*   Updated: 2022/11/21 19:37:01 by cfiliber         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,6 +47,8 @@
 # define KEY_ESC	53
 # define KEY_TAB	48
 
+#define H 1080 / 2
+#define W 1920 / 2
 
 # include <unistd.h>
 # include <stdlib.h>
@@ -97,6 +99,7 @@ int		update_window(t_game *game);
 int 	check_pos(t_game *game);
 int 	key_press(int keycode, t_game *game);
 int     key_rlease(int keycode, t_game *game);
+void	get_orient(t_game *game);
 
 /* end_program.c */
 int		end_program(t_game *game);
