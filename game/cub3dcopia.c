@@ -6,6 +6,9 @@
 #define H 1080 / 2
 #define W 1920 / 2
 
+//per poter usare algorimo dda ho divuto cambiare un po' di cose, 
+// se usi questo file qui nella tua repository al posto di cube3d.c (modificare makefile)
+// dovresti poter cambiare solo la funzione increment_d. 
 
 double to_degrees(double rad)
 {
@@ -221,26 +224,28 @@ double dda_incr(double d, t_game *game, double m, double sx, double sy, double r
 */
 t_bool increment_d(double *d, t_game *game, double ray_a)
 {
-    int     stepx;
-    int     stepy;
-    int   eye_x;
-    int   eye_y;
-    double   ipx;
-    double   ipy;
+    int     stepx; // passo sulla x per andare all'intersezione successiva
+    int     stepy; // passo sulla y per andare all'intersezione successiva
+    int   eye_x; //indice x della casella da controllare nella mappa
+    int   eye_y; //indice y della casella da controllare nella mappa
+    double   ipx; //distanza lungo x dalla casella che sto controllando
+    double   ipy; //distanza lungo y dalla casella che sto controllando
 
-    double m = tan(ray_a);
-    double sx = sqrt(1 + m*m);
-    double sy = sqrt(1 + (1/m)*(1/m));
+    double m = tan(ray_a); //tangente o coefficente angolare
+    double sx = sqrt(1 + m*m); //passo sulla x che corrisponde al passo di una casella sulla y
+    double sy = sqrt(1 + (1/m)*(1/m)); //passo sulla y che corrisponde al passo di una casella sulla x
     double cos_a = cos(ray_a);
     double sin_a = sin(ray_a);
 
-    eye_x = game->pl.pos_x;
+    eye_x = game->pl.pos_x; //all'inizio la posizione da controllare parte dal giocatore
     eye_y = game->pl.pos_y;
 
     t_bool wall;
 
     wall = FALSE;
    
+// con questi if else calcolo se lungo x e lungo y devo aumentare o diminuire di uno per andare nella 
+// prox. casella
     if (cos_a < 0)
     {
         stepx = -1;
@@ -264,6 +269,9 @@ t_bool increment_d(double *d, t_game *game, double ray_a)
 
     eye_x = game->pl.pos_x;
     eye_y = game->pl.pos_y;
+
+// con questi if else calcolo se lungo x e lungo y devo aumentare o diminuire di uno per andare nella 
+// prox. casella
     if (sin_a < 0)
     {
         stepy = -1;
@@ -286,17 +294,20 @@ t_bool increment_d(double *d, t_game *game, double ray_a)
         
     }
     
-    
+    // se la ditanza dall'intersezione sulla x è maggiore di quella sulla y prende in considerazione quella 
+    // sulla y
     if (ipx > ipy)
     {
         *d = ipy;
-        game->f_sample_x =(game->pl.pos_x + *d * cos_a) - (int)(game->pl.pos_x + *d * cos_a);            
+        game->f_sample_x =(game->pl.pos_x + *d * cos_a) - (int)(game->pl.pos_x + *d * cos_a); //mi serve per calcolare in che punto della texture andare a prendere i colori!       
     }
     else
     {
         *d = ipx;
         game->f_sample_x =(game->pl.pos_y + *d * sin_a) - (int)(game->pl.pos_y + *d * sin_a);            
     }
+
+    //mi servono per mettere bene le texture
     game->r.ntest_x = eye_x;
     game->r.ntest_y = eye_y;
     game->r.test_point_x = game->pl.pos_x + *d * cos_a;
