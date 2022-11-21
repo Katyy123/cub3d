@@ -6,7 +6,7 @@
 /*   By: cfiliber <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/21 12:41:47 by mel-hada          #+#    #+#             */
-/*   Updated: 2022/11/12 20:38:30 by cfiliber         ###   ########.fr       */
+/*   Updated: 2022/11/21 19:37:01 by cfiliber         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,6 +47,8 @@
 # define KEY_ESC	53
 # define KEY_TAB	48
 
+#define H 1080 / 2
+#define W 1920 / 2
 
 # include <unistd.h>
 # include <stdlib.h>
@@ -63,14 +65,24 @@
 # include "../libft/libft.h"
 # include "../gnl/get_next_line.h"
 
+
+
+
+int wall_f1(t_game *game);
+int wall_f2(t_game *game);
+int wall_b1(t_game *game);
+int wall_b2(t_game *game);
+int wall_dx(t_game *game);
+int wall_sx(t_game *game);
+
 /* errors.c */
 int		error(char *message);
 int     error_1(char *message);
 void	*null_error(char *message);
 void	print_warning(char *message);
 
-/* cub3d.c */
-float	to_degrees(float rad);
+/* cub3d.c */ // ne mancano un po!
+double	to_degrees(double rad);
 void	*ft_memcpy(void *dst, const void *src, size_t n);
 int     ft_strlen(const char *str);
 char	*ft_strdup(const char *str);
@@ -79,13 +91,15 @@ void    ft_init_tex(t_game *game);
 void    ft_init2(t_game *game);
 void	my_mlx_pixel_put(t_data *data, int x, int y, int color);
 void 	pixel_col_put(t_screen *screen, int x, int y, int color, int pxnum);
-float 	get_distance(t_game *game, int w);
+double 	get_distance(t_game *game, int w);
 t_tex 	*select_text(t_game *game);
 int     get_color(t_game *game, int y, int wall_h, t_tex tex);
-void 	draw_line(t_screen *screen, int line, float celing_h, t_game *game);
+void 	draw_line(t_screen *screen, int line, double celing_h, t_game *game);
 int		update_window(t_game *game);
 int 	check_pos(t_game *game);
 int 	key_press(int keycode, t_game *game);
+int     key_rlease(int keycode, t_game *game);
+void	get_orient(t_game *game);
 
 /* end_program.c */
 int		end_program(t_game *game);

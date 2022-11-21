@@ -6,7 +6,7 @@
 /*   By: cfiliber <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/30 15:19:18 by cfiliber          #+#    #+#             */
-/*   Updated: 2022/11/12 18:54:30 by cfiliber         ###   ########.fr       */
+/*   Updated: 2022/11/17 20:24:46 by cfiliber         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -78,6 +78,19 @@ char	**read_map_file(char *file_path)
 	return (map_file);
 }
 
+/* free the textures paths */
+void	free_textures(t_game *game)
+{
+	if (game->no_tex.path)
+		free(game->no_tex.path);
+	if (game->so_tex.path)
+		free(game->so_tex.path);
+	if (game->we_tex.path)
+		free(game->we_tex.path);
+	if (game->ea_tex.path)
+		free(game->ea_tex.path);
+}
+
 /* parsing of the file */
 int	map_file_parse(char *file_path, t_game *game)
 {
@@ -88,6 +101,7 @@ int	map_file_parse(char *file_path, t_game *game)
 		return (-1);
 	if (valid_file(map_file, game) == FALSE)
 	{
+		free_textures(game);
 		ft_free_char_mtx(map_file);
 		return (-1);
 	}
