@@ -6,7 +6,7 @@
 /*   By: cfiliber <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/21 16:26:03 by cfiliber          #+#    #+#             */
-/*   Updated: 2022/11/21 20:11:22 by cfiliber         ###   ########.fr       */
+/*   Updated: 2022/11/21 20:27:25 by cfiliber         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,7 +41,7 @@ double	dist_horiz_inters(t_game *game, double ray_a)
 	point = find_1st_horiz_inters(game, ray_a);
 	printf("point.x = %f, point.y = %f\n", point.x, point.y);
 	printf("(int)point.x = %d  (int)point.y = %d\n", (int)point.x, (int)point.y);
-	if (game->map[(int)point.x][(int)point.y] == '1')
+	if (game->map[(int)point.y][(int)point.x] == '1')
 		return (calc_distance(game, ray_a, point));
 	if (sin(ray_a) < 0)
 		ya = -1;
@@ -50,7 +50,7 @@ double	dist_horiz_inters(t_game *game, double ray_a)
 	xa = abs((int)ya) / tan(ray_a);
 	while (point.x <= game->map_x && point.y <= game->map_y)
 	{
-		if (game->map[(int)point.x][(int)point.y] == '1')
+		if (game->map[(int)point.y][(int)point.x] == '1')
 			return (calc_distance(game, ray_a, point));
 		point.x += xa;
 		point.y += ya;
@@ -77,7 +77,7 @@ double	dist_vert_inters(t_game *game, double ray_a)
 	double	ya;
 	
 	point = find_1st_vert_inters(game, ray_a);
-	if (game->map[(int)point.x][(int)point.y] == '1')
+	if (game->map[(int)point.y][(int)point.x] == '1')
 		return (calc_distance(game, ray_a, point));
 	if (cos(ray_a) < 0)
 		xa = -1;
@@ -86,7 +86,7 @@ double	dist_vert_inters(t_game *game, double ray_a)
 	ya = abs((int)xa) * tan(ray_a);
 	while (point.x <= game->map_x && point.y <= game->map_y)
 	{
-		if (game->map[(int)point.x][(int)point.y] == '1')
+		if (game->map[(int)point.y][(int)point.x] == '1')
 			return (calc_distance(game, ray_a, point));
 		point.x += xa;
 		point.y += ya;
