@@ -6,7 +6,7 @@
 /*   By: tbertoli <tbertoli@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/21 12:41:47 by mel-hada          #+#    #+#             */
-/*   Updated: 2022/11/19 20:01:17 by tbertoli         ###   ########.fr       */
+/*   Updated: 2022/11/21 13:25:37 by tbertoli         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -80,7 +80,7 @@ void	*null_error(char *message);
 void	print_warning(char *message);
 
 /* cub3d.c */ // ne mancano un po!
-float	to_degrees(float rad);
+double	to_degrees(double rad);
 void	*ft_memcpy(void *dst, const void *src, size_t n);
 int     ft_strlen(const char *str);
 char	*ft_strdup(const char *str);
@@ -89,10 +89,10 @@ void    ft_init_tex(t_game *game);
 void    ft_init2(t_game *game);
 void	my_mlx_pixel_put(t_data *data, int x, int y, int color);
 void 	pixel_col_put(t_screen *screen, int x, int y, int color, int pxnum);
-float 	get_distance(t_game *game, int w);
+double 	get_distance(t_game *game, int w);
 t_tex 	*select_text(t_game *game);
 int     get_color(t_game *game, int y, int wall_h, t_tex tex);
-void 	draw_line(t_screen *screen, int line, float celing_h, t_game *game);
+void 	draw_line(t_screen *screen, int line, double celing_h, t_game *game);
 int		update_window(t_game *game);
 int 	check_pos(t_game *game);
 int 	key_press(int keycode, t_game *game);

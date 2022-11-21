@@ -6,7 +6,7 @@
 /*   By: tbertoli <tbertoli@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/08 12:01:01 by ael-bekk          #+#    #+#             */
-/*   Updated: 2022/11/19 18:22:24 by tbertoli         ###   ########.fr       */
+/*   Updated: 2022/11/21 13:25:37 by tbertoli         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,11 +39,11 @@ typedef struct s_rc {
     int ntest_y; // = (int)(posY + distance_to_wall * sen(f_ray_angle)
     
     //per il calcolo del quadrante
-    float mid_block_x;
-    float mid_block_y;
-    float test_point_x;
-    float test_point_y;
-    float test_angle;
+    double mid_block_x;
+    double mid_block_y;
+    double test_point_x;
+    double test_point_y;
+    double test_angle;
 }				t_rc;
 
 typedef struct s_mov {
@@ -89,10 +89,10 @@ typedef struct s_col
 */
 typedef struct s_player
 {
-	float	pos_x;
-	float	pos_y;
-	float	view;
-	float	pov;
+	double	pos_x;
+	double	pos_y;
+	double	view;
+	double	pov;
 }	t_player;
 
 /*
@@ -124,9 +124,9 @@ typedef struct s_game
 	int			screen_y;
 	int			map_x;
 	int			map_y;
-	float		n_rays; // = screen_x
-	float		delta_view;
-	float		f_sample_x;
+	double		n_rays; // = screen_x
+	double		delta_view;
+	double		f_sample_x;
 	int			game_ended;
 	char		**map;
 }	t_game;
