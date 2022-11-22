@@ -2,8 +2,8 @@
 
 #include "../inc/cub3d.h"
 
-#define H 1080 / 2
-#define W 1920 / 2
+#define H 1080
+#define W 1920
 #define X 0
 #define Y 1
 
