@@ -6,7 +6,7 @@
 /*   By: cfiliber <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/08 12:01:01 by ael-bekk          #+#    #+#             */
-/*   Updated: 2022/11/22 15:48:44 by cfiliber         ###   ########.fr       */
+/*   Updated: 2022/11/22 16:54:49 by cfiliber         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,8 +20,8 @@ typedef enum e_bool
 }	t_bool;
 
 typedef struct s_coord {
-	double	x;
-	double	y;
+	int	x;
+	int	y;
 }	t_coord;
 
 /*
@@ -145,6 +145,8 @@ typedef struct s_game
 	char		**map;
 	char		nsoe;
 	t_rproperties	ray;
+	int			mouse_block;
+	t_coord		mouse_start;
 }	t_game;
 
 #endif

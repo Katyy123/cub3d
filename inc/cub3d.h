@@ -6,7 +6,7 @@
 /*   By: cfiliber <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/21 12:41:47 by mel-hada          #+#    #+#             */
-/*   Updated: 2022/11/21 19:37:01 by cfiliber         ###   ########.fr       */
+/*   Updated: 2022/11/22 18:01:34 by cfiliber         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,6 +49,8 @@
 
 #define H 1080 / 2
 #define W 1920 / 2
+
+# define MOUSE_SPEED 200
 
 # include <unistd.h>
 # include <stdlib.h>
@@ -104,4 +106,10 @@ void	get_orient(t_game *game);
 /* end_program.c */
 int		end_program(t_game *game);
 
+/* mouse_input.c */
+t_coord	point_coord(int x, int y);
+float	to_radian(float angle);
+int		trasl_mov(int x, int y, t_game *game);
+int		unlock_mouse(int button, int x, int y, t_game *game);
+int		get_mouse(int button, int x, int y, t_game *game);
 # endif
