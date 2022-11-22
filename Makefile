@@ -6,7 +6,11 @@
 #    By: tbertoli <tbertoli@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/10/27 16:37:56 by cfiliber          #+#    #+#              #
+<<<<<<< HEAD
 #    Updated: 2022/11/22 12:07:10 by tbertoli         ###   ########.fr        #
+=======
+#    Updated: 2022/11/21 19:11:13 by tbertoli         ###   ########.fr        #
+>>>>>>> 638682d371785144261c5c02e0efcbc76ca59cd0
 #                                                                              #
 # **************************************************************************** #
 
@@ -25,7 +29,11 @@ SRC_GNL = $(addprefix gnl/, $(GNL))
 PARSING = file_reader.c file_checker.c texture_checker.c color_checker.c map_create.c map_create_2.c map_checker.c map_checker_2.c
 SRC_PARSING = $(addprefix parsing/, $(PARSING))
 
+<<<<<<< HEAD
 GAME = cub3dcopia1.c end_program.c mov_checks.c
+=======
+GAME = cub3d.c end_program.c mov_checks.c
+>>>>>>> 638682d371785144261c5c02e0efcbc76ca59cd0
 SRC_GAME = $(addprefix game/, $(GAME))
 
 OBJS = $(SRCS:.c=.o)

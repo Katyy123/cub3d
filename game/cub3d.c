@@ -420,33 +420,53 @@ void    update_screen(t_game *game)
 void    update_pos(t_game *game)
 {
     double teta;
+
+    double pos_x;
+    double pos_y;
+
+    pos_x = game->pl.pos_x;
+    pos_y = game->pl.pos_y;
     
-    if (game->mov.m_fwrd == 1 && !wall_f1(game) && !wall_f2(game))
+    if (game->mov.m_fwrd == 1)
     {
-        game->pl.pos_x += cos(game->pl.pov) * 0.2;
-        game->pl.pos_y += sin(game->pl.pov) * 0.2;//scambiati sen e cos
+        pos_x += cos(game->pl.pov) * 0.3;
+        pos_y += sin(game->pl.pov) * 0.3;//scambiati sen e cos
     }
-    else if (game->mov.m_bwrd == 1 && !wall_b1(game) && !wall_b2(game))
+    else if (game->mov.m_bwrd == 1)
     {
-        game->pl.pos_x -= cos(game->pl.pov) * 0.2;
-        game->pl.pos_y -= sin(game->pl.pov) * 0.2;//scambiati sen e cos
+        pos_x -= cos(game->pl.pov) * 0.3;
+        pos_y -= sin(game->pl.pov) * 0.3;//scambiati sen e cos
     }
-    else if  (game->mov.m_rght == 1 && !wall_dx(game))
+    else if  (game->mov.m_rght == 1)
     {
         teta = game->pl.pov + M_PI/2;
-        game->pl.pos_x += cos(teta) * 0.1;
-        game->pl.pos_y += sin(teta) * 0.1; //scambiati sen e cos
+        pos_x += cos(teta) * 0.2;
+        pos_y += sin(teta) * 0.2; //scambiati sen e cos
     }
-    else if  (game->mov.m_lft == 1 && !wall_sx(game))
+    else if  (game->mov.m_lft == 1)
     {
         teta = game->pl.pov + M_PI/2;
-        game->pl.pos_x -= cos(teta) * 0.1; //scambiati sen e cos
-        game->pl.pos_y -= sin(teta) * 0.1;
+        pos_x -= cos(teta) * 0.2; //scambiati sen e cos
+        pos_y -= sin(teta) * 0.2;
     }
     else if (game->mov.r_r == 1)
         game->pl.pov += 0.05;
     else if (game->mov.r_l == 1)
         game->pl.pov -= 0.05;
+    float i = 0.0;
+    while (i < 1)
+    {
+
+        if (game->map[(int)(pos_y + (i * sin(game->pl.pov)))][(int)(pos_x + (i * cos(game->pl.pov)))] == '1')
+        {
+            return ;
+        }
+        i += 0.1;
+    }
+    game->pl.pos_x = pos_x;
+    game->pl.pos_y = pos_y; 
+    
+    
 }
 
 int    update_window(t_game *game)
