@@ -6,7 +6,7 @@
 /*   By: cfiliber <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/08 12:01:01 by ael-bekk          #+#    #+#             */
-/*   Updated: 2022/11/21 17:11:17 by cfiliber         ###   ########.fr       */
+/*   Updated: 2022/11/22 15:48:44 by cfiliber         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -114,6 +114,15 @@ typedef struct s_screen
 	t_data		shown_img;
 }				t_screen;
 
+typedef struct s_rproperties
+{
+	double		m;
+    double		sx;
+    double		sy;
+    double		cos_a;
+    double		sin_a;
+}				t_rproperties;
+
 typedef struct s_game
 {
 	t_rc		r;
@@ -134,6 +143,8 @@ typedef struct s_game
 	double		f_sample_x;
 	int			game_ended;
 	char		**map;
+	char		nsoe;
+	t_rproperties	ray;
 }	t_game;
 
 #endif
