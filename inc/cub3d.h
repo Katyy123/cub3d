@@ -112,4 +112,7 @@ float	to_radian(float angle);
 int		trasl_mov(int x, int y, t_game *game);
 int		unlock_mouse(int button, int x, int y, t_game *game);
 int		get_mouse(int button, int x, int y, t_game *game);
+
+/* put_minimap.c */
+void    put_minimap(t_game * game);
 # endif
