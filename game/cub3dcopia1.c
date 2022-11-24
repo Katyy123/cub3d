@@ -5,7 +5,8 @@
 #define X 0
 #define Y 1
 
-
+#define H 1080 / 2
+#define W 1920 / 2
 
 
 //per poter usare algorimo dda ho divuto cambiare un po' di cose, 
@@ -472,6 +473,7 @@ int    update_window(t_game *game)
     img->addr = mlx_get_data_addr(img->img, &img->bits_per_pixel, &img->line_length, &img->endian);
     update_pos(game);
     raycast(game);
+    put_minimap(game);
 	mlx_put_image_to_window(screen->ptr, screen->win, img->img, 0, 0);
     return (0);
 }

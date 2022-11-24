@@ -145,7 +145,7 @@ typedef struct s_game
 	char		**map;
 	char		nsoe;
 	t_rproperties	ray;
-	int			mouse_block;
+	int			press_mouse;
 	t_coord		mouse_start;
 }	t_game;
 
