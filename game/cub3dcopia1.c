@@ -61,8 +61,7 @@ void    ft_init1(t_game *game)
 }
 
 void    ft_init_tex(t_game *game)
-{
-    
+{ 
     game->no_tex.tex_img = mlx_xpm_file_to_image(game->screen.ptr, 
                             game->no_tex.path, &game->no_tex.width, &game->no_tex.height);
     game->no_tex.tex_addr = mlx_get_data_addr(game->no_tex.tex_img, &game->no_tex.bpp,
@@ -240,7 +239,6 @@ t_bool    increment_x(t_game *game, int *step, int *eye, double *ip, double *d)
     return (wall);
 }
 
-
 /*
 * incrementa di una tile lungo y, aggiorna la distanza e controlla se cé il muro
 */
@@ -385,63 +383,95 @@ void draw_line(t_screen *screen, int line, double celing_h, t_game *game)
     }
 }
 
+void  collision(t_game *game, double pos_x, double pos_y)
+{
+    double   r;
+    double   a;
+
+    r = 0.5;
+    a = game->pl.pov;
+    if (game->map[(int)(pos_y + (r * sin(a)))][(int)(pos_x + (r * cos(a)))] == '1')
+             return ; 
+    r = 0.15;
+    a = 0.0;
+    while (a <= 2 * M_PI)
+    {
+        if (game->map[(int)(pos_y + (r * sin(a)))][(int)(pos_x + (r * cos(a)))] == '1')
+             return ;
+         a += 0.1;
+    }
+    game->pl.pos_x = pos_x;
+    game->pl.pos_y = pos_y;
+}
+
 void    update_pos(t_game *game)
 {
     double teta;
-    
-    if (game->mov.m_fwrd == 1 && !wall_f1(game) && !wall_f2(game))
+    double pos_x;
+    double pos_y;
+
+    pos_x = game->pl.pos_x;
+    pos_y = game->pl.pos_y; 
+    if (game->mov.m_fwrd == 1)
     {
-        game->pl.pos_x += cos(game->pl.pov) * 0.2;
-        game->pl.pos_y += sin(game->pl.pov) * 0.2;
+        pos_x += cos(game->pl.pov) * 0.3;
+        pos_y += sin(game->pl.pov) * 0.3;//scambiati sen e cos
     }
-    else if (game->mov.m_bwrd == 1 && !wall_b1(game) && !wall_b2(game))
+    else if (game->mov.m_bwrd == 1)
     {
-        game->pl.pos_x -= cos(game->pl.pov) * 0.2;
-        game->pl.pos_y -= sin(game->pl.pov) * 0.2;
+        pos_x -= cos(game->pl.pov) * 0.3;
+        pos_y -= sin(game->pl.pov) * 0.3;//scambiati sen e cos
     }
-    else if  (game->mov.m_rght == 1 && !wall_dx(game))
+    else if  (game->mov.m_rght == 1)
     {
         teta = game->pl.pov + M_PI/2;
-        game->pl.pos_x += cos(teta) * 0.1;
-        game->pl.pos_y += sin(teta) * 0.1;
+        pos_x += cos(teta) * 0.2;
+        pos_y += sin(teta) * 0.2; //scambiati sen e cos
     }
-    else if  (game->mov.m_lft == 1 && !wall_sx(game))
+    else if  (game->mov.m_lft == 1)
     {
         teta = game->pl.pov + M_PI/2;
-        game->pl.pos_x -= cos(teta) * 0.1;
-        game->pl.pos_y -= sin(teta) * 0.1;
+        pos_x -= cos(teta) * 0.2; //scambiati sen e cos
+        pos_y -= sin(teta) * 0.2;
     }
     else if (game->mov.r_r == 1)
         game->pl.pov += 0.05;
     else if (game->mov.r_l == 1)
         game->pl.pov -= 0.05;
+    collision(game, pos_x, pos_y);
+}   
+
+void    raycast(t_game *game)
+{
+    double       d;
+    int       celing_h;
+    int       floor;
+	int			w;
+
+    w = 0;
+    while (w < W)
+	{
+        d = get_distance(game, w);
+        celing_h = H/2 - H/d;
+        floor = H - celing_h;
+        draw_line(&game->screen, w, celing_h, game);   
+        w++;
+    }
 }
 
 int    update_window(t_game *game)
 {
 	t_screen	*screen;
     t_data      *img;
-	double       d;
-    int       celing_h;
-    int       floor;
-	int			w;
-
+	
 	screen = &game->screen;
     img = &game->screen.shown_img;
-    w = 0;
     mlx_clear_window(game->screen.ptr, game->screen.win);
     mlx_destroy_image(screen->ptr, screen->shown_img.img);
     img->img = mlx_new_image(game->screen.ptr, W, H);//changed the first arg of mlx_new_image (earlier it was img->img)
     img->addr = mlx_get_data_addr(img->img, &img->bits_per_pixel, &img->line_length, &img->endian);
     update_pos(game);
-    while (w < W) //while del raycasting
-	{
-        d = get_distance(game, w);
-        celing_h = H/2 - H/d;
-        floor = H - celing_h;
-        draw_line(screen, w, celing_h, game);   
-        w++;
-    }
+    raycast(game);
 	mlx_put_image_to_window(screen->ptr, screen->win, img->img, 0, 0);
     return (0);
 }
