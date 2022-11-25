@@ -35,10 +35,10 @@ int main(int argc, char **argv)
     
 	mlx_hook(game.screen.win, X_EVENT_KEY_RELEASE, 0, &key_rlease, &game);
     mlx_hook(game.screen.win, X_EVENT_KEY_PRESS, 0, &key_press, &game);
-	mlx_hook(game.screen.win, 4, 1L << 0, get_mouse, &game);
-	mlx_hook(game.screen.win, 6, 1L << 0, trasl_mov, &game);
-	mlx_hook(game.screen.win, 5, 1L << 0, unlock_mouse, &game);
-	mlx_hook(game.screen.win, 17, 0, end_program, &game);
+	mlx_hook(game.screen.win, X_EVENT_MOUSE_PRESS, 1L << 0, get_mouse, &game);
+	mlx_hook(game.screen.win, X_EVENT_MOUSE_MOVE, 1L << 0, trasl_mov, &game);
+	mlx_hook(game.screen.win, X_EVENT_MOUSE_RELEASE, 1L << 0, unlock_mouse, &game);
+	mlx_hook(game.screen.win, X_EVENT_EXIT, 0, end_program, &game);
     mlx_loop_hook(game.screen.ptr, &update_window, &game); //uncommented
     mlx_loop(game.screen.ptr);
 	ft_free_char_mtx(game.map);

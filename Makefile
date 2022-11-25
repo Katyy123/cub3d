@@ -25,7 +25,7 @@ SRC_GNL = $(addprefix gnl/, $(GNL))
 PARSING = file_reader.c file_checker.c texture_checker.c color_checker.c map_create.c map_create_2.c map_checker.c map_checker_2.c
 SRC_PARSING = $(addprefix parsing/, $(PARSING))
 
-GAME = cub3dcopia1.c end_program.c mov_checks.c mouse_input.c
+GAME = cub3dcopia1.c end_program.c mov_checks.c mouse_input.c minimap.c minimap_background.c minimap_utils.c
 SRC_GAME = $(addprefix game/, $(GAME))
 
 OBJS = $(SRCS:.c=.o)

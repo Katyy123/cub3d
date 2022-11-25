@@ -1,5 +1,3 @@
-
-
 #include "../inc/cub3d.h"
 
 #define X 0
@@ -473,7 +471,7 @@ int    update_window(t_game *game)
     img->addr = mlx_get_data_addr(img->img, &img->bits_per_pixel, &img->line_length, &img->endian);
     update_pos(game);
     raycast(game);
-    put_minimap(game);
+    draw_minimap(game);
 	mlx_put_image_to_window(screen->ptr, screen->win, img->img, 0, 0);
     return (0);
 }

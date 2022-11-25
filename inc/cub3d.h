@@ -47,11 +47,35 @@
 # define KEY_ESC	53
 # define KEY_TAB	48
 
+/* height and width of the window */
 #define H 1080 / 2
 #define W 1920 / 2
 
+/* mouse event */
 # define MOUSE_SPEED 200
 
+/* minimap */
+# define MAP_WALL_COL           0x70505050
+# define MAP_BACK_COL           0x70FFFFFF 
+# define MAP_BORDER_COL         0x70000000
+# define MAP_EMPTY_COL          0x70FFFFFF
+# define MAP_PLAYER_COL         0x200000FF
+# define MAP_BORDER_WIDTH       5
+# define MAP_TILE_WIDTH         20
+# define MAP_PLAYER_WIDTH       15
+# define DIST_MAP_WIN           30
+// # define MAP_BORD_START_UP      3 * W / 4
+// # define MAP_BORD_START_LEFT    3 * W / 4
+// # define MAP_BORD_END_DOWN      H - DIST_MAP_WIN
+// # define MAP_BORD_END_RIGHT     W - DIST_MAP_WIN
+// # define MAP_START_UP           MAP_BORD_START_UP + MAP_BORDER_WIDTH
+// # define MAP_START_LEFT         MAP_BORD_START_LEFT + MAP_BORDER_WIDTH
+// # define MAP_END_DOWN           MAP_BORD_END_DOWN - MAP_BORDER_WIDTH
+// # define MAP_END_RIGHT          MAP_BORD_END_RIGHT - MAP_BORDER_WIDTH
+// # define MAP_CENTRE_X           (MAP_START_LEFT + (W - DIST_MAP_WIN)) / 2
+// # define MAP_CENTRE_Y           (MAP_START_UP + (H - DIST_MAP_WIN)) / 2
+
+/* libraries */
 # include <unistd.h>
 # include <stdlib.h>
 # include <stdio.h>
@@ -113,6 +137,21 @@ int		trasl_mov(int x, int y, t_game *game);
 int		unlock_mouse(int button, int x, int y, t_game *game);
 int		get_mouse(int button, int x, int y, t_game *game);
 
-/* put_minimap.c */
-void    put_minimap(t_game * game);
+/* minimap.c */
+void    init_minimap(t_game *game);
+void    draw_wall(t_game *game, int tile_x, int tile_y);
+void    draw_player(t_game *game);
+void    draw_minimap(t_game * game);
+
+/* minimap_background.c */
+void    draw_horiz_lines(t_game *game, int x, int *y);
+void    draw_vert_lines(t_game *game, int x, int y);
+void    draw_border(t_game *game);
+void    draw_background(t_game *game);
+
+/* minimap_utils.c */
+t_bool  is_pix_in_minimap(t_game *game, int x, int y);
+t_bool  is_tile_in_minimap(t_game *game, int x, int y);
+t_bool	is_inside_circle(t_game *game, int x, int y);
+
 # endif

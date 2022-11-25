@@ -19,17 +19,52 @@ typedef enum e_bool
 	FALSE = 0
 }	t_bool;
 
-typedef struct s_coord {
+/* struct for the int coordinates of a point */
+typedef struct s_coord
+{
 	int	x;
 	int	y;
 }	t_coord;
+
+/* struct for the double coordinates of a point */
+typedef struct s_double_coord
+{
+	double	x;
+	double	y;
+}	t_double_coo;
+
+/* struct for the minimap:
+bd_start_up: beginning of the boarder on top of the minimap
+bd_start_l: beginning of the boarder on the left
+bd_end_d: end of the boarder down
+bd_end_r: end of the boarder on the right
+start_up: beginning of the minimap from the top
+start_l: beginning of the minimap from the left
+end_d: end of the minimap down
+end_r: end of the minimap on the right
+ctr_x: x_coordinate of the minimap center 
+ctr_y: y_coordinate of the minimap center */
+typedef struct s_minimap
+{
+	int	bd_start_up;
+	int	bd_start_l;
+	int	bd_end_d;
+	int	bd_end_r;
+	int	start_up;
+	int	start_l;
+	int	end_d;
+	int	end_r;
+	int	ctr_x;
+	int	ctr_y;
+}	t_minimap;
 
 /*
 * struttura necessaria a gestire le immagini con minilibx.
 * contiene il puntatore a immagine img;
 * gli altri elementi servono a [...]
 */
-typedef struct s_data {
+typedef struct s_data
+{
 	void	*img;
 	void	*addr;
 	int		bits_per_pixel;
@@ -39,7 +74,8 @@ typedef struct s_data {
 
 
 //aggiunta da casa, da testare
-typedef struct s_rc {
+typedef struct s_rc
+{
 	int ntest_x;// = (int)(posX + distance_to_wall * cos(f_ray_angle))
     int ntest_y; // = (int)(posY + distance_to_wall * sen(f_ray_angle)
     
@@ -51,7 +87,8 @@ typedef struct s_rc {
     double test_angle;
 }				t_rc;
 
-typedef struct s_mov {
+typedef struct s_mov
+{
 	int		m_fwrd;
 	int		m_bwrd;
 	int		m_lft;
@@ -147,6 +184,7 @@ typedef struct s_game
 	t_rproperties	ray;
 	int			press_mouse;
 	t_coord		mouse_start;
+	t_minimap	m_map;
 }	t_game;
 
 #endif
