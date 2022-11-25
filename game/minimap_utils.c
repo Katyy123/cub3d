@@ -21,14 +21,12 @@ t_bool  is_tile_in_minimap(t_game *game, int x, int y)
     t_minimap       *m_map;
 
     m_map = &game->m_map;
-    //player.x = (int)game->pl.pos_x + 0.5;
-    //player.y = (int)game->pl.pos_y + 0.5;
     player.x = game->pl.pos_x;
     player.y = game->pl.pos_y;
     map_width = m_map->end_r - m_map->start_l;
-    half_tiles = map_width / MAP_TILE_WIDTH / 2;
-    if (x > (int)(player.x - half_tiles) && x < player.x + half_tiles
-        && y > (int)(player.y - half_tiles) && y < player.y + half_tiles)
+    half_tiles = map_width / m_map->tile_width / 2;
+    if (x + 1 >= (int)(player.x - half_tiles) && x - 1 < player.x + half_tiles
+        && y + 1 >= (int)(player.y - half_tiles) && y - 1 < player.y + half_tiles)
         return (TRUE);
     return (FALSE);
 }
@@ -40,7 +38,7 @@ t_bool	is_inside_circle(t_game *game, int x, int y)
 
     m_map = &game->m_map;
 	float distance = sqrtf(powf(x - m_map->ctr_x, 2.) + powf(y - m_map->ctr_y, 2.));
-	if (distance <= MAP_PLAYER_WIDTH / 2)
-		return (TRUE); //inside circle
-	return (FALSE); //outside circle
+	if (distance <= m_map->pl_width / 2)
+		return (TRUE);
+	return (FALSE);
 }

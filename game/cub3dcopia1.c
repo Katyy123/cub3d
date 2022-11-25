@@ -3,10 +3,6 @@
 #define X 0
 #define Y 1
 
-#define H 1080 / 2
-#define W 1920 / 2
-
-
 //per poter usare algorimo dda ho divuto cambiare un po' di cose, 
 // se usi questo file qui nella tua repository al posto di cube3d.c (modificare makefile)
 // dovresti poter cambiare solo la funzione increment_d. 

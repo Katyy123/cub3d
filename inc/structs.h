@@ -6,7 +6,7 @@
 /*   By: cfiliber <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/08 12:01:01 by ael-bekk          #+#    #+#             */
-/*   Updated: 2022/11/22 16:54:49 by cfiliber         ###   ########.fr       */
+/*   Updated: 2022/11/25 18:26:55 by cfiliber         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,6 +46,10 @@ ctr_x: x_coordinate of the minimap center
 ctr_y: y_coordinate of the minimap center */
 typedef struct s_minimap
 {
+	int	bd_width;
+	int	tile_width;
+	int	pl_width;
+	int	dist_win;
 	int	bd_start_up;
 	int	bd_start_l;
 	int	bd_end_d;

@@ -6,7 +6,7 @@
 /*   By: cfiliber <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/30 15:11:58 by cfiliber          #+#    #+#             */
-/*   Updated: 2022/11/22 18:01:54 by cfiliber         ###   ########.fr       */
+/*   Updated: 2022/11/25 17:58:51 by cfiliber         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,9 +35,9 @@ int main(int argc, char **argv)
     
 	mlx_hook(game.screen.win, X_EVENT_KEY_RELEASE, 0, &key_rlease, &game);
     mlx_hook(game.screen.win, X_EVENT_KEY_PRESS, 0, &key_press, &game);
-	mlx_hook(game.screen.win, X_EVENT_MOUSE_PRESS, 1L << 0, get_mouse, &game);
-	mlx_hook(game.screen.win, X_EVENT_MOUSE_MOVE, 1L << 0, trasl_mov, &game);
-	mlx_hook(game.screen.win, X_EVENT_MOUSE_RELEASE, 1L << 0, unlock_mouse, &game);
+	//mlx_hook(game.screen.win, X_EVENT_MOUSE_PRESS, 1L << 0, get_mouse, &game);
+	//mlx_hook(game.screen.win, X_EVENT_MOUSE_MOVE, 1L << 0, trasl_mov, &game);
+	//mlx_hook(game.screen.win, X_EVENT_MOUSE_RELEASE, 1L << 0, unlock_mouse, &game);
 	mlx_hook(game.screen.win, X_EVENT_EXIT, 0, end_program, &game);
     mlx_loop_hook(game.screen.ptr, &update_window, &game); //uncommented
     mlx_loop(game.screen.ptr);

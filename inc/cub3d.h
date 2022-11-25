@@ -6,7 +6,7 @@
 /*   By: cfiliber <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/21 12:41:47 by mel-hada          #+#    #+#             */
-/*   Updated: 2022/11/22 18:01:34 by cfiliber         ###   ########.fr       */
+/*   Updated: 2022/11/25 19:05:33 by cfiliber         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,15 +55,15 @@
 # define MOUSE_SPEED 200
 
 /* minimap */
-# define MAP_WALL_COL           0x70505050
-# define MAP_BACK_COL           0x70FFFFFF 
-# define MAP_BORDER_COL         0x70000000
-# define MAP_EMPTY_COL          0x70FFFFFF
-# define MAP_PLAYER_COL         0x200000FF
-# define MAP_BORDER_WIDTH       5
-# define MAP_TILE_WIDTH         20
-# define MAP_PLAYER_WIDTH       15
-# define DIST_MAP_WIN           30
+# define MAP_WALL_COL           0x00505050
+# define MAP_BACK_COL           0x00F0F0E0 
+# define MAP_BORDER_COL         0x00000000
+# define MAP_EMPTY_COL          0x00FFFFFF
+# define MAP_PLAYER_COL         0x00FF0000
+// # define MAP_BORDER_WIDTH       5
+// # define MAP_TILE_WIDTH         20
+// # define m_map->pl_width       10
+// # define DIST_MAP_WIN           20
 // # define MAP_BORD_START_UP      3 * W / 4
 // # define MAP_BORD_START_LEFT    3 * W / 4
 // # define MAP_BORD_END_DOWN      H - DIST_MAP_WIN
