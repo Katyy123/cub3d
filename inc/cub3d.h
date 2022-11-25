@@ -6,7 +6,7 @@
 /*   By: cfiliber <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/21 12:41:47 by mel-hada          #+#    #+#             */
-/*   Updated: 2022/11/25 19:05:33 by cfiliber         ###   ########.fr       */
+/*   Updated: 2022/11/25 19:55:15 by cfiliber         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,8 +48,8 @@
 # define KEY_TAB	48
 
 /* height and width of the window */
-#define H 1080 / 2
-#define W 1920 / 2
+#define H 1080
+#define W 1920
 
 /* mouse event */
 # define MOUSE_SPEED 200
@@ -144,8 +144,6 @@ void    draw_player(t_game *game);
 void    draw_minimap(t_game * game);
 
 /* minimap_background.c */
-void    draw_horiz_lines(t_game *game, int x, int *y);
-void    draw_vert_lines(t_game *game, int x, int y);
 void    draw_border(t_game *game);
 void    draw_background(t_game *game);
 
