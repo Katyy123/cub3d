@@ -2,23 +2,11 @@
 
 #include "../inc/cub3d.h"
 
-#define H 1080
-#define W 1920
-#define X 0
-#define Y 1
 
-
-
-
-//per poter usare algorimo dda ho divuto cambiare un po' di cose, 
-// se usi questo file qui nella tua repository al posto di cube3d.c (modificare makefile)
-// dovresti poter cambiare solo la funzione increment_d. 
-
-
-double to_degrees(double rad)
-{
-    return (rad * 57.2597);
-}
+// #define H 1080
+// #define W 1920
+// #define X 0
+// #define Y 1
 
 /*
 * funzione che inizializza a zero i valori della struttura rc
@@ -91,6 +79,7 @@ void    ft_init2(t_game *game){
     img->addr = mlx_get_data_addr(img->img, &img->bits_per_pixel, 
                                     &img->line_length, &img->endian);
     ft_init_tex(game);
+    time(&game->t_prev);
 }
 
 void	my_mlx_pixel_put(t_data *data, int x, int y, int color)
@@ -408,36 +397,39 @@ void    update_pos(t_game *game)
     double teta;
     double pos_x;
     double pos_y;
+    time_t      t_current;
 
+    time(&t_current);
     pos_x = game->pl.pos_x;
     pos_y = game->pl.pos_y; 
     if (game->mov.m_fwrd == 1)
     {
-        pos_x += cos(game->pl.pov) * 0.3;
-        pos_y += sin(game->pl.pov) * 0.3;//scambiati sen e cos
+        pos_x += cos(game->pl.pov) * 0.3; //difftime(t_current, game->t_prev) * 2;
+        pos_y += sin(game->pl.pov) * 0.3; //difftime(t_current, game->t_prev) * 2;//scambiati sen e cos
     }
     else if (game->mov.m_bwrd == 1)
     {
-        pos_x -= cos(game->pl.pov) * 0.3;
-        pos_y -= sin(game->pl.pov) * 0.3;//scambiati sen e cos
+        pos_x -= cos(game->pl.pov) * 0.2;// * difftime(t_current, game->t_prev) * 0.01;
+        pos_y -= sin(game->pl.pov) * 0.2;// * difftime(t_current, game->t_prev) * 0.01;//scambiati sen e cos
     }
     else if  (game->mov.m_rght == 1)
     {
         teta = game->pl.pov + M_PI/2;
-        pos_x += cos(teta) * 0.2;
-        pos_y += sin(teta) * 0.2; //scambiati sen e cos
+        pos_x += cos(teta) * 0.2;// * difftime(t_current, game->t_prev) * 0.01;
+        pos_y += sin(teta) * 0.2;// * difftime(t_current, game->t_prev) * 0.01; //scambiati sen e cos
     }
     else if  (game->mov.m_lft == 1)
     {
         teta = game->pl.pov + M_PI/2;
-        pos_x -= cos(teta) * 0.2; //scambiati sen e cos
-        pos_y -= sin(teta) * 0.2;
+        pos_x -= cos(teta) * 0.2;// * difftime(t_current, game->t_prev) * 0.01; //scambiati sen e cos
+        pos_y -= sin(teta) * 0.2;// * difftime(t_current, game->t_prev) * 0.01;
     }
     else if (game->mov.r_r == 1)
         game->pl.pov += 0.05;
     else if (game->mov.r_l == 1)
         game->pl.pov -= 0.05;
     collision(game, pos_x, pos_y);
+    time(&game->t_prev);
 }   
 
 void    raycast(t_game *game)
@@ -458,11 +450,12 @@ void    raycast(t_game *game)
     }
 }
 
+
 int    update_window(t_game *game)
 {
 	t_screen	*screen;
     t_data      *img;
-	
+    
 	screen = &game->screen;
     img = &game->screen.shown_img;
     mlx_clear_window(game->screen.ptr, game->screen.win);

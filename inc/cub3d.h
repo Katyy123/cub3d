@@ -5,10 +5,12 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: tbertoli <tbertoli@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/07/21 12:41:47 by mel-hada          #+#    #+#             */
-/*   Updated: 2022/11/21 13:25:37 by tbertoli         ###   ########.fr       */
+/*   Created: 2022/11/24 19:39:28 by tbertoli          #+#    #+#             */
+/*   Updated: 2022/11/24 19:39:29 by tbertoli         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
+
+
 
 #ifndef CUB3D_H
 # define CUB3D_H
@@ -51,17 +53,18 @@
 # include <unistd.h>
 # include <stdlib.h>
 # include <stdio.h>
-# include <fcntl.h>
-# include <time.h>
-# include <pthread.h>
+//# include <fcntl.h>
+//# include <pthread.h>
 # include <mlx.h>
 //# include "../lib/mlx.h"
 # include <math.h>
+# include <time.h>
 # include "structs.h"
-#include <x86intrin.h>
-# include <semaphore.h>
+//#include <x86intrin.h>
+//# include <semaphore.h>
 # include "../libft/libft.h"
 # include "../gnl/get_next_line.h"
+
 
 
 
