@@ -1,20 +1,10 @@
 #include "../inc/cub3d.h"
 
-#define X 0
-#define Y 1
 
-//per poter usare algorimo dda ho divuto cambiare un po' di cose, 
-// se usi questo file qui nella tua repository al posto di cube3d.c (modificare makefile)
-// dovresti poter cambiare solo la funzione increment_d. 
-
-//per poter usare algorimo dda ho divuto cambiare un po' di cose, 
-// se usi questo file qui nella tua repository al posto di cube3d.c (modificare makefile)
-// dovresti poter cambiare solo la funzione increment_d. 
-
-double to_degrees(double rad)
-{
-    return (rad * 57.2597);
-}
+// #define H 1080
+// #define W 1920
+// #define X 0
+// #define Y 1
 
 /*
 * funzione che inizializza a zero i valori della struttura rc
@@ -87,6 +77,7 @@ void    ft_init2(t_game *game){
     img->addr = mlx_get_data_addr(img->img, &img->bits_per_pixel, 
                                     &img->line_length, &img->endian);
     ft_init_tex(game);
+    time(&game->t_prev);
 }
 
 void	my_mlx_pixel_put(t_data *data, int x, int y, int color)
@@ -320,14 +311,14 @@ int     get_color(t_game *game, int y, int wall_h, t_tex tex)
     return (color);
 }
 
-int draw_ceiling(t_game *game, double celing_h, int line)
+int draw_ceiling(t_game *game, double ceiling_h, int line)
 {
     t_screen    *screen;
     int         y;
 
     y = 0;
     screen = &game->screen;
-    while (y < celing_h)
+    while (y < ceiling_h)
     {
         my_mlx_pixel_put(&screen->shown_img, line, (y), game->col.c_col);
         y++;
@@ -355,19 +346,19 @@ t_tex ret_right_tex(t_game *game)
 /*
 * funzione che disegna una linea sullo schermo per ogni ray
 */
-void draw_line(t_screen *screen, int line, double celing_h, t_game *game)
+void draw_line(t_screen *screen, int line, double ceiling_h, t_game *game)
 {
     double floor_h;
     double wall_h;
     int y;
 
-    floor_h = celing_h;
-    wall_h = H - celing_h -floor_h;
-    y = draw_ceiling(game, celing_h, line);
-    while (y < celing_h + wall_h)
+    floor_h = ceiling_h;
+    wall_h = H - ceiling_h -floor_h;
+    y = draw_ceiling(game, ceiling_h, line);
+    while (y < ceiling_h + wall_h)
     {
         my_mlx_pixel_put(&screen->shown_img, line, (y), 
-                        get_color(game, y - celing_h, wall_h,
+                        get_color(game, y - ceiling_h, wall_h,
                         ret_right_tex(game)));
         y++;
     }
@@ -404,42 +395,45 @@ void    update_pos(t_game *game)
     double teta;
     double pos_x;
     double pos_y;
+    time_t      t_current;
 
+    time(&t_current);
     pos_x = game->pl.pos_x;
     pos_y = game->pl.pos_y; 
     if (game->mov.m_fwrd == 1)
     {
-        pos_x += cos(game->pl.pov) * 0.3;
-        pos_y += sin(game->pl.pov) * 0.3;//scambiati sen e cos
+        pos_x += cos(game->pl.pov) * 0.3; //difftime(t_current, game->t_prev) * 2;
+        pos_y += sin(game->pl.pov) * 0.3; //difftime(t_current, game->t_prev) * 2;//scambiati sen e cos
     }
     else if (game->mov.m_bwrd == 1)
     {
-        pos_x -= cos(game->pl.pov) * 0.3;
-        pos_y -= sin(game->pl.pov) * 0.3;//scambiati sen e cos
+        pos_x -= cos(game->pl.pov) * 0.2;// * difftime(t_current, game->t_prev) * 0.01;
+        pos_y -= sin(game->pl.pov) * 0.2;// * difftime(t_current, game->t_prev) * 0.01;//scambiati sen e cos
     }
     else if  (game->mov.m_rght == 1)
     {
         teta = game->pl.pov + M_PI/2;
-        pos_x += cos(teta) * 0.2;
-        pos_y += sin(teta) * 0.2; //scambiati sen e cos
+        pos_x += cos(teta) * 0.2;// * difftime(t_current, game->t_prev) * 0.01;
+        pos_y += sin(teta) * 0.2;// * difftime(t_current, game->t_prev) * 0.01; //scambiati sen e cos
     }
     else if  (game->mov.m_lft == 1)
     {
         teta = game->pl.pov + M_PI/2;
-        pos_x -= cos(teta) * 0.2; //scambiati sen e cos
-        pos_y -= sin(teta) * 0.2;
+        pos_x -= cos(teta) * 0.2;// * difftime(t_current, game->t_prev) * 0.01; //scambiati sen e cos
+        pos_y -= sin(teta) * 0.2;// * difftime(t_current, game->t_prev) * 0.01;
     }
     else if (game->mov.r_r == 1)
         game->pl.pov += 0.05;
     else if (game->mov.r_l == 1)
         game->pl.pov -= 0.05;
     collision(game, pos_x, pos_y);
+    time(&game->t_prev);
 }   
 
 void    raycast(t_game *game)
 {
     double       d;
-    int       celing_h;
+    int       ceiling_h;
     int       floor;
 	int			w;
 
@@ -447,18 +441,19 @@ void    raycast(t_game *game)
     while (w < W)
 	{
         d = get_distance(game, w);
-        celing_h = H/2 - H/d;
-        floor = H - celing_h;
-        draw_line(&game->screen, w, celing_h, game);   
+        ceiling_h = H/2 - H/d;
+        floor = H - ceiling_h;
+        draw_line(&game->screen, w, ceiling_h, game);   
         w++;
     }
 }
+
 
 int    update_window(t_game *game)
 {
 	t_screen	*screen;
     t_data      *img;
-	
+    
 	screen = &game->screen;
     img = &game->screen.shown_img;
     mlx_clear_window(game->screen.ptr, game->screen.win);

@@ -6,7 +6,7 @@
 /*   By: tbertoli <tbertoli@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/12 17:41:01 by cfiliber          #+#    #+#             */
-/*   Updated: 2022/11/21 08:10:06 by tbertoli         ###   ########.fr       */
+/*   Updated: 2022/11/26 17:22:09 by tbertoli         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@ void	save_player_data(t_player *player, int x, int y, char dir)
 	player->pos_x = x;
 	player->pos_y = y;
 	if (dir == 'E')
-		player->pov = 0;
+		player->pov = 0.00001;
 	else if (dir == 'S')
 		player->pov = M_PI / 2;
 	else if (dir == 'W')

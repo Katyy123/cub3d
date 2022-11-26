@@ -5,13 +5,20 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: cfiliber <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/08/08 12:01:01 by ael-bekk          #+#    #+#             */
-/*   Updated: 2022/11/25 18:26:55 by cfiliber         ###   ########.fr       */
+/*   Created: 2022/11/24 19:39:40 by tbertoli          #+#    #+#             */
+/*   Updated: 2022/11/26 18:29:28 by cfiliber         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
+
+
 #ifndef STRUCTS_H
 # define STRUCTS_H
+
+#define H 1080
+#define W 1920
+#define X 0
+#define Y 1
 
 typedef enum e_bool
 {
@@ -166,6 +173,7 @@ typedef struct s_rproperties
 
 typedef struct s_game
 {
+	char		buffer[H];
 	t_rc		r;
 	t_screen	screen;
 	t_player	pl;
@@ -186,8 +194,7 @@ typedef struct s_game
 	char		**map;
 	char		nsoe;
 	t_rproperties	ray;
-	int			press_mouse;
-	t_coord		mouse_start;
+	time_t		t_prev;
 	t_minimap	m_map;
 }	t_game;
 

@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: tbertoli <tbertoli@student.42.fr>          +#+  +:+       +#+         #
+#    By: cfiliber <marvin@42.fr>                    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/10/27 16:37:56 by cfiliber          #+#    #+#              #
-#    Updated: 2022/11/26 16:43:45 by tbertoli         ###   ########.fr        #
+#    Updated: 2022/11/26 18:30:32 by cfiliber         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -25,14 +25,14 @@ SRC_GNL = $(addprefix gnl/, $(GNL))
 PARSING = file_reader.c file_checker.c texture_checker.c color_checker.c map_create.c map_create_2.c map_checker.c map_checker_2.c
 SRC_PARSING = $(addprefix parsing/, $(PARSING))
 
-GAME = cub3dcopia1.c end_program.c mov_checks.c mouse_input.c minimap.c minimap_background.c minimap_utils.c
+GAME = cub3dcopia1.c end_program.c mov_checks.c minimap_background.c minimap_utils.c minimap.c
 SRC_GAME = $(addprefix game/, $(GAME))
 
 OBJS = $(SRCS:.c=.o)
 
 CC = gcc
 
-CFLAGS = -Wall -Wextra -Werror -g -I libft -Imlx -fsanitize=address
+CFLAGS = -Wall -Wextra -Werror -g -I libft -Imlx #-fsanitize=address
 
 GREEN = '\x1b[32m'
 YELLOW = '\x1b[33m'

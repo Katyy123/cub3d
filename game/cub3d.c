@@ -295,14 +295,14 @@ int     get_color(t_game *game, int y, int wall_h, t_tex tex)
     return (color);
 }
 
-int draw_ceiling(t_game *game, double celing_h, int line)
+int draw_ceiling(t_game *game, double ceiling_h, int line)
 {
     t_screen    *screen;
     int         y;
 
     y = 0;
     screen = &game->screen;
-    while (y < celing_h)
+    while (y < ceiling_h)
     {
         my_mlx_pixel_put(&screen->shown_img, line, (y), game->col.c_col);
         y++;
@@ -330,19 +330,19 @@ t_tex ret_right_tex(t_game *game)
 /*
 * funzione che disegna una linea sullo schermo per ogni ray
 */
-void draw_line(t_screen *screen, int line, double celing_h, t_game *game)
+void draw_line(t_screen *screen, int line, double ceiling_h, t_game *game)
 {
     double floor_h;
     double wall_h;
     int y;
 
-    floor_h = celing_h;
-    wall_h = H - celing_h -floor_h;
-    y = draw_ceiling(game, celing_h, line);
-    while (y < celing_h + wall_h)
+    floor_h = ceiling_h;
+    wall_h = H - ceiling_h -floor_h;
+    y = draw_ceiling(game, ceiling_h, line);
+    while (y < ceiling_h + wall_h)
     {
         my_mlx_pixel_put(&screen->shown_img, line, (y), 
-                        get_color(game, y - celing_h, wall_h,
+                        get_color(game, y - ceiling_h, wall_h,
                         ret_right_tex(game)));
         y++;
     }
@@ -358,24 +358,24 @@ void draw_line(t_screen *screen, int line, double celing_h, t_game *game)
     int y;
     int color;
 
-    floor_h = celing_h;
-    wall_h = H - celing_h -floor_h;
+    floor_h = ceiling_h;
+    wall_h = H - ceiling_h -floor_h;
     y = 0;
-    while (y < celing_h)//sono tra y = 0 e celing
+    while (y < ceiling_h)//sono tra y = 0 e celing
     {
         my_mlx_pixel_put(&screen->shown_img, line, (y), game->col.c_col);
         y++;
     } //lascio nero
-    while (y < celing_h + wall_h)
+    while (y < ceiling_h + wall_h)
     {
         if (screen->orient == 3)
-            color = get_color(game, y - celing_h, wall_h, game->no_tex);
+            color = get_color(game, y - ceiling_h, wall_h, game->no_tex);
         if (screen->orient == 2)
-            color = get_color(game, y - celing_h, wall_h, game->so_tex);
+            color = get_color(game, y - ceiling_h, wall_h, game->so_tex);
         if (screen->orient == 1)
-            color = get_color(game, y - celing_h, wall_h, game->ea_tex);
+            color = get_color(game, y - ceiling_h, wall_h, game->ea_tex);
         if (screen->orient == 4)
-            color = get_color(game, y - celing_h, wall_h, game->we_tex);
+            color = get_color(game, y - ceiling_h, wall_h, game->we_tex);
         my_mlx_pixel_put(&screen->shown_img, line, (y), color);
         y++;
     }
@@ -394,7 +394,7 @@ void    update_screen(t_game *game)
 	t_screen	*screen;
     t_data      img;
     double       d;
-    int       celing_h;
+    int       ceiling_h;
     int       floor;
 	int			i;
 	
@@ -405,12 +405,12 @@ void    update_screen(t_game *game)
 	while (i < W) //while del raycasting
 	{
         d = get_distance(game, i);
-        celing_h = H/2 - H/d;
-        if (celing_h < 0)
-            celing_h = 0;
-        floor = H - celing_h;
+        ceiling_h = H/2 - H/d;
+        if (ceiling_h < 0)
+            ceiling_h = 0;
+        floor = H - ceiling_h;
         draw_pixel(screen, i, 100, 0x00FFFF00);
-        //printf("ceilinh H = %d", celing_h);
+        //printf("ceilinh H = %d", ceiling_h);
         i++;
         
 	}
@@ -474,7 +474,7 @@ int    update_window(t_game *game)
 	t_screen	*screen;
     t_data      *img;
 	double       d;
-    int       celing_h;
+    int       ceiling_h;
     int       floor;
 	int			w;
     printf("%f\n", to_degrees(game->pl.pov));
@@ -495,9 +495,9 @@ int    update_window(t_game *game)
         //     w++;
         //else
         //{
-            celing_h = H/2 - H/d;
-            floor = H - celing_h;
-            draw_line(screen, w, celing_h, game);   
+            ceiling_h = H/2 - H/d;
+            floor = H - ceiling_h;
+            draw_line(screen, w, ceiling_h, game);   
             w++;
         //} 
     }
