@@ -6,7 +6,7 @@
 /*   By: cfiliber <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/24 19:39:40 by tbertoli          #+#    #+#             */
-/*   Updated: 2022/11/26 18:29:28 by cfiliber         ###   ########.fr       */
+/*   Updated: 2022/11/26 18:43:00 by cfiliber         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -195,6 +195,8 @@ typedef struct s_game
 	char		nsoe;
 	t_rproperties	ray;
 	time_t		t_prev;
+	int			press_mouse;
+	t_coord		mouse_start;
 	t_minimap	m_map;
 }	t_game;
 
