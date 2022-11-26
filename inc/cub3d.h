@@ -6,7 +6,7 @@
 /*   By: tbertoli <tbertoli@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/24 19:39:28 by tbertoli          #+#    #+#             */
-/*   Updated: 2022/11/26 17:29:20 by tbertoli         ###   ########.fr       */
+/*   Updated: 2022/11/26 19:53:54 by tbertoli         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -87,39 +87,55 @@ t_bool  is_pix_in_minimap(t_game *game, int x, int y);
 t_bool  is_tile_in_minimap(t_game *game, int x, int y);
 t_bool	is_inside_circle(t_game *game, int x, int y);
 
-
-
-int wall_f1(t_game *game);
-int wall_f2(t_game *game);
-int wall_b1(t_game *game);
-int wall_b2(t_game *game);
-int wall_dx(t_game *game);
-int wall_sx(t_game *game);
-
 /* errors.c */
 int		error(char *message);
 int     error_1(char *message);
 void	*null_error(char *message);
 void	print_warning(char *message);
 
-/* cub3d.c */ // ne mancano un po!
-double	to_degrees(double rad);
-void	*ft_memcpy(void *dst, const void *src, size_t n);
-int     ft_strlen(const char *str);
-char	*ft_strdup(const char *str);
+/* cub3d.c */
+void	my_mlx_pixel_put(t_data *data, int x, int y, int color);
+int     draw_ceiling(t_game *game, double ceiling_h, int line);
+void	raycast(t_game *game);
+void 	draw_line(t_screen *screen, int line, double ceiling_h, t_game *game);
+int		update_window(t_game *game);
+
+/* text_utils2.c */
+void	set_no(t_game *game, char xy);
+void	set_so(t_game *game, char xy);
+void	set_ne(t_game *game, char xy);
+void	set_se(t_game *game, char xy);
+
+/* text_utils.c */
+int     get_color(t_game *game, int y, int wall_h, t_tex tex);
+void	get_orient(t_game *game);
+t_tex	ret_right_tex(t_game *game);
+void	set_orient(t_game *game, double cos_a, double sin_a, char xy);
+
+/* raycast_utils.c */
+double 	get_distance(t_game *game, int w);
+void	first_step(t_game *game, int *eye, int *step, double *ip);
+t_bool	increment_x(t_game *game, int *step, int *eye, double *ip);
+t_bool	increment_y(t_game *game, int *step, int *eye, double *ip);
+void	increment_d(t_game *game, int *step, int *eye, double *ip);
+
+/* move_utils.c */
+void	collision(t_game *game, double pos_x, double pos_y);
+int 	key_press(int keycode, t_game *game);
+int     key_rlease(int keycode, t_game *game);
+
+/* update_pos.c */
+void	update_pos_f(t_game *game, double *x, double *y);
+void	update_pos_b(t_game *game, double *x, double *y);
+void	update_pos_sx(t_game *game, double *x, double *y);
+void	update_pos_dx(t_game *game, double *x, double *y);
+void	update_pos(t_game *game);
+
+/* init.c */
+void	ft_init_rc(t_rc *rc);
 void    ft_init1(t_game *game);
 void    ft_init_tex(t_game *game);
 void    ft_init2(t_game *game);
-void	my_mlx_pixel_put(t_data *data, int x, int y, int color);
-void 	pixel_col_put(t_screen *screen, int x, int y, int color, int pxnum);
-double 	get_distance(t_game *game, int w);
-t_tex 	*select_text(t_game *game);
-int     get_color(t_game *game, int y, int wall_h, t_tex tex);
-void 	draw_line(t_screen *screen, int line, double ceiling_h, t_game *game);
-int		update_window(t_game *game);
-int 	check_pos(t_game *game);
-int 	key_press(int keycode, t_game *game);
-int     key_rlease(int keycode, t_game *game);
 
 /* end_program.c */
 int		end_program(t_game *game);
