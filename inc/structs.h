@@ -6,7 +6,7 @@
 /*   By: tbertoli <tbertoli@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/24 19:39:40 by tbertoli          #+#    #+#             */
-/*   Updated: 2022/11/26 13:52:07 by tbertoli         ###   ########.fr       */
+/*   Updated: 2022/11/26 17:14:57 by tbertoli         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,6 +25,50 @@ typedef enum e_bool
 	TRUE = 1,
 	FALSE = 0
 }	t_bool;
+
+/* struct for the int coordinates of a point */
+typedef struct s_coord
+{
+	int	x;
+	int	y;
+}	t_coord;
+
+/* struct for the double coordinates of a point */
+typedef struct s_double_coord
+{
+	double	x;
+	double	y;
+}	t_double_coo;
+
+/* struct for the minimap:
+bd_start_up: beginning of the boarder on top of the minimap
+bd_start_l: beginning of the boarder on the left
+bd_end_d: end of the boarder down
+bd_end_r: end of the boarder on the right
+start_up: beginning of the minimap from the top
+start_l: beginning of the minimap from the left
+end_d: end of the minimap down
+end_r: end of the minimap on the right
+ctr_x: x_coordinate of the minimap center 
+ctr_y: y_coordinate of the minimap center */
+typedef struct s_minimap
+{
+	int	bd_width;
+	int	tile_width;
+	int	pl_width;
+	int	dist_win;
+	int	bd_start_up;
+	int	bd_start_l;
+	int	bd_end_d;
+	int	bd_end_r;
+	int	start_up;
+	int	start_l;
+	int	end_d;
+	int	end_r;
+	int	ctr_x;
+	int	ctr_y;
+}	t_minimap;
+
 
 /*
 * struttura necessaria a gestire le immagini con minilibx.
@@ -149,6 +193,7 @@ typedef struct s_game
 	char		nsoe;
 	t_rproperties	ray;
 	time_t		t_prev;
+	t_minimap	m_map;
 }	t_game;
 
 #endif

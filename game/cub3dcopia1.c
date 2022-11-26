@@ -313,14 +313,14 @@ int     get_color(t_game *game, int y, int wall_h, t_tex tex)
     return (color);
 }
 
-int draw_ceiling(t_game *game, double celing_h, int line)
+int draw_ceiling(t_game *game, double ceiling_h, int line)
 {
     t_screen    *screen;
     int         y;
 
     y = 0;
     screen = &game->screen;
-    while (y < celing_h)
+    while (y < ceiling_h)
     {
         my_mlx_pixel_put(&screen->shown_img, line, (y), game->col.c_col);
         y++;
@@ -348,19 +348,19 @@ t_tex ret_right_tex(t_game *game)
 /*
 * funzione che disegna una linea sullo schermo per ogni ray
 */
-void draw_line(t_screen *screen, int line, double celing_h, t_game *game)
+void draw_line(t_screen *screen, int line, double ceiling_h, t_game *game)
 {
     double floor_h;
     double wall_h;
     int y;
 
-    floor_h = celing_h;
-    wall_h = H - celing_h -floor_h;
-    y = draw_ceiling(game, celing_h, line);
-    while (y < celing_h + wall_h)
+    floor_h = ceiling_h;
+    wall_h = H - ceiling_h -floor_h;
+    y = draw_ceiling(game, ceiling_h, line);
+    while (y < ceiling_h + wall_h)
     {
         my_mlx_pixel_put(&screen->shown_img, line, (y), 
-                        get_color(game, y - celing_h, wall_h,
+                        get_color(game, y - ceiling_h, wall_h,
                         ret_right_tex(game)));
         y++;
     }
@@ -435,7 +435,7 @@ void    update_pos(t_game *game)
 void    raycast(t_game *game)
 {
     double       d;
-    int       celing_h;
+    int       ceiling_h;
     int       floor;
 	int			w;
 
@@ -443,9 +443,9 @@ void    raycast(t_game *game)
     while (w < W)
 	{
         d = get_distance(game, w);
-        celing_h = H/2 - H/d;
-        floor = H - celing_h;
-        draw_line(&game->screen, w, celing_h, game);   
+        ceiling_h = H/2 - H/d;
+        floor = H - ceiling_h;
+        draw_line(&game->screen, w, ceiling_h, game);   
         w++;
     }
 }
@@ -464,6 +464,7 @@ int    update_window(t_game *game)
     img->addr = mlx_get_data_addr(img->img, &img->bits_per_pixel, &img->line_length, &img->endian);
     update_pos(game);
     raycast(game);
+    draw_minimap(game);
 	mlx_put_image_to_window(screen->ptr, screen->win, img->img, 0, 0);
     return (0);
 }
