@@ -5,13 +5,20 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: cfiliber <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/08/08 12:01:01 by ael-bekk          #+#    #+#             */
-/*   Updated: 2022/11/21 17:11:17 by cfiliber         ###   ########.fr       */
+/*   Created: 2022/11/24 19:39:40 by tbertoli          #+#    #+#             */
+/*   Updated: 2022/11/26 18:02:29 by cfiliber         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
+
+
 #ifndef STRUCTS_H
 # define STRUCTS_H
+
+#define H 1080
+#define W 1920
+#define X 0
+#define Y 1
 
 typedef enum e_bool
 {
@@ -19,10 +26,49 @@ typedef enum e_bool
 	FALSE = 0
 }	t_bool;
 
-typedef struct s_coord {
+/* struct for the int coordinates of a point */
+typedef struct s_coord
+{
+	int	x;
+	int	y;
+}	t_coord;
+
+/* struct for the double coordinates of a point */
+typedef struct s_double_coord
+{
 	double	x;
 	double	y;
-}	t_coord;
+}	t_double_coo;
+
+/* struct for the minimap:
+bd_start_up: beginning of the boarder on top of the minimap
+bd_start_l: beginning of the boarder on the left
+bd_end_d: end of the boarder down
+bd_end_r: end of the boarder on the right
+start_up: beginning of the minimap from the top
+start_l: beginning of the minimap from the left
+end_d: end of the minimap down
+end_r: end of the minimap on the right
+ctr_x: x_coordinate of the minimap center 
+ctr_y: y_coordinate of the minimap center */
+typedef struct s_minimap
+{
+	int	bd_width;
+	int	tile_width;
+	int	pl_width;
+	int	dist_win;
+	int	bd_start_up;
+	int	bd_start_l;
+	int	bd_end_d;
+	int	bd_end_r;
+	int	start_up;
+	int	start_l;
+	int	end_d;
+	int	end_r;
+	int	ctr_x;
+	int	ctr_y;
+}	t_minimap;
+
 
 /*
 * struttura necessaria a gestire le immagini con minilibx.
@@ -114,8 +160,18 @@ typedef struct s_screen
 	t_data		shown_img;
 }				t_screen;
 
+typedef struct s_rproperties
+{
+	double		m;
+    double		sx;
+    double		sy;
+    double		cos_a;
+    double		sin_a;
+}				t_rproperties;
+
 typedef struct s_game
 {
+	char		buffer[H];
 	t_rc		r;
 	t_screen	screen;
 	t_player	pl;
@@ -134,6 +190,10 @@ typedef struct s_game
 	double		f_sample_x;
 	int			game_ended;
 	char		**map;
+	char		nsoe;
+	t_rproperties	ray;
+	time_t		t_prev;
+	t_minimap	m_map;
 }	t_game;
 
 #endif
