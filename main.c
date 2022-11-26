@@ -6,7 +6,7 @@
 /*   By: cfiliber <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/30 15:11:58 by cfiliber          #+#    #+#             */
-/*   Updated: 2022/11/26 18:52:33 by cfiliber         ###   ########.fr       */
+/*   Updated: 2022/11/26 19:51:54 by cfiliber         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,7 +32,7 @@ int main(int argc, char **argv)
     ft_init1(&game);
     ft_init2(&game);
     //update_window(&game);
-    
+    init_minimap(&game);
 	mlx_hook(game.screen.win, X_EVENT_KEY_RELEASE, 0, &key_rlease, &game);
     mlx_hook(game.screen.win, X_EVENT_KEY_PRESS, 0, &key_press, &game);
 	mlx_hook(game.screen.win, X_EVENT_MOUSE_PRESS, 1L << 0, get_mouse, &game);

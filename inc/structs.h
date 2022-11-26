@@ -6,7 +6,7 @@
 /*   By: cfiliber <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/24 19:39:40 by tbertoli          #+#    #+#             */
-/*   Updated: 2022/11/26 18:43:00 by cfiliber         ###   ########.fr       */
+/*   Updated: 2022/11/26 20:30:39 by cfiliber         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,6 +56,8 @@ typedef struct s_minimap
 	int	bd_width;
 	int	tile_width;
 	int	pl_width;
+	int	pl_dir_width;
+	int	dist_pl_dir;
 	int	dist_win;
 	int	bd_start_up;
 	int	bd_start_l;
@@ -65,8 +67,8 @@ typedef struct s_minimap
 	int	start_l;
 	int	end_d;
 	int	end_r;
-	int	ctr_x;
-	int	ctr_y;
+	t_coord	ctr;
+	t_coord dir_ctr;
 }	t_minimap;
 
 /*

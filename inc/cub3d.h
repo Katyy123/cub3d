@@ -6,7 +6,7 @@
 /*   By: cfiliber <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/24 19:39:28 by tbertoli          #+#    #+#             */
-/*   Updated: 2022/11/26 18:29:48 by cfiliber         ###   ########.fr       */
+/*   Updated: 2022/11/26 20:43:01 by cfiliber         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -97,23 +97,6 @@
 # define MAP_EMPTY_COL          0x00FFFFFF
 # define MAP_PLAYER_COL         0x00FF0000
 
-/* minimap.c */
-void    init_minimap(t_game *game);
-void    draw_wall(t_game *game, int tile_x, int tile_y);
-void    draw_player(t_game *game);
-void    draw_minimap(t_game * game);
-
-/* minimap_background.c */
-void    draw_border(t_game *game);
-void    draw_background(t_game *game);
-
-/* minimap_utils.c */
-t_bool  is_pix_in_minimap(t_game *game, int x, int y);
-t_bool  is_tile_in_minimap(t_game *game, int x, int y);
-t_bool	is_inside_circle(t_game *game, int x, int y);
-
-
-
 int wall_f1(t_game *game);
 int wall_f2(t_game *game);
 int wall_b1(t_game *game);
@@ -159,6 +142,7 @@ int		get_mouse(int button, int x, int y, t_game *game);
 /* minimap.c */
 void    init_minimap(t_game *game);
 void    draw_wall(t_game *game, int tile_x, int tile_y);
+void    draw_pl_dir(t_game *game);
 void    draw_player(t_game *game);
 void    draw_minimap(t_game * game);
 
@@ -169,6 +153,7 @@ void    draw_background(t_game *game);
 /* minimap_utils.c */
 t_bool  is_pix_in_minimap(t_game *game, int x, int y);
 t_bool  is_tile_in_minimap(t_game *game, int x, int y);
-t_bool	is_inside_circle(t_game *game, int x, int y);
+t_bool	is_inside_circle(t_game *game, t_coord point, t_coord ctr, int radius);
+t_coord coord_to_point(int x, int y);
 
 # endif
