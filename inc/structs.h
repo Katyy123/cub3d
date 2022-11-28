@@ -6,7 +6,7 @@
 /*   By: cfiliber <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/24 19:39:40 by tbertoli          #+#    #+#             */
-/*   Updated: 2022/11/26 20:30:39 by cfiliber         ###   ########.fr       */
+/*   Updated: 2022/11/28 17:16:33 by cfiliber         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,6 +41,11 @@ typedef struct s_double_coord
 }	t_double_coo;
 
 /* struct for the minimap:
+bd_width: width of the border of the minimap
+tile_width: width of a tile
+pl_width: width of the player (the big circle)
+pl_dir_width: width of the small circle (shows the direction)
+dist_pl_dir: distance between the player and the small circle
 bd_start_up: beginning of the boarder on top of the minimap
 bd_start_l: beginning of the boarder on the left
 bd_end_d: end of the boarder down
@@ -49,8 +54,8 @@ start_up: beginning of the minimap from the top
 start_l: beginning of the minimap from the left
 end_d: end of the minimap down
 end_r: end of the minimap on the right
-ctr_x: x_coordinate of the minimap center 
-ctr_y: y_coordinate of the minimap center */
+ctr: minimap center 
+dir_ctr: center of the small circle */
 typedef struct s_minimap
 {
 	int	bd_width;

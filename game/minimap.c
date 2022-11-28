@@ -6,7 +6,7 @@
 /*   By: cfiliber <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/26 19:29:28 by cfiliber          #+#    #+#             */
-/*   Updated: 2022/11/26 20:44:42 by cfiliber         ###   ########.fr       */
+/*   Updated: 2022/11/28 17:11:27 by cfiliber         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,8 +19,8 @@ void    init_minimap(t_game *game)// togliere dal loop e mettere
 
     m_map = &game->m_map;
     m_map->bd_width = W / 300;
-    m_map->tile_width = W / 100;
-    m_map->pl_width = W / 150;
+    m_map->tile_width = W / 90;
+    m_map->pl_width = W / 108;
     m_map->pl_dir_width = m_map->pl_width / 2;
     m_map->dist_pl_dir = sqrtf(2) * m_map->pl_width / 2
         + m_map->pl_dir_width / 2;
@@ -64,6 +64,8 @@ void    draw_wall(t_game *game, int tile_x, int tile_y)
     }
 }
 
+/* draw the little circle in front of the player,
+to indicate the point of view */
 void    draw_pl_dir(t_game *game)
 {
     t_screen    *screen;
@@ -74,8 +76,8 @@ void    draw_pl_dir(t_game *game)
 
     screen = &game->screen;
     m_map = &game->m_map;
-    m_map->dir_ctr.x = m_map->dist_pl_dir * cos(game->pl.pov);
-    m_map->dir_ctr.y = m_map->dist_pl_dir * sin(game->pl.pov);
+    m_map->dir_ctr.x = m_map->ctr.x + m_map->dist_pl_dir * cos(game->pl.pov);
+    m_map->dir_ctr.y = m_map->ctr.y + m_map->dist_pl_dir * sin(game->pl.pov);
     y = m_map->dir_ctr.y - (m_map->pl_dir_width / 2);
     while (y < m_map->dir_ctr.y + (m_map->pl_dir_width / 2))
     {
@@ -84,7 +86,7 @@ void    draw_pl_dir(t_game *game)
         {
             point = coord_to_point(x, y);
             if (is_inside_circle(game, point, m_map->dir_ctr, (m_map->pl_dir_width) / 2) == TRUE)
-                my_mlx_pixel_put(&screen->shown_img, x, y, MAP_PLAYER_COL);
+                my_mlx_pixel_put(&screen->shown_img, x, y, MAP_PL_DIR_COL);
             x++;
         }
         y++;

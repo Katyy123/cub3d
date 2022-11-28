@@ -6,7 +6,7 @@
 /*   By: cfiliber <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/24 19:39:28 by tbertoli          #+#    #+#             */
-/*   Updated: 2022/11/26 20:43:01 by cfiliber         ###   ########.fr       */
+/*   Updated: 2022/11/28 17:21:57 by cfiliber         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,7 +51,7 @@
 
 
 /* mouse event */
-# define MOUSE_SPEED 200
+# define MOUSE_SPEED 150
 
 /* minimap */
 # define MAP_WALL_COL           0x00505050
@@ -59,20 +59,7 @@
 # define MAP_BORDER_COL         0x00000000
 # define MAP_EMPTY_COL          0x00FFFFFF
 # define MAP_PLAYER_COL         0x00FF0000
-// # define MAP_BORDER_WIDTH       5
-// # define MAP_TILE_WIDTH         20
-// # define m_map->pl_width       10
-// # define DIST_MAP_WIN           20
-// # define MAP_BORD_START_UP      3 * W / 4
-// # define MAP_BORD_START_LEFT    3 * W / 4
-// # define MAP_BORD_END_DOWN      H - DIST_MAP_WIN
-// # define MAP_BORD_END_RIGHT     W - DIST_MAP_WIN
-// # define MAP_START_UP           MAP_BORD_START_UP + MAP_BORDER_WIDTH
-// # define MAP_START_LEFT         MAP_BORD_START_LEFT + MAP_BORDER_WIDTH
-// # define MAP_END_DOWN           MAP_BORD_END_DOWN - MAP_BORDER_WIDTH
-// # define MAP_END_RIGHT          MAP_BORD_END_RIGHT - MAP_BORDER_WIDTH
-// # define MAP_CENTRE_X           (MAP_START_LEFT + (W - DIST_MAP_WIN)) / 2
-// # define MAP_CENTRE_Y           (MAP_START_UP + (H - DIST_MAP_WIN)) / 2
+# define MAP_PL_DIR_COL			0X00FF0000
 
 /* libraries */
 # include <unistd.h>
@@ -89,13 +76,6 @@
 //# include <semaphore.h>
 # include "../libft/libft.h"
 # include "../gnl/get_next_line.h"
-
-/* minimap */
-# define MAP_WALL_COL           0x00505050
-# define MAP_BACK_COL           0x00F0F0E0 
-# define MAP_BORDER_COL         0x00000000
-# define MAP_EMPTY_COL          0x00FFFFFF
-# define MAP_PLAYER_COL         0x00FF0000
 
 int wall_f1(t_game *game);
 int wall_f2(t_game *game);

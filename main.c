@@ -6,7 +6,7 @@
 /*   By: cfiliber <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/30 15:11:58 by cfiliber          #+#    #+#             */
-/*   Updated: 2022/11/26 19:51:54 by cfiliber         ###   ########.fr       */
+/*   Updated: 2022/11/28 16:24:16 by cfiliber         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,6 +41,7 @@ int main(int argc, char **argv)
 	mlx_hook(game.screen.win, X_EVENT_EXIT, 0, end_program, &game);
     mlx_loop_hook(game.screen.ptr, &update_window, &game); //uncommented
     mlx_loop(game.screen.ptr);
+	
 	ft_free_char_mtx(game.map);
 	return 0;
 }
