@@ -6,7 +6,7 @@
 /*   By: cfiliber <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/12 17:41:18 by cfiliber          #+#    #+#             */
-/*   Updated: 2022/11/12 19:19:20 by cfiliber         ###   ########.fr       */
+/*   Updated: 2022/11/28 20:08:51 by cfiliber         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,13 +45,6 @@ t_bool	valid_map(char **map_file, t_pos *pos, t_game *game)
 	if (create_map(&map_file[pos->y], game, lines_to_remove) == -1)
 		return (FALSE);
 	i = 0;
-	printf("The map:\n");
-	while (game->map[i])
-	{
-		printf("%s$\n", game->map[i]);
-		i++;
-	}
-	printf("--end map--\n\n");
 	if (check_map(game) == -1)
 		return (FALSE);
 	pos->y += game->map_y;

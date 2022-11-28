@@ -6,7 +6,7 @@
 /*   By: cfiliber <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/12 17:41:09 by cfiliber          #+#    #+#             */
-/*   Updated: 2022/11/12 19:13:57 by cfiliber         ###   ########.fr       */
+/*   Updated: 2022/11/28 20:31:46 by cfiliber         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,6 +24,11 @@ int	check_last_line(t_game *game)
 	{
 		if (game->map[y][x] != '1' && game->map[y][x] != ' ')
 			return (error_1("The map must be closed by walls"));
+		if (game->map[y][x] == ' ')
+		{
+			if (space_closed_by_walls(game, y, x) == FALSE)
+				return (error_1("The map must be closed by walls"));
+		}
 		x++;
 	}
 	return (0);
@@ -84,6 +89,11 @@ int	check_first_line(t_game *game)
 	{
 		if (game->map[0][x] != '1' && game->map[0][x] != ' ')
 			return (error_1("The map must be closed by walls"));
+		if (game->map[0][x] == ' ')
+		{
+			if (space_closed_by_walls(game, 0, x) == FALSE)
+				return (error_1("The map must be closed by walls"));
+		}
 		x++;
 	}
 	return (0);

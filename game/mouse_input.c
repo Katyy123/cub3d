@@ -6,7 +6,7 @@
 /*   By: cfiliber <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/26 19:30:39 by cfiliber          #+#    #+#             */
-/*   Updated: 2022/11/26 19:30:40 by cfiliber         ###   ########.fr       */
+/*   Updated: 2022/11/28 18:41:58 by cfiliber         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,7 @@ int	trasl_mov(int x, int y, t_game *game)
 	t_coord	end;
 	int		dist;
 	float	ratio;
-	
+
 	if (game->press_mouse == 1)
 	{
 		end.x = x;

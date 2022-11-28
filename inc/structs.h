@@ -6,19 +6,17 @@
 /*   By: cfiliber <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/24 19:39:40 by tbertoli          #+#    #+#             */
-/*   Updated: 2022/11/28 17:51:59 by cfiliber         ###   ########.fr       */
+/*   Updated: 2022/11/28 20:03:52 by cfiliber         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
-
-
 
 #ifndef STRUCTS_H
 # define STRUCTS_H
 
-#define H 1080
-#define W 1920
-#define X 0
-#define Y 1
+# define H 1080
+# define W 1920
+# define X 0
+# define Y 1
 
 typedef enum e_bool
 {
@@ -58,22 +56,22 @@ ctr: minimap center
 dir_ctr: center of the small circle */
 typedef struct s_minimap
 {
-	int	bd_width;
-	int	tile_width;
-	int	pl_width;
-	int	pl_dir_width;
-	int	dist_pl_dir;
-	int	dist_win;
-	int	bd_start_up;
-	int	bd_start_l;
-	int	bd_end_d;
-	int	bd_end_r;
-	int	start_up;
-	int	start_l;
-	int	end_d;
-	int	end_r;
+	int		bd_width;
+	int		tile_width;
+	int		pl_width;
+	int		pl_dir_width;
+	int		dist_pl_dir;
+	int		dist_win;
+	int		bd_start_up;
+	int		bd_start_l;
+	int		bd_end_d;
+	int		bd_end_r;
+	int		start_up;
+	int		start_l;
+	int		end_d;
+	int		end_r;
 	t_coord	ctr;
-	t_coord dir_ctr;
+	t_coord	dir_ctr;
 }	t_minimap;
 
 /*
@@ -90,19 +88,10 @@ typedef struct s_data
 	int		endian;
 }				t_data;
 
-
 //aggiunta da casa, da testare
 typedef struct s_rc
 {
-	int ntest_x;// = (int)(posX + distance_to_wall * cos(f_ray_angle))
-    int ntest_y; // = (int)(posY + distance_to_wall * sen(f_ray_angle)
-    
-    //per il calcolo del quadrante
-    double mid_block_x;
-    double mid_block_y;
-    double test_point_x;
-    double test_point_y;
-    double test_angle;
+	double	test_angle;
 }				t_rc;
 
 typedef struct s_mov
@@ -156,10 +145,12 @@ typedef struct s_player
 }	t_player;
 
 /*
-* struttura che contiene elementi utili alla gestione della finestra di gioco
+* struttura che contiene elementi utili
+* alla gestione della finestra di gioco
 * ptr è il pointer da inizializzare con mlx_init()
 * win è il pointer alla finestra, da inizializzare con mlx_new_window(...)
-* shown_img è l'immagine mostrata sulla fienstra, che viene refreshata a ogni loop
+* shown_img è l'immagine mostrata sulla fienstra,
+* che viene refreshata a ogni loop
 */
 typedef struct s_screen
 {
@@ -172,39 +163,39 @@ typedef struct s_screen
 typedef struct s_rproperties
 {
 	double		m;
-    double		sx;
-    double		sy;
-    double		cos_a;
-    double		sin_a;
+	double		sx;
+	double		sy;
+	double		cos_a;
+	double		sin_a;
 }				t_rproperties;
 
 typedef struct s_game
 {
-	double		d;
-	t_rc		r;
-	t_screen	screen;
-	t_player	pl;
-	t_tex		no_tex;
-	t_tex		so_tex;
-	t_tex		we_tex;
-	t_tex		ea_tex;
-	t_col		col;
-	t_mov		mov;
-	int			screen_x;
-	int			screen_y;
-	int			map_x;
-	int			map_y;
-	double		n_rays; // = screen_x
-	double		delta_view;
-	double		f_sample_x;
-	int			game_ended;
-	char		**map;
-	char		nsoe;
+	double			d;
+	t_rc			r;
+	t_screen		screen;
+	t_player		pl;
+	t_tex			no_tex;
+	t_tex			so_tex;
+	t_tex			we_tex;
+	t_tex			ea_tex;
+	t_col			col;
+	t_mov			mov;
+	int				screen_x;
+	int				screen_y;
+	int				map_x;
+	int				map_y;
+	double			n_rays;
+	double			delta_view;
+	double			f_sample_x;
+	int				game_ended;
+	char			**map;
+	char			nsoe;
 	t_rproperties	ray;
-	time_t		t_prev;
-	int			press_mouse;
-	t_coord		mouse_start;
-	t_minimap	m_map;
+	time_t			t_prev;
+	int				press_mouse;
+	t_coord			mouse_start;
+	t_minimap		m_map;
 }	t_game;
 
 #endif

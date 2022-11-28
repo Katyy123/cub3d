@@ -3,16 +3,15 @@
 /*                                                        :::      ::::::::   */
 /*   parsing.h                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tbertoli <tbertoli@student.42.fr>          +#+  +:+       +#+        */
+/*   By: cfiliber <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/30 15:06:49 by cfiliber          #+#    #+#             */
-/*   Updated: 2022/11/19 18:11:11 by tbertoli         ###   ########.fr       */
+/*   Updated: 2022/11/28 19:07:12 by cfiliber         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef PARSING_H
 # define PARSING_H
-
 
 # include "../inc/cub3d.h"
 # include "../inc/structs.h"
@@ -40,6 +39,7 @@ t_bool	all_info(t_game *game);
 t_bool	valid_file(char **map_file, t_game *game);
 
 /* texture_checker.c */
+void	save_textures(char *str, t_game *game, char *type_id);
 int		check_texture_path(char *str, t_pos *pos, t_game *game, char *type_id);
 
 /* color_checker.c */

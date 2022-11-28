@@ -3,26 +3,45 @@
 /*                                                        :::      ::::::::   */
 /*   init.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tbertoli <tbertoli@student.42.fr>          +#+  +:+       +#+        */
+/*   By: cfiliber <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/26 19:18:55 by tbertoli          #+#    #+#             */
-/*   Updated: 2022/11/26 19:19:46 by tbertoli         ###   ########.fr       */
+/*   Updated: 2022/11/28 19:48:14 by cfiliber         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../inc/cub3d.h"
 
+/* initialize t_minimap struct */
+void	init_minimap(t_game *game)
+{
+	t_minimap	*m_map;
+
+	m_map = &game->m_map;
+	m_map->bd_width = W / 300;
+	m_map->tile_width = W / 90;
+	m_map->pl_width = W / 110;
+	m_map->pl_dir_width = m_map->pl_width / 2;
+	m_map->dist_pl_dir = sqrtf(2) * m_map->pl_width / 2
+		+ m_map->pl_dir_width / 2;
+	m_map->dist_win = 20;
+	m_map->bd_start_l = 4 * W / 5;
+	m_map->bd_start_up = H - (W - m_map->bd_start_l);
+	m_map->bd_end_d = H - m_map->dist_win;
+	m_map->bd_end_r = W - m_map->dist_win;
+	m_map->start_up = m_map->bd_start_up + m_map->bd_width;
+	m_map->start_l = m_map->bd_start_l + m_map->bd_width;
+	m_map->end_d = m_map->bd_end_d - m_map->bd_width;
+	m_map->end_r = m_map->bd_end_r - m_map->bd_width;
+	m_map->ctr.x = (m_map->start_l + (W - m_map->dist_win)) / 2;
+	m_map->ctr.y = (m_map->start_up + (H - m_map->dist_win)) / 2;
+}
+
 /*
-* funzione che inizializza a zero i valori della struttura rc
+* funzione che inizializza a zero i valori della struttura
 */
 void	ft_init_rc(t_rc *rc)
 {
-	rc->ntest_x = 0;
-	rc->ntest_y = 0;
-	rc->mid_block_x = 0;
-	rc->mid_block_y = 0;
-	rc->test_point_x = 0;
-	rc->test_point_y = 0;
 	rc->test_angle = 0;
 }
 
@@ -85,5 +104,4 @@ void	ft_init2(t_game *game)
 	img->addr = mlx_get_data_addr(img->img, &img->bits_per_pixel,
 			&img->line_length, &img->endian);
 	ft_init_tex(game);
-	time(&game->t_prev);
 }

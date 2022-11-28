@@ -6,7 +6,7 @@
 /*   By: cfiliber <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/30 16:33:53 by cfiliber          #+#    #+#             */
-/*   Updated: 2022/11/12 18:44:21 by cfiliber         ###   ########.fr       */
+/*   Updated: 2022/11/28 19:06:52 by cfiliber         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -103,15 +103,5 @@ t_bool	valid_file(char **map_file, t_game *game)
 	}
 	if (all_info(game) == FALSE)
 		return (FALSE);
-	printf("NO texture: %s\n", game->no_tex.path);
-	printf("SO texture: %s\n", game->so_tex.path);
-	printf("WE texture: %s\n", game->we_tex.path);
-	printf("EA texture: %s\n\n", game->ea_tex.path);
-	printf("floor color = 0x00%X\n", game->col.f_col);
-	printf("ceiling color = 0x00%X\n\n", game->col.c_col);
-	printf("player.pos_x = %f\n", game->pl.pos_x);
-	printf("player.pos_y = %f\n", game->pl.pos_y);
-	printf("player.view = %f\n", game->pl.view);
-	printf("player.pov = %f\n", game->pl.pov);
 	return (TRUE);
 }
