@@ -6,15 +6,12 @@
 /*   By: tbertoli <tbertoli@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/26 19:18:55 by tbertoli          #+#    #+#             */
-/*   Updated: 2022/11/26 19:19:46 by tbertoli         ###   ########.fr       */
+/*   Updated: 2022/11/28 19:01:01 by tbertoli         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../inc/cub3d.h"
 
-/*
-* funzione che inizializza a zero i valori della struttura rc
-*/
 void	ft_init_rc(t_rc *rc)
 {
 	rc->ntest_x = 0;
@@ -26,10 +23,6 @@ void	ft_init_rc(t_rc *rc)
 	rc->test_angle = 0;
 }
 
-/*
-* funzione che inizializza la mappa, la posizione 
-* del giocatore e altre costanti del gioco;
-*/
 void	ft_init1(t_game *game)
 {
 	game->pl.pos_x += 0.5;

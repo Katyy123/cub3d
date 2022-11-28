@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   cub3dcopia1.c                                      :+:      :+:    :+:   */
+/*   cub3d.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: cfiliber <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: tbertoli <tbertoli@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/26 17:40:24 by tbertoli          #+#    #+#             */
-/*   Updated: 2022/11/28 17:54:09 by cfiliber         ###   ########.fr       */
+/*   Updated: 2022/11/28 19:00:34 by tbertoli         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,7 +40,7 @@ int	draw_ceiling(t_game *game, double ceiling_h, int line)
 }
 
 /*
-* funzione che disegna una linea sullo schermo per ogni ray
+* draws one line per ray on the screen
 */
 void	draw_line(t_screen *screen, int line, double ceiling_h, t_game *game)
 {

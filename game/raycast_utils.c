@@ -6,7 +6,7 @@
 /*   By: tbertoli <tbertoli@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/26 19:03:37 by tbertoli          #+#    #+#             */
-/*   Updated: 2022/11/26 19:37:17 by tbertoli         ###   ########.fr       */
+/*   Updated: 2022/11/28 19:04:49 by tbertoli         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,7 +39,7 @@ void	first_step(t_game *game, int *eye, int *step, double *ip)
 }
 
 /*
-* incrementa di una tile lungo x, aggiorna la distanza e controlla se cé il muro
+* increment one step on x, updates distance, check if wall
 */
 t_bool	increment_x(t_game *game, int *step, int *eye, double *ip)
 {
@@ -66,7 +66,7 @@ t_bool	increment_x(t_game *game, int *step, int *eye, double *ip)
 }
 
 /*
-* incrementa di una tile lungo y, aggiorna la distanza e controlla se cé il muro
+* increment one step on y, updates distance, check if wall
 */
 t_bool	increment_y(t_game *game, int *step, int *eye, double *ip)
 {
@@ -93,7 +93,8 @@ t_bool	increment_y(t_game *game, int *step, int *eye, double *ip)
 }
 
 /*
-* funzione che scrive in d la distanza dal muro con dda
+* calculates distance from player, writes it in d
+* dda algoritm start
 */
 void	increment_d(t_game *game, int *step, int *eye, double *ip)
 {
@@ -111,8 +112,7 @@ void	increment_d(t_game *game, int *step, int *eye, double *ip)
 }
 
 /*
-* funzione che calcola la distanza dell' ostacolo dall'osservatore 
-* per ogni raggio della visuale
+* returns wall distance from player
 */
 double	get_distance(t_game *game, int w)
 {

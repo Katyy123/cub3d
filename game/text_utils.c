@@ -6,7 +6,7 @@
 /*   By: tbertoli <tbertoli@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/26 19:22:38 by tbertoli          #+#    #+#             */
-/*   Updated: 2022/11/26 19:52:24 by tbertoli         ###   ########.fr       */
+/*   Updated: 2022/11/28 19:07:20 by tbertoli         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,9 +25,7 @@ void	set_orient(t_game *game, double cos_a, double sin_a, char xy)
 }
 
 /*
-* funzione che determina l'orientamento della parte incontrata e
-* setta il valore di f_sample_X che serve a capire
-* la coordinata x per il sampling della texture
+* determins where the wall detected is facing
 */
 void	get_orient(t_game *game)
 {
@@ -53,10 +51,7 @@ void	get_orient(t_game *game)
 }
 
 /*
-* determina il colore del pixel dalla tex.
-* il pixel va preso sulla coordinata x salvata in f_sample_x
-* la coordinata y si determina in base all'altezza relativa tra y e wall_h
-* y rappresenta a che altezza del muro sto disegnando
+* color sampling from texture
 */
 int	get_color(t_game *game, int y, int wall_h, t_tex tex)
 {
