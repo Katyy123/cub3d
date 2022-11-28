@@ -6,7 +6,7 @@
 /*   By: cfiliber <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/24 19:39:40 by tbertoli          #+#    #+#             */
-/*   Updated: 2022/11/28 17:16:33 by cfiliber         ###   ########.fr       */
+/*   Updated: 2022/11/28 17:51:59 by cfiliber         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -180,7 +180,7 @@ typedef struct s_rproperties
 
 typedef struct s_game
 {
-	char		buffer[H];
+	double		d;
 	t_rc		r;
 	t_screen	screen;
 	t_player	pl;
