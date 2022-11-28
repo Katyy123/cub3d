@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   minimap_utils.c                                    :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: cfiliber <marvin@42.fr>                    +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2022/11/26 19:30:26 by cfiliber          #+#    #+#             */
+/*   Updated: 2022/11/26 20:22:32 by cfiliber         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "../inc/cub3d.h"
 
 /* check if a pixel of a wall has to be shown in the minimap */
@@ -32,13 +44,23 @@ t_bool  is_tile_in_minimap(t_game *game, int x, int y)
 }
 
 /* check if a pixel has to belong to the circle representing the player in the minimap */
-t_bool	is_inside_circle(t_game *game, int x, int y)
+t_bool	is_inside_circle(t_game *game, t_coord point, t_coord ctr, int radius)
 {
-    t_minimap       *m_map;
+    t_minimap   *m_map;
+    float       dist;
 
     m_map = &game->m_map;
-	float distance = sqrtf(powf(x - m_map->ctr_x, 2.) + powf(y - m_map->ctr_y, 2.));
-	if (distance <= m_map->pl_width / 2)
+	dist = sqrtf(powf(point.x - ctr.x, 2.) + powf(point.y - ctr.y, 2.));
+	if (dist <= radius)
 		return (TRUE);
 	return (FALSE);
+}
+
+t_coord coord_to_point(int x, int y)
+{
+    t_coord point;
+    
+    point.x = x;
+    point.y = y;
+    return (point);
 }

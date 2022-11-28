@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: tbertoli <tbertoli@student.42.fr>          +#+  +:+       +#+         #
+#    By: cfiliber <marvin@42.fr>                    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/10/27 16:37:56 by cfiliber          #+#    #+#              #
-
+#    Updated: 2022/11/28 17:56:07 by cfiliber         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -22,11 +22,11 @@ MAIN_SRC = main.c errors.c
 GNL = get_next_line.c get_next_line_utils.c
 SRC_GNL = $(addprefix gnl/, $(GNL))
 
-PARSING = file_reader.c file_checker.c texture_checker.c color_checker.c\
+PARSING = file_reader.c file_checker.c texture_checker.c color_checker.c \
 		 map_create.c map_create_2.c map_checker.c map_checker_2.c
 SRC_PARSING = $(addprefix parsing/, $(PARSING))
 
-GAME = cub3dcopia1.c end_program.c minimap_background.c minimap_utils.c minimap.c\
+GAME = cub3dcopia1.c end_program.c minimap_background.c minimap_utils.c minimap.c mouse_input.c \
 		update_pos.c move_utils.c raycast_utils.c init.c text_utils.c text_utils2.c
 SRC_GAME = $(addprefix game/, $(GAME))
 
