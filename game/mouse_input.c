@@ -1,66 +1,77 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   mouse_input.c                                      :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: cfiliber <marvin@42.fr>                    +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2022/11/26 19:30:39 by cfiliber          #+#    #+#             */
+/*   Updated: 2022/11/26 19:30:40 by cfiliber         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "../inc/cub3d.h"
 
-// t_pt	ft_point(int x, int y)
-// {
-// 	t_pt	point;
+/* convert an angle from degree to radian */
+float	to_radian(float angle)
+{
+	float	rad;
 
-// 	point.x = x;
-// 	point.y = y;
-// 	return (point);
-// }
+	rad = angle * M_PI / 180;
+	return (roundf(rad * 1000000) / 1000000);
+}
 
-// float	ft_to_radian(float angle)
-// {
-// 	float	ret;
+/* manage the movement of the mouse */
+int	trasl_mov(int x, int y, t_game *game)
+{
+	t_coord	end;
+	int		dist;
+	float	ratio;
+	
+	if (game->press_mouse == 1)
+	{
+		end.x = x;
+		end.y = y;
+		dist = game->mouse_start.x - end.x;
+		ratio = ((float)dist * 1.5) / (float)W;
+		ratio *= MOUSE_SPEED;
+		game->pl.pov += to_radian(ratio);
+		game->mouse_start = end;
+		update_window(game);
+	}
+	return (0);
+}
 
-// 	ret = angle * M_PI / 180;
-// 	return (roundf(ret * 1000000) / 1000000);
-// }
+/* manage the releasing of the mouse button */
+int	unlock_mouse(int button, int x, int y, t_game *game)
+{
+	t_coord	end;
+	int		dist;
+	float	ratio;
 
-// int	ft_trasl(int x, int y, t_game *game)
-// {
-// 	int		dist;
-// 	float	ratio;
-// 	t_pt	end;
+	if (button == 1)
+	{
+		end.x = x;
+		end.y = y;
+		game->press_mouse = 0;
+		dist = game->mouse_start.x - end.x;
+		ratio = ((float)dist * 1.5) / (float)W;
+		ratio *= MOUSE_SPEED;
+		game->pl.pov += to_radian(ratio);
+		update_window(game);
+	}
+	return (0);
+}
 
-// 	if (game->pause_game == 0 && game->mouse_block == 1)
-// 	{
-// 		end = ft_point(x, y);
-// 		dist = game->mouse_start.x - end.x;
-// 		ratio = ((float)dist * 1.5) / (float)WIN_WIDTH;
-// 		ratio *= FOV_D;
-// 		game->pos_a += ft_to_radian(ratio);
-// 		game->mouse_start = end;
-// 		ft_execution(game);
-// 	}
-// 	return (0);
-// }
-
-// int	ft_unlock(int button, int x, int y, t_game *game)
-// {
-// 	int		dist;
-// 	float	ratio;
-// 	t_pt	end;
-
-// 	if (game->pause_game == 0 && button == 2)
-// 	{
-// 		end = ft_point(x, y);
-// 		game->mouse_block = 0;
-// 		dist = game->mouse_start.x - end.x;
-// 		ratio = ((float)dist * 1.5) / (float)WIN_WIDTH;
-// 		ratio *= FOV_D;
-// 		game->pos_a += ft_to_radian(ratio);
-// 		ft_execution(game);
-// 	}
-// 	return (0);
-// }
-
-// int	ft_get_mouse(int button, int x, int y, t_game *game)
-// {
-// 	if (game->pause_game == 0 && button == 2)
-// 	{
-// 		game->mouse_block = 1;
-// 		game->mouse_start = ft_point(x, y);
-// 	}
-// 	return (0);
-// }
+/* initialize mouse event variables.
+It is called after pressing the left button of the mouse*/
+int	get_mouse(int button, int x, int y, t_game *game)
+{
+	if (button == 1)
+	{
+		game->press_mouse = 1;
+		game->mouse_start.x = x;
+		game->mouse_start.y = y;
+	}
+	return (0);
+}

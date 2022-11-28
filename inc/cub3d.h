@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cub3d.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tbertoli <tbertoli@student.42.fr>          +#+  +:+       +#+        */
+/*   By: cfiliber <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/24 19:39:28 by tbertoli          #+#    #+#             */
-/*   Updated: 2022/11/26 17:29:20 by tbertoli         ###   ########.fr       */
+/*   Updated: 2022/11/28 17:21:57 by cfiliber         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,6 +50,18 @@
 # define KEY_TAB	48
 
 
+/* mouse event */
+# define MOUSE_SPEED 150
+
+/* minimap */
+# define MAP_WALL_COL           0x00505050
+# define MAP_BACK_COL           0x00F0F0E0 
+# define MAP_BORDER_COL         0x00000000
+# define MAP_EMPTY_COL          0x00FFFFFF
+# define MAP_PLAYER_COL         0x00FF0000
+# define MAP_PL_DIR_COL			0X00FF0000
+
+/* libraries */
 # include <unistd.h>
 # include <stdlib.h>
 # include <stdio.h>
@@ -64,30 +76,6 @@
 //# include <semaphore.h>
 # include "../libft/libft.h"
 # include "../gnl/get_next_line.h"
-
-/* minimap */
-# define MAP_WALL_COL           0x00505050
-# define MAP_BACK_COL           0x00F0F0E0 
-# define MAP_BORDER_COL         0x00000000
-# define MAP_EMPTY_COL          0x00FFFFFF
-# define MAP_PLAYER_COL         0x00FF0000
-
-/* minimap.c */
-void    init_minimap(t_game *game);
-void    draw_wall(t_game *game, int tile_x, int tile_y);
-void    draw_player(t_game *game);
-void    draw_minimap(t_game * game);
-
-/* minimap_background.c */
-void    draw_border(t_game *game);
-void    draw_background(t_game *game);
-
-/* minimap_utils.c */
-t_bool  is_pix_in_minimap(t_game *game, int x, int y);
-t_bool  is_tile_in_minimap(t_game *game, int x, int y);
-t_bool	is_inside_circle(t_game *game, int x, int y);
-
-
 
 int wall_f1(t_game *game);
 int wall_f2(t_game *game);
@@ -123,5 +111,29 @@ int     key_rlease(int keycode, t_game *game);
 
 /* end_program.c */
 int		end_program(t_game *game);
+
+/* mouse_input.c */
+t_coord	point_coord(int x, int y);
+float	to_radian(float angle);
+int		trasl_mov(int x, int y, t_game *game);
+int		unlock_mouse(int button, int x, int y, t_game *game);
+int		get_mouse(int button, int x, int y, t_game *game);
+
+/* minimap.c */
+void    init_minimap(t_game *game);
+void    draw_wall(t_game *game, int tile_x, int tile_y);
+void    draw_pl_dir(t_game *game);
+void    draw_player(t_game *game);
+void    draw_minimap(t_game * game);
+
+/* minimap_background.c */
+void    draw_border(t_game *game);
+void    draw_background(t_game *game);
+
+/* minimap_utils.c */
+t_bool  is_pix_in_minimap(t_game *game, int x, int y);
+t_bool  is_tile_in_minimap(t_game *game, int x, int y);
+t_bool	is_inside_circle(t_game *game, t_coord point, t_coord ctr, int radius);
+t_coord coord_to_point(int x, int y);
 
 # endif
