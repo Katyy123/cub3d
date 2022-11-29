@@ -6,7 +6,7 @@
 /*   By: cfiliber <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/26 19:18:55 by tbertoli          #+#    #+#             */
-/*   Updated: 2022/11/28 19:48:14 by cfiliber         ###   ########.fr       */
+/*   Updated: 2022/11/29 14:32:53 by cfiliber         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,7 @@ void	init_minimap(t_game *game)
 	m_map->pl_dir_width = m_map->pl_width / 2;
 	m_map->dist_pl_dir = sqrtf(2) * m_map->pl_width / 2
 		+ m_map->pl_dir_width / 2;
-	m_map->dist_win = 20;
+	m_map->dist_win = 10 + W / 96;
 	m_map->bd_start_l = 4 * W / 5;
 	m_map->bd_start_up = H - (W - m_map->bd_start_l);
 	m_map->bd_end_d = H - m_map->dist_win;
