@@ -6,7 +6,7 @@
 /*   By: cfiliber <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/24 19:39:40 by tbertoli          #+#    #+#             */
-/*   Updated: 2022/11/29 15:05:20 by cfiliber         ###   ########.fr       */
+/*   Updated: 2022/11/29 16:30:58 by cfiliber         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,9 +75,8 @@ typedef struct s_minimap
 }	t_minimap;
 
 /*
-* struttura necessaria a gestire le immagini con minilibx.
-* contiene il puntatore a immagine img;
-* gli altri elementi servono a [...]
+* struct to manage the images with minilibx
+* it contains the pointer to img image
 */
 typedef struct s_data
 {
@@ -99,7 +98,7 @@ typedef struct s_mov
 }				t_mov;
 
 /*
-* struttura in cui vengono salvate le path alle 4 diverse textures
+* struct to save textures paths
 */
 typedef struct s_tex
 {
@@ -124,11 +123,11 @@ typedef struct s_col
 }	t_col;
 
 /*
-* struttura che contiene:
-* pos_x = cordinata x del giocatore nella mappa
-* pos_y = cordinata y del giocatore nella mappa
-* view = valore del campo visivo del giocatore
-* pov = direzione dello sguardo
+* this struct contains:
+* pos_x = player's x_coordinate in the map 
+* pos_y = player's y_coordinate in the map
+* view = player's field of view
+* pov = player's sight direction
 */
 typedef struct s_player
 {
@@ -139,12 +138,10 @@ typedef struct s_player
 }	t_player;
 
 /*
-* struttura che contiene elementi utili
-* alla gestione della finestra di gioco
-* ptr è il pointer da inizializzare con mlx_init()
-* win è il pointer alla finestra, da inizializzare con mlx_new_window(...)
-* shown_img è l'immagine mostrata sulla fienstra,
-* che viene refreshata a ogni loop
+* struct to manage the window
+* ptr is the pointer initialized by mlx_init()
+* win is the pointer to the window, initialized by mlx_new_window
+* shown_image is the image shown in the window, refreshed in everey loop
 */
 typedef struct s_screen
 {

@@ -6,7 +6,7 @@
 #    By: cfiliber <marvin@42.fr>                    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/10/27 16:37:56 by cfiliber          #+#    #+#              #
-#    Updated: 2022/11/29 15:18:40 by cfiliber         ###   ########.fr        #
+#    Updated: 2022/11/29 18:43:33 by cfiliber         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -32,7 +32,7 @@ SRC_GAME = $(addprefix game/, $(GAME))
 
 OBJS = $(SRCS:.c=.o)
 
-CC = gcc
+CC = cc
 
 CFLAGS = -Wall -Wextra -Werror -g -I libft -Imlx #-fsanitize=address
 

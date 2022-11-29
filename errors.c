@@ -6,7 +6,7 @@
 /*   By: cfiliber <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/30 15:04:12 by cfiliber          #+#    #+#             */
-/*   Updated: 2022/11/12 19:42:02 by cfiliber         ###   ########.fr       */
+/*   Updated: 2022/11/29 18:02:05 by cfiliber         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,21 +16,21 @@
 /* print an error message and return 0 */
 int	error(char *message)
 {
-	printf("\x1b[31m""Error:\n%s\n""\x1b[0m", message);
+	printf("\x1b[31m""Error\n%s\n""\x1b[0m", message);
 	return (0);
 }
 
 /* print an error message and return -1 */
 int	error_1(char *message)
 {
-	printf("\x1b[31m""Error:\n%s\n""\x1b[0m", message);
+	printf("\x1b[31m""Error\n%s\n""\x1b[0m", message);
 	return (-1);
 }
 
 /* print an error message and return NULL */
 void	*null_error(char *message)
 {
-	printf("\x1b[31m""Error:\n%s\n""\x1b[0m", message);
+	printf("\x1b[31m""Error\n%s\n""\x1b[0m", message);
 	return (NULL);
 }
 
@@ -39,12 +39,3 @@ void	print_warning(char *message)
 {
 	printf("\x1b[33m""Warning:\n%s\n""\x1b[0m", message);
 }
-
-// int	exit_error(char *message, t_game *game)
-// {
-// 	printf("\x1b[31m""Error:\n%s\n""\x1b[0m", message);
-// 	mlx_destroy_window(game->mlx, game->win);
-// 	free(game->mlx);
-// 	free_tile_map(game->tile_map);
-// 	exit(-1);
-// }

@@ -6,7 +6,7 @@
 /*   By: cfiliber <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/26 19:18:55 by tbertoli          #+#    #+#             */
-/*   Updated: 2022/11/29 15:05:05 by cfiliber         ###   ########.fr       */
+/*   Updated: 2022/11/29 16:15:26 by cfiliber         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -87,7 +87,8 @@ void	ft_init2(t_game *game)
 	screen = &game->screen;
 	img = &game->screen.shown_img;
 	screen->ptr = mlx_init();
-	screen->win = mlx_new_window(screen->ptr, W, H, "prova");
+	screen->win = mlx_new_window(screen->ptr, W, H,
+			"cub3D made by Catia Filiberto and Tommaso Bertolini");
 	img->img = mlx_new_image(screen->ptr, W, H);
 	img->addr = mlx_get_data_addr(img->img, &img->bits_per_pixel,
 			&img->line_length, &img->endian);

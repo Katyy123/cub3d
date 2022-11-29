@@ -1,0 +1,11 @@
+EA ./textures/greystone.xpm
+NO ./textures/redbrick.xpm
+SO ./textures/bluestone.xpm
+WE ./textures/wood.xpm
+
+F 50,30,30 
+C 155,213,225
+
+111
+1E1
+111

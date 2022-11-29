@@ -6,7 +6,7 @@
 /*   By: cfiliber <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/24 19:39:28 by tbertoli          #+#    #+#             */
-/*   Updated: 2022/11/29 15:03:15 by cfiliber         ###   ########.fr       */
+/*   Updated: 2022/11/29 16:18:42 by cfiliber         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -114,7 +114,6 @@ void	update_pos(t_game *game);
 
 /* init.c */
 void	init_minimap(t_game *game);
-//void	ft_init_rc(t_rc *rc);
 void	ft_init1(t_game *game);
 void	ft_init_tex(t_game *game);
 void	ft_init2(t_game *game);
