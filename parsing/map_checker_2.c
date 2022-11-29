@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   map_checker_2.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tbertoli <tbertoli@student.42.fr>          +#+  +:+       +#+        */
+/*   By: cfiliber <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/12 17:41:01 by cfiliber          #+#    #+#             */
-/*   Updated: 2022/11/26 17:22:09 by tbertoli         ###   ########.fr       */
+/*   Updated: 2022/11/29 14:22:32 by cfiliber         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,16 +28,22 @@ void	save_player_data(t_player *player, int x, int y, char dir)
 }
 
 /* check if a space is surrounded (up, down, left, right)
-by an other space, a 1 or a \0 */
+by another space, a 1 or a \0 */
 t_bool	space_closed_by_walls(t_game *game, int y, int x)
 {
 	if (game->map[y][x + 1] != ' ' && game->map[y][x + 1] != '1'
 		&& game->map[y][x + 1] != '\0')
 		return (FALSE);
-	if (game->map[y - 1][x] != ' ' && game->map[y - 1][x] != '1')
-		return (FALSE);
-	if (game->map[y + 1][x] != ' ' && game->map[y + 1][x] != '1')
-		return (FALSE);
+	if (y != 0)
+	{
+		if (game->map[y - 1][x] != ' ' && game->map[y - 1][x] != '1')
+			return (FALSE);
+	}
+	if (game->map[y + 1])
+	{
+		if (game->map[y + 1][x] != ' ' && game->map[y + 1][x] != '1')
+			return (FALSE);
+	}
 	if (x != 0)
 	{
 		if (game->map[y][x - 1] != ' ' && game->map[y][x - 1] != '1')

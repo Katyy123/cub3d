@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   update_pos.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tbertoli <tbertoli@student.42.fr>          +#+  +:+       +#+        */
+/*   By: cfiliber <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/26 18:49:08 by tbertoli          #+#    #+#             */
-/*   Updated: 2022/11/28 19:09:33 by tbertoli         ###   ########.fr       */
+/*   Updated: 2022/11/29 14:49:12 by cfiliber         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,9 +46,7 @@ void	update_pos(t_game *game)
 {
 	double	pos_x;
 	double	pos_y;
-	time_t	t_current;
 
-	time(&t_current);
 	pos_x = game->pl.pos_x;
 	pos_y = game->pl.pos_y;
 	if (game->mov.m_fwrd == 1)
@@ -64,5 +62,4 @@ void	update_pos(t_game *game)
 	else if (game->mov.r_l == 1)
 		game->pl.pov -= H / 10000.00;
 	collision(game, pos_x, pos_y);
-	time(&game->t_prev);
 }

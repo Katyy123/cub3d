@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: tbertoli <tbertoli@student.42.fr>          +#+  +:+       +#+         #
+#    By: cfiliber <marvin@42.fr>                    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/10/27 16:37:56 by cfiliber          #+#    #+#              #
-#    Updated: 2022/11/28 19:11:11 by tbertoli         ###   ########.fr        #
+#    Updated: 2022/11/29 14:51:19 by cfiliber         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -27,7 +27,7 @@ PARSING = file_reader.c file_checker.c texture_checker.c color_checker.c \
 SRC_PARSING = $(addprefix parsing/, $(PARSING))
 
 GAME = cub3d.c end_program.c minimap_background.c minimap_utils.c minimap.c mouse_input.c \
-		update_pos.c move_utils.c raycast_utils.c init.c text_utils.c text_utils2.c
+		update_pos.c move_utils.c raycast_utils.c init.c text_utils.c text_utils2.c mlx.c
 SRC_GAME = $(addprefix game/, $(GAME))
 
 OBJS = $(SRCS:.c=.o)
