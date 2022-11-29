@@ -6,7 +6,7 @@
 /*   By: cfiliber <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/26 19:18:55 by tbertoli          #+#    #+#             */
-/*   Updated: 2022/11/29 14:32:53 by cfiliber         ###   ########.fr       */
+/*   Updated: 2022/11/29 14:50:12 by cfiliber         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,10 +45,6 @@ void	ft_init_rc(t_rc *rc)
 	rc->test_angle = 0;
 }
 
-/*
-* funzione che inizializza la mappa, la posizione 
-* del giocatore e altre costanti del gioco;
-*/
 void	ft_init1(t_game *game)
 {
 	game->pl.pos_x += 0.5;
