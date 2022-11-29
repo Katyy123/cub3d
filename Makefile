@@ -6,16 +6,20 @@
 #    By: cfiliber <marvin@42.fr>                    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/10/27 16:37:56 by cfiliber          #+#    #+#              #
-#    Updated: 2022/11/29 18:43:33 by cfiliber         ###   ########.fr        #
+#    Updated: 2022/11/29 20:27:53 by cfiliber         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 NAME	= cub3D
 
+NAME_BONUS	= cub3D_bonus
+
 LIB_PATH = ./libft/
 LIB = $(LIB_PATH)libft.a
 
 SRCS = $(MAIN_SRC) $(SRC_GNL) $(SRC_PARSING) $(SRC_GAME)
+
+SRCS_BONUS = $(MAIN_SRC) $(SRC_GNL) $(SRC_PARSING) $(SRC_GAME_BONUS)
 
 MAIN_SRC = main.c errors.c
 
@@ -30,7 +34,13 @@ GAME = cub3d.c end_program.c minimap_background.c minimap_utils.c minimap.c mous
 		update_pos.c move_utils.c raycast_utils.c init.c text_utils.c text_utils2.c mlx.c
 SRC_GAME = $(addprefix game/, $(GAME))
 
+GAME_BONUS = cub3d_bonus.c end_program_bonus.c minimap_background_bonus.c minimap_utils_bonus.c minimap_bonus.c mouse_input_bonus.c \
+		update_pos_bonus.c move_utils_bonus.c raycast_utils_bonus.c init_bonus.c text_utils_bonus.c text_utils2_bonus.c mlx_bonus.c
+SRC_GAME_BONUS = $(addprefix game_bonus/, $(GAME_BONUS))
+
 OBJS = $(SRCS:.c=.o)
+
+OBJS_BONUS = $(SRCS_BONUS:.c=.o)
 
 CC = cc
 
@@ -58,14 +68,23 @@ $(NAME): $(OBJS)
 	@echo $(GREEN)$(CURSIVE)"\nAll files have been compiled"$(RESET)
 	@echo $(MAGENTA)$(CURSIVE)"\nTo start the game, type ./cub3d and map name.\nFor example: ./cub3d maps/test1.cub\n"$(RESET)
 
+bonus: fclean subsystem $(NAME_BONUS)
+
+$(NAME_BONUS): $(OBJS_BONUS)
+	@$(CC) $(CFLAGS) -lmlx -framework OpenGL -framework AppKit -o $(NAME_BONUS) $(OBJS_BONUS) $(LIB)
+	@echo $(GREEN)$(CURSIVE)"\nAll files have been compiled"$(RESET)
+	@echo $(MAGENTA)$(CURSIVE)"\nTo start the game, type ./cub3d and map name.\nFor example: ./cub3d maps/test1.cub\n"$(RESET)
+
 clean:
 	@make clean -C $(LIB_PATH)
 	@rm -f $(OBJS)
+	@rm -f $(OBJS_BONUS)
 
 fclean: clean
 	@make fclean -C $(LIB_PATH)
 	@rm -f $(NAME)
+	@rm -f $(NAME_BONUS)
 
 re: fclean all
 
-.PHONY: all clean fclean re
+.PHONY: all bonus clean fclean re

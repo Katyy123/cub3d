@@ -6,7 +6,7 @@
 /*   By: cfiliber <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/26 17:40:24 by tbertoli          #+#    #+#             */
-/*   Updated: 2022/11/29 20:27:30 by cfiliber         ###   ########.fr       */
+/*   Updated: 2022/11/29 19:17:16 by cfiliber         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -97,6 +97,7 @@ int	update_window(t_game *game)
 			&img->line_length, &img->endian);
 	update_pos(game);
 	raycast(game);
+	draw_minimap(game);
 	mlx_put_image_to_window(screen->ptr, screen->win, img->img, 0, 0);
 	return (0);
 }
