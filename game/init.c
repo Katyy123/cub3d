@@ -6,7 +6,7 @@
 /*   By: cfiliber <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/26 19:18:55 by tbertoli          #+#    #+#             */
-/*   Updated: 2022/11/29 14:50:12 by cfiliber         ###   ########.fr       */
+/*   Updated: 2022/11/29 15:05:05 by cfiliber         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,14 +37,6 @@ void	init_minimap(t_game *game)
 	m_map->ctr.y = (m_map->start_up + (H - m_map->dist_win)) / 2;
 }
 
-/*
-* funzione che inizializza a zero i valori della struttura
-*/
-void	ft_init_rc(t_rc *rc)
-{
-	rc->test_angle = 0;
-}
-
 void	ft_init1(t_game *game)
 {
 	game->pl.pos_x += 0.5;
@@ -64,7 +56,7 @@ void	ft_init1(t_game *game)
 	game->ray.m = 0.0;
 	game->ray.sx = 0.0;
 	game->ray.sy = 0.0;
-	ft_init_rc(&game->r);
+	game->test_angle = 0;
 }
 
 void	ft_init_tex(t_game *game)
