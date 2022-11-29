@@ -6,7 +6,7 @@
 /*   By: cfiliber <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/24 19:39:40 by tbertoli          #+#    #+#             */
-/*   Updated: 2022/11/28 20:03:52 by cfiliber         ###   ########.fr       */
+/*   Updated: 2022/11/29 15:05:20 by cfiliber         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -88,12 +88,6 @@ typedef struct s_data
 	int		endian;
 }				t_data;
 
-//aggiunta da casa, da testare
-typedef struct s_rc
-{
-	double	test_angle;
-}				t_rc;
-
 typedef struct s_mov
 {
 	int		m_fwrd;
@@ -172,7 +166,7 @@ typedef struct s_rproperties
 typedef struct s_game
 {
 	double			d;
-	t_rc			r;
+	double			test_angle;
 	t_screen		screen;
 	t_player		pl;
 	t_tex			no_tex;

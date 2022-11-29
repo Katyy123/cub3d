@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   text_utils.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tbertoli <tbertoli@student.42.fr>          +#+  +:+       +#+        */
+/*   By: cfiliber <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/26 19:22:38 by tbertoli          #+#    #+#             */
-/*   Updated: 2022/11/28 19:07:20 by tbertoli         ###   ########.fr       */
+/*   Updated: 2022/11/29 15:03:43 by cfiliber         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,7 +31,7 @@ void	get_orient(t_game *game)
 {
 	double	test_angle;
 
-	test_angle = game->r.test_angle;
+	test_angle = game->test_angle;
 	if (test_angle >= -M_PI * 0.25 && test_angle < M_PI * 0.25)
 	{
 		game->screen.orient = 1;
