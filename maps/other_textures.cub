@@ -1,7 +1,7 @@
-EA ./textures/catia_wall1.xpm
-NO ./textures/catia_wall2.xpm
-SO ./textures/catia_wall4.xpm
-WE ./textures/catia_wall5.xpm
+EA ./textures/wood-1108307_1920.xpm
+NO ./textures/wall-2933017_1920.xpm
+SO ./textures/texture-1027796.xpm
+WE ./textures/background-3048876_1920.xpm
 
 F 50,30,30
 C 155,213,225

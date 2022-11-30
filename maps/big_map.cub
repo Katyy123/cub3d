@@ -1,16 +1,16 @@
 
 
-    EA       ./textures/greystone.xpm
+    EA       ./textures/bluestone.xpm
      F 50,30,30
-   NO ./textures/redbrick.xpm
+   NO  ./textures/greystone.xpm
 
    
   
 C      155,213,225
 
-    SO   ./textures/bluestone.xpm
+    SO     ./textures/redbrick.xpm
 
-WE ./textures/wood.xpm
+WE     ./textures/wood.xpm
 
   111111111111111111111111111111111111111111111111111111111111
 110000000001110100000000011111000000000000000011111000000000001
